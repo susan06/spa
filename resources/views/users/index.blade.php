@@ -1,0 +1,48 @@
+@extends('layouts.app')
+
+@section('page-title', trans('app.users'))
+
+@section('content')
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">{{ trans('app.users') }}</h4>
+                <p class="category">{{trans('app.list_of_registered_users')}}</p>
+            </div>
+            <div class="content">
+                <div class="row">
+                    @include('partials.status')
+                    @include('partials.search') 
+
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                       <a href="javascript:void(0)" data-href="{{ route('user.create') }}" class="btn btn-danger btn-fill  create-edit-show" data-model="modal" title="@lang('app.create_user')">
+                          @lang('app.add_user')
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="inner-spacer">
+                      <div id="content-table">
+                        @include('users.list')
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+@endsection
+
+@section('scripts')
+
+ <!-- jquery.inputmask -->
+ {!! HTML::script('vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js') !!}
+ 
+@endsection
