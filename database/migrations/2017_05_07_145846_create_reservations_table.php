@@ -27,7 +27,7 @@ class CreateReservationsTable extends Migration
             $table->timestamps();  
             $table->engine = 'InnoDB'; 
 
-            $table->foreign('branch_office_id')->references('id')->on('branch_offices')->onUpdate('cascade')->onDelete('cascade');
+            //$table->foreign('branch_office_id')->references('id')->on('branch_offices')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('client_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
