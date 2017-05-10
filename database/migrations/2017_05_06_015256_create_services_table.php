@@ -34,6 +34,6 @@ class CreateServicesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('branch_offices_services');
+        Schema::drop('services');
     }
 }

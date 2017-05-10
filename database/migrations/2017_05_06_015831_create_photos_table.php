@@ -31,6 +31,6 @@ class CreatePhotosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('branch_offices_photos');
+        Schema::drop('photos');
     }
 }

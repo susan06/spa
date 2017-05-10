@@ -32,6 +32,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('branch_offices_payments');
+        Schema::drop('payments');
     }
 }
