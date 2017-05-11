@@ -69,15 +69,15 @@
                         </div>
                     </div>
 
-                    <nav class="navbar navbar-fixed navbar-menu navbar-menu-footer visible-mobile">
+                    <!--<nav class="navbar navbar-fixed navbar-menu navbar-menu-footer visible-mobile">
                         <div class="container-fluid">
                             <div class="navbar-header">
                             
                                 <button type="button" id="nav-bar-button-foo" class="navbar-toggle" data-toggle="collapse">
-                                    <!--<span class="sr-only">Toggle navigation</span>
+                                    <span class="sr-only">Toggle navigation</span>
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span> -->
+                                    <span class="icon-bar"></span>
                                 </button>
                            
                                 <a class="navbar-brand site-name" href="{{ route('home') }}">
@@ -85,11 +85,11 @@
                                 </a>
                             </div>
                         </div>
-                    </nav>
+                    </nav> 
 
                     <p class="copyright pull-right visible-pc">
                         &copy; 2017 {{ settings::get('app_name') }}
-                    </p>
+                    </p>-->
                 </div>
             </footer>
 
