@@ -48,7 +48,7 @@ class Score extends Model
     }
 
     public function sumScore() {
-        $sum = ($this->service + $this->environment + $this->attention + $this->price) / 5;
+        $sum = ($this->sum('service') + $this->sum('environment') + $this->sum('attention') + $this->sum('price')) / 5;
 
         return $sum.'/5';
     }

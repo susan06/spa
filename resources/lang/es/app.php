@@ -660,7 +660,7 @@ return [
 
 
     //condiciones del servicio
-    'terms_service' => 'Condiciones del servicio',
+    'terms_service' => 'Términos y condiciones',
     'privacy_policy' => 'Política de Privacidad',
     'terms_service_updated' => 'Condiciones del servicio actualizada',
     'setting_updated' => 'Configuraciones actualizadas',

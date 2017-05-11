@@ -43,6 +43,13 @@
       </li>
     @endpermission
 
+    <li class="{{ Request::is('conditions_and_privacy*') ? 'active' : ''  }}">
+        <a  href="{{ route('setting.conditions_and_privacy') }}" title="terminos">
+        <i class="pe-7s-notebook"></i>
+        <p>Términos y condiciones</p>
+        </a>
+    </li>
+
 
     @permission('settings.general') 
        <li class="menu {{ Request::is('setting*') ? 'active' : ''  }}">

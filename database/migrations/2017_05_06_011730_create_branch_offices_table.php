@@ -30,6 +30,7 @@ class CreateBranchOfficesTable extends Migration
             $table->boolean('reservation_discount')->default(false);
             $table->integer('percent_discount')->nullable(); 
             $table->boolean('status')->default(true);
+            $table->timestamps();
             
             $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('province_id')->references('id')->on('provinces')->onUpdate('cascade')->onDelete('cascade');

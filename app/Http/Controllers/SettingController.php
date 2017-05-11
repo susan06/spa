@@ -79,4 +79,23 @@ class SettingController extends Controller
 
         $this->logAction('update', trans('log.updated_settings'), 'setting');
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     *
+     */
+    public function conditions_and_privacy(Request $request)
+    {
+        if ( $request->ajax() ) {
+
+            return response()->json([
+                'success' => true,
+                'view' => view('setting.conditions_privacy_field')->render(),
+            ]);
+        }
+
+        return view('setting.conditions_and_privacy');
+    }
 }

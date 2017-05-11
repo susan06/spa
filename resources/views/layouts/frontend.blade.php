@@ -49,63 +49,42 @@
 
             @include('partials.user-menu-front')
 
-                <div id="nav-bar" class="visible-mobile">
+                <div id="nav-bar-header" class="visible-mobile">
                     <div id="menu-mobile">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <i class="pe-7s-home"></i>
-                                    Inicio de sesión
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="pe-7s-search"></i>
-                                    Busqueda avanzada
-                                </a>
-                            </li>
-                             <li>
-                                <a href="#">
-                                    <i class="pe-7s-star"></i>
-                                    Ranking
-                                </a>
-                            </li>
-                             <li>
-                                <a href="#">
-                                    <i class="pe-7s-map-marker"></i>
-                                    Locales cerca
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="pe-7s-notebook"></i>
-                                    Términos y condiciones
-                                </a>
-                            </li>
-                        </ul>
+                       @include('partials.menu-movil')
                     </div>
                 </div>
+
             <div class="content">
                 @yield('content')   
             </div>
 
             <footer class="footer">
-                <div class="container-fluid">
-                    <nav class="pull-left">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                   Preguntas frecuentes
+                <div class="container-fluid" id="ejemplo">
+
+                    <div id="nav-bar-foo" class="visible-mobile">
+                        <div id="menu-mobile-foo">
+                           @include('partials.menu-movil')
+                        </div>
+                    </div>
+
+                    <nav class="navbar navbar-fixed navbar-menu navbar-menu-footer visible-mobile">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" id="nav-bar-button-foo" class="navbar-toggle" data-toggle="collapse">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand site-name" href="{{ route('home') }}">
+                                 <img src="{{ asset('images/logo.png') }}">
                                 </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                   Términos y condiciones
-                                </a>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                     </nav>
-                    <p class="copyright pull-right">
+
+                    <p class="copyright pull-right visible-pc">
                         &copy; 2017 {{ settings::get('app_name') }}
                     </p>
                 </div>
@@ -148,9 +127,21 @@
             "no_data_table" : "@lang('app.no_records_found')",
             "invalidUpdateMsg" : "@lang('app.invalid_update_status')",
         };
-       
-        $("#nav-bar").click(function(){
+        $('html,body').animate({
+                scrollTop: $("#ejemplo").offset().top
+            }, 2000);
+        $("#nav-bar-button").click(function(){
             $("#menu-mobile").toggle();
+            $('html,body').animate({
+                scrollTop: $("#menu-mobile").offset().top
+            }, 2000);
+        });
+
+        $("#nav-bar-button-foo").click(function(){
+            $("#menu-mobile-foo").toggle();
+            $('html,body').animate({
+                scrollTop: $("#menu-mobile-foo").offset().top
+            }, 2000);
         });
 
     </script>

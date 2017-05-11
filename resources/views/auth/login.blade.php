@@ -1,54 +1,110 @@
-@extends('layouts.auth')
+@extends('layouts.frontend')
 
 @section('page-title', trans('app.login'))
 
 @section('content') 
 
-<div class="center-block">
-  <div class="login-block">
-  {!! Form::open(['url' => '/authenticate', 'class'=>'orb-form', 'id' => 'login-form']) !!}
-      <header>
-        <div class="image-block">
-        <a href="{{ url('login') }}">
-        {{ HTML::image('assets/images/logos/logo.png', Settings::get('app_name')) }}
-        </a>
-        </div>
-        @lang('app.login_to') {{ Settings::get('app_name') }} 
-        @if (Settings::get('reg_enabled'))
-        <small><h4><a href="{{ url('registration') }}">@lang('app.dont_have_an_account')</a></h4></small>
-        @endif
-      </header>
-      <fieldset>
-        <section>
-          <label class="label">@lang('app.email_or_username')</label>
-            <label class="input"> <i class="icon-append fa fa-user"></i>
-              <input type="text" name="username" id="username" value="{{ old('username') }}" required="required">
-            </label>
-        </section>
-        <section>
-            <label class="label">@lang('app.password')</label>
-            <label class="input"> <i class="icon-append fa fa-lock"></i>
-              <input type="password" name="password" id="password" required="required">
-            </label>
-            @if (Settings::get('forgot_password'))
-              <div class="note"><a href="{{url('password/remind')}}">@lang('app.i_forgot_my_password')</a></div>
-            @endif
-        </section>
-        @if (Settings::get('remember_me'))
-          <section>
-            <label class="checkbox">
-              <input type="checkbox" name="remember" id="remember" value="1" checked>
-              <i></i>@lang('app.remember_me')
-            </label>
-          </section>
-        @endif
-      </fieldset>
-      <footer>
-        {!! Form::submit(trans('app.log_in'), ['class' => 'btn btn-default']) !!}
-      </footer>
-    {!! Form::close() !!}
-  </div>
-  @include('copyrights')
-</div>
+<div class="row content-login">
+  <div class="col-md-4 col-xs-12">
+        <div class="flat-form form-login">
+            <ul class="tabs">
+                <li>
+                    <a href="#login" class="active">Login</a>
+                </li>
+                <li>
+                    <a href="#register">Registrarse</a>
+                </li>
+            </ul>
+            <div id="login" class="form-action show">
 
+              <div class="col-md-12 col-xs-12 btn-social">
+                <a href="#" class="btn-login btn-lg btn-block omb_btn-facebook">
+                  <span class="">Entrar con Facebook</span>
+                </a>
+              </div>
+
+                <div class="col-md-12 col-xs-12">
+                  {!! Form::open(['url' => '/authenticate', 'class' => 'omb_login']) !!}
+                      <div class="form-group">
+                          <input type="text" name="username" placeholder="@lang('app.email_or_username')" class="form-control"/>
+                      </div>
+                      <div class="form-group">
+                          <input type="password" name="password" placeholder="@lang('app.password')" class="form-control"/>
+                      </div>
+
+                    <div class="col-md-12 col-xs-12 btn-social">
+                      <input type="submit" value="Login" class="btn-login btn-lg btn-block omb_btn-login" />
+                      </a>
+                    </div>
+
+                    <div class="col-xs-5 col-md-6 pull-left">
+                      <label class="remember">
+                      @if (Settings::get('remember_me'))
+                        <input type="checkbox" value="remember-me">Recordarme
+                      @endif
+                      </label>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 pull-right">
+                      <p class="omb_forgotPwd">
+                      @if(Settings::get('forgot_password'))
+                        <a href="#">Olvido de contraseña</a>
+                      @endif
+                      </p>
+                    </div>
+
+                  {!! Form::close() !!}
+                </div>
+            </div>
+            <!--/#login.form-action-->
+            <div id="register" class="form-action hide">
+                <div class="col-md-12 col-xs-12">
+                <form>
+                    <div class="form-group">
+                      <input type="text" placeholder="Username" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                       <input type="password" placeholder="Password" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Crear cuenta" class="btn btn-fill btn-danger pull-right" />
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+@endsection
+
+@section('scripts')
+
+<script type="text/javascript">
+  (function( $ ) {
+  // constants
+  var SHOW_CLASS = 'show',
+      HIDE_CLASS = 'hide',
+      ACTIVE_CLASS = 'active';
+  
+  $( '.tabs' ).on( 'click', 'li a', function(e){
+    e.preventDefault();
+    var $tab = $( this ),
+         href = $tab.attr( 'href' );
+  
+     $( '.active' ).removeClass( ACTIVE_CLASS );
+     $tab.addClass( ACTIVE_CLASS );
+  
+     $( '.show' )
+        .removeClass( SHOW_CLASS )
+        .addClass( HIDE_CLASS )
+        .hide();
+    
+      $(href)
+        .removeClass( HIDE_CLASS )
+        .addClass( SHOW_CLASS )
+        .hide()
+        .fadeIn( 550 );
+  });
+})( jQuery );
+</script>
 @endsection

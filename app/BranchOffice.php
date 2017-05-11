@@ -52,6 +52,22 @@ class BranchOffice extends Model
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y G:ia');
     }
 
+
+    public function getFirsthPhoto() {
+        
+        return $this->photos->first()->name;
+    }
+
+    public function sumPrice() {
+        $services = $this->services;
+        $sum = 0;
+        foreach ($services as $key => $value) {
+            $sum += $value->price;
+        }
+
+        return $sum / $services->count();
+    }
+
     /**
      * Relationships
      *
@@ -80,5 +96,10 @@ class BranchOffice extends Model
     public function payment()
     {
         return $this->hasMany(Payment::class, 'branch_office_id');
+    }
+
+    public function score()
+    {
+        return $this->hasMany(Score::class, 'branch_office_id');
     }
 }

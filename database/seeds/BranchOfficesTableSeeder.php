@@ -26,6 +26,7 @@ class BranchOfficesTableSeeder extends Seeder
             'reservation_web' => true,
             'reservation_discount' => true,
             'percent_discount' => 10,
+            'created_at' => \Carbon\Carbon::now()
         ]);
 
     	  DB::table('branch_offices')->insert([
@@ -38,7 +39,8 @@ class BranchOfficesTableSeeder extends Seeder
             'lng' => -80.882127,
             'phone_one' => 554444778,
             'working_hours' => 'Abierto de lunes a domingo desde las 8:00 am hasta las 3:00 pm',
-            'email' => 'ejemplo2@ejemplo.com'
+            'email' => 'ejemplo2@ejemplo.com',
+            'created_at' => \Carbon\Carbon::now()
         ]);
 
     }

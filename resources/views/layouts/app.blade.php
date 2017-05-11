@@ -70,15 +70,6 @@
 
             <footer class="footer">
                 <div class="container-fluid">
-                    <nav class="pull-left">
-                        <ul>
-                            <li>
-                                <a href="{{ route('home') }}">
-                                   @lang('app.home')
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
                     <p class="copyright pull-right">
                         &copy; 2017 {{ settings::get('app_name') }}
                     </p>

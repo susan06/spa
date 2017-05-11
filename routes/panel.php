@@ -23,6 +23,10 @@
           'SettingController@update')
           ->name('setting.update');
 
+      Route::get('/conditions_and_privacy',
+        'SettingController@conditions_and_privacy')
+        ->name('setting.conditions_and_privacy');
+
    });
 
   /**

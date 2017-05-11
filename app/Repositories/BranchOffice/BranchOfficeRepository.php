@@ -7,12 +7,14 @@ use App\Repositories\RepositoryInterface;
 interface BranchOfficeRepository extends RepositoryInterface
 {
     /**
-     * Paginate and search
+     * search by score
      *
-     * return the result paginated for the take value and with the attributes.
      *
-     * @param int $take
-     * @param string $search
+     */
+    public function searchByScore($take = 10, $search = null);
+
+    /**
+     * search by created_at or puntaje
      *
      *
      */

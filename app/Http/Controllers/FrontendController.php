@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Repositories\Banner\BannerRepository;
 use App\Repositories\BranchOffice\BranchOfficeRepository;
+use App\Repositories\Faq\FaqRepository;
 
 class FrontendController extends Controller
 {
@@ -21,15 +22,24 @@ class FrontendController extends Controller
     private $branchs;
 
     /**
+     * @var FaqRepository
+     */
+    private $faqs;
+
+    /**
      * FrontendController constructor.
      * @param 
      */
-    public function __construct(BannerRepository $banners, BranchOfficeRepository $branchs)
-    {
+    public function __construct(
+        BannerRepository $banners, 
+        BranchOfficeRepository $branchs,
+        FaqRepository $faqs
+    ){
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
         $this->banners = $banners;
         $this->branchs = $branchs;
+        $this->faqs = $faqs;
     }
 
     /**
@@ -60,7 +70,7 @@ class FrontendController extends Controller
             if (count($locales)) {
                 return response()->json([
                     'success' => true,
-                    'view' => view('frontend.branchs.list', compact('locales', 'score'))->render(),
+                    'view' => view('frontend.branchs.score', compact('locales', 'score'))->render(),
                 ]);
             } else {
                 return response()->json([
@@ -70,16 +80,103 @@ class FrontendController extends Controller
             }
         }
 
-        return view('frontend.branchs.list', compact('locales', 'score'));
+        return view('frontend.branchs.score', compact('locales', 'score'));
     }
 
     /**
      * get locales by score
      *
      */
-    public function getlocalByScore($take, $score)
+    public function getlocalByScore($take, $score, $new = null)
     {
-        return $this->branchs->search($take, $score);
+        return $this->branchs->searchByScore($take, $score, $new);
+    }
+
+    /**
+     * Display local News
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function localNews(Request $request)
+    {
+        $locales = $this->branchs->orderBy('created_at', 'desc')->paginate(10);
+
+        if ( $request->ajax() ) {
+            if (count($locales)) {
+                return response()->json([
+                    'success' => true,
+                    'view' => view('frontend.branchs.list', compact('locales'))->render(),
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('app.no_records_found')
+                ]);
+            }
+        }
+
+        return view('frontend.news', compact('locales'));
+    }
+  
+    /**
+     * Display local News
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function localReservations(Request $request)
+    {
+        $locales = $this->branchs->where('reservation_web', true)->paginate(10);
+
+        if ( $request->ajax() ) {
+            if (count($locales)) {
+                return response()->json([
+                    'success' => true,
+                    'view' => view('frontend.branchs.list', compact('locales'))->render(),
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('app.no_records_found')
+                ]);
+            }
+        }
+
+        return view('frontend.reservation_web', compact('locales'));
+    }
+    /**
+     * Display faqs
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function faqs(Request $request)
+    {
+        $faqs = $this->faqs->all();
+        if ( $request->ajax() ) {
+            if (count($faqs)) {
+                return response()->json([
+                    'success' => true,
+                    'view' => view('frontend.faqs.list', compact('faqs'))->render(),
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('app.no_records_found')
+                ]);
+            }
+        }
+
+        return view('frontend.faqs.index', compact('faqs'));
+    }
+
+    /**
+     * Display conditions
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function conditions(Request $request)
+    {
+
+        return view('frontend.conditions');
     }
 
 

@@ -81,11 +81,11 @@ $(document).ready(function() {
 });
 
 $('#editor').change(function() {
-    document.getElementById("description").value = document.getElementById("editor").innerHTML;
+    document.getElementById("terms_service").value = document.getElementById("editor").innerHTML;
 }).trigger("change");
 
 $('#editor2').change(function() {
-    document.getElementById("terms_and_conditions").value = document.getElementById("editor2").innerHTML;
+    document.getElementById("description").value = document.getElementById("editor2").innerHTML;
 }).trigger("change");
 
 $('#editor3').change(function() {
