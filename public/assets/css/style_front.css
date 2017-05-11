@@ -5540,6 +5540,8 @@ li.selector {
 
 #menu-mobile, #menu-mobile-foo{
     display: none;
+    background-color: #fff;
+    margin: 0px -15px 0px -15px;
 }
 
 #menu-mobile ul, #menu-mobile-foo ul {
