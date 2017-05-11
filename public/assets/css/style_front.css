@@ -4367,6 +4367,11 @@ div.boxed_mini_details {
   text-align: center;
   padding: 5px 0px 5px 0px;
 }
+div.boxed_mini_details .status {
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+}
 div.boxed_mini_details span {
     float: left;
     width: 20%;
