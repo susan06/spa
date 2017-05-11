@@ -629,3 +629,7 @@ $(document).on('click', '.tab-ext', function(e){
     } 
 });
 
+$(document).on('click', '.menu-click', function () {
+    showLoading();
+});
+

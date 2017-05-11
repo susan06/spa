@@ -17,43 +17,43 @@
 <div class="div-menu-header">
     <ul class="nav navbar-nav menu-header visible-pc">
         <li>
-            <a href="{{ route('local.news') }}" class="active">
+            <a href="{{ route('local.news') }}" class="active menu-click">
                 <i class="pe-7s-star"></i>
                 Nuevos
             </a>
         </li>
         <li>
-            <a href="#" class="">
+            <a href="#" class="-menu-click">
                 <i class="pe-7s-ribbon"></i>
                 Ranking
             </a>
         </li>
          <li>
-            <a href="#" class="">
+            <a href="#" class="-menu-click">
                 <i class="pe-7s-map-2"></i>
                 Locales cerca
             </a>
         </li>
         <li>
-            <a href="#" class="">
+            <a href="#" class="-menu-click">
                 <i class="pe-7s-compass"></i>
                 Localidad
             </a>
         </li>
         <li>
-            <a href="{{ route('local.reservations') }}" class="">
+            <a href="{{ route('local.reservations') }}" class="menu-click">
                 <i class="pe-7s-alarm"></i>
                 Reserva Online
             </a>
         </li>
         <li>
-            <a href="{{ route('faqs') }}" class="">
+            <a href="{{ route('faqs') }}" class="-menu-click">
                 <i class="pe-7s-bookmarks"></i>
                 FAQs
             </a>
         </li>
         <li>
-            <a href="{{ route('conditions') }}" class="">
+            <a href="{{ route('conditions') }}" class="-menu-click">
                 <i class="pe-7s-notebook"></i>
                 Términos y condiciones
             </a>
@@ -72,14 +72,14 @@
               </ul>
         </li>
         <li>
-            <a href="{{ route('auth.logout') }}">
+            <a href="{{ route('auth.logout') }}" class="menu-click">
             <i class="pe-7s-back"></i>
                 @lang('app.sign_out')
             </a>
         </li>
         @else
         <li>
-            <a href="{{ route('login') }}">
+            <a href="{{ route('login') }}" class="menu-click">
             <i class="pe-7s-lock"></i>
                 Ingresar
             </a>
