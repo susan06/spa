@@ -5,20 +5,7 @@
     <a href="#"><img src="{{ asset('uploads/photos/'.$local->getFirsthPhoto()) }}" class="img-responsive" alt="{{ $local->getFirsthPhoto() }}"></a>
       <div class="box_2">
           <div class="special-wrap">
-              <div class="forclosure"><span class="m_12 box-number">
-              @if($score == 'price')
-              {{ 'Puntaje '.number_format($local->avg_price, 1, '.', '').'/5' }}
-              @endif
-              @if($score == 'service')
-              {{ 'Puntaje '.number_format($local->avg_service, 1, '.', '').'/5' }}
-              @endif
-              @if($score == 'environment')
-              {{ 'Puntaje '.number_format($local->avg_environment, 1, '.', '').'/5' }}
-              @endif
-              @if($score == 'attention')
-              {{ 'Puntaje '.number_format($local->avg_attention, 1, '.', '').'/5' }}
-              @endif
-              </span></div>
+              <div class="forclosure"><span class="m_12 box-number box-price">{{ '$ '.$local->sumPrice() }}</span></div>
               @if($local->branchOffice->reservation_web)<div class="forclosure"><span class="m_13 bg-nav">Reserva Online</span></div>@endif
           </div>
       </div>
@@ -28,7 +15,6 @@
          <div class="boxed_mini_details clearfix">
 
                 @if($score == 'price')
-                <span class="status text-red">{{ '$ '.$local->sumPrice() }}</span>
                 <div class="star-rating">
                   @for($i=1; $i <= 5; $i++)
                     <a href="#" class="{{ ($i <= $local->avg_price) ? 'active' : '' }}">&#9733;</a>
@@ -37,7 +23,6 @@
                 @endif
 
                 @if($score == 'service')
-                <span class="status"><strong class="text-red">{{ '$ '.$local->sumPrice() }}</strong></span>
                 <div class="star-rating">
                   @for($i=1; $i <= 5; $i++)
                     <a href="#" class="{{ ($i <= $local->avg_service) ? 'active' : '' }}">&#9733;</a>
@@ -46,7 +31,6 @@
                 @endif
 
                 @if($score == 'environment')
-                <span class="status"><strong class="text-red">{{ '$ '.$local->sumPrice() }}</strong></span>
                 <div class="star-rating">
                   @for($i=1; $i <= 5; $i++)
                     <a href="#" class="{{ ($i <= $local->avg_environment) ? 'active' : '' }}">&#9733;</a>
@@ -54,14 +38,19 @@
                 </div>
                 @endif
 
-                 @if($score == 'attention')
-                <span class="status"><strong class="text-red">{{ '$ '.$local->sumPrice() }}</strong></span>
+                @if($score == 'attention')
                 <div class="star-rating">
                 @for($i=1; $i <= 5; $i++)
                   <a href="#" class="{{ ($i <= $local->avg_attention) ? 'active' : '' }}">&#9733;</a>
                 @endfor
                 </div>
                 @endif
+
+              <span class="area first"><strong>Precio</strong><br>{{ number_format($local->avg_price, 1, '.', '').'/5' }}</span>
+              <span class="area first"><strong>Servicio</strong><br>{{ number_format($local->avg_service, 1, '.', '').'/5' }}</span>
+              <span class="area first"><strong>Ambiente</strong><br>{{ number_format($local->avg_environment, 1, '.', '').'/5' }}</span>
+              <span class="area last"><strong>Atención</strong><br>{{ number_format($local->avg_attention, 1, '.', '').'/5' }}</span>
+
           </div>
 
      </div>

@@ -64,20 +64,22 @@
                 <div class="container-fluid" id="ejemplo">
 
                     <div id="nav-bar-foo" class="visible-mobile">
-                        <div id="menu-mobile-foo">
-                           @include('partials.menu-movil')
+                        <div id="menu-mobile-foo" style="display: block;">
+                           @include('partials.menu-movil-foo')
                         </div>
                     </div>
 
                     <nav class="navbar navbar-fixed navbar-menu navbar-menu-footer visible-mobile">
                         <div class="container-fluid">
                             <div class="navbar-header">
+                            
                                 <button type="button" id="nav-bar-button-foo" class="navbar-toggle" data-toggle="collapse">
-                                    <span class="sr-only">Toggle navigation</span>
+                                    <!--<span class="sr-only">Toggle navigation</span>
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span> -->
                                 </button>
+                           
                                 <a class="navbar-brand site-name" href="{{ route('home') }}">
                                  <img src="{{ asset('images/logo.png') }}">
                                 </a>

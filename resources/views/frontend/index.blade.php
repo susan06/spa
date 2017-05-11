@@ -39,7 +39,7 @@
 
   <div class="end_pills">
     <!-- End Carousel Inner -->
-    <ul class="nav nav-pills nav-justified">
+    <ul class="nav nav-pills nav-pills-cat nav-justified">
         <li class="tab-ext active" data-url="{{ route('local.search', 'score=service') }}"><a href="#">Servicio</a></li>
         <li class="tab-ext" data-url="{{ route('local.search', 'score=environment') }}"><a href="#">Ambiente</a></li>
         <li class="tab-ext" data-url="{{ route('local.search', 'score=attention') }}"><a href="#">Atención</a></li>

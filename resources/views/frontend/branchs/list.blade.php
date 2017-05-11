@@ -16,8 +16,8 @@
 
             <span class="area first"><strong>Precio</strong><br>{{ number_format($local->score->avg('price'), 1, '.', '').'/5' }}</span>
             <span class="area first"><strong>Servicio</strong><br>{{ number_format($local->score->avg('service'), 1, '.', '').'/5' }}</span>
-            <span class="status"><strong>Ambiente</strong><br>{{ number_format($local->score->avg('environment'), 1, '.', '').'/5' }}</span>
-            <span class="bedrooms last"><strong>Atención</strong><br>{{ number_format($local->score->avg('attention'), 1, '.', '').'/5' }}</span>
+            <span class="area first"><strong>Ambiente</strong><br>{{ number_format($local->score->avg('environment'), 1, '.', '').'/5' }}</span>
+            <span class="area last"><strong>Atención</strong><br>{{ number_format($local->score->avg('attention'), 1, '.', '').'/5' }}</span>
 
           </div>
 
