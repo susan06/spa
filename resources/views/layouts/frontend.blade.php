@@ -79,7 +79,7 @@
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
                                 </button>
-                           
+
                                 <a class="navbar-brand site-name" href="{{ route('home') }}">
                                  <img src="{{ asset('images/logo.png') }}">
                                 </a>
@@ -133,16 +133,16 @@
  
         $("#nav-bar-button").click(function(){
             $("#menu-mobile").toggle();
-            $('html,body').animate({
+            /*$('html,body').animate({
                 scrollTop: $("#menu-mobile").offset().top
-            }, 2000);
+            }, 2000);*/
         });
 
         $("#nav-bar-button-foo").click(function(){
             $("#menu-mobile-foo").toggle();
-            $('html,body').animate({
+            /*$('html,body').animate({
                 scrollTop: $("#menu-mobile-foo").offset().top
-            }, 2000);
+            }, 2000);*/
         });
 
     </script>
