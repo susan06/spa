@@ -127,9 +127,7 @@
             "no_data_table" : "@lang('app.no_records_found')",
             "invalidUpdateMsg" : "@lang('app.invalid_update_status')",
         };
-        $('html,body').animate({
-                scrollTop: $("#ejemplo").offset().top
-            }, 2000);
+ 
         $("#nav-bar-button").click(function(){
             $("#menu-mobile").toggle();
             $('html,body').animate({
