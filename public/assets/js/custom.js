@@ -522,9 +522,11 @@ function getPages(page) {
             success: function(response) {
                 hideLoading();
                 if(response.success){
-                    $('#'+divId).html(response.view);
-                    loadResposiveTable();
+                    $('#tab-content').html(response.view);
                     CURRENT_URL = page;
+                    $('html,body').animate({
+                        scrollTop: $(".top").offset().top
+                    }, 2000);
                 }
             },
             error: function (status) {

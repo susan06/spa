@@ -38,5 +38,119 @@ class ServicesTableSeeder extends Seeder
             'details' => 'detalles del servicio',
             'price' => 25,
         ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 3,
+            'name' => 'servicio 1', 
+            'details' => 'detalles del servicio',
+            'price' => 20,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 3,
+            'name' => 'servicio 2', 
+            'details' => 'detalles del servicio',
+            'price' => 25,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 4,
+            'name' => 'servicio 1', 
+            'details' => 'detalles del servicio',
+            'price' => 20,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 4,
+            'name' => 'servicio 2', 
+            'details' => 'detalles del servicio',
+            'price' => 25,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 5,
+            'name' => 'servicio 1', 
+            'details' => 'detalles del servicio',
+            'price' => 20,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 5,
+            'name' => 'servicio 2', 
+            'details' => 'detalles del servicio',
+            'price' => 25,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 6,
+            'name' => 'servicio 1', 
+            'details' => 'detalles del servicio',
+            'price' => 20,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 6,
+            'name' => 'servicio 2', 
+            'details' => 'detalles del servicio',
+            'price' => 25,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 7,
+            'name' => 'servicio 1', 
+            'details' => 'detalles del servicio',
+            'price' => 20,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 7,
+            'name' => 'servicio 2', 
+            'details' => 'detalles del servicio',
+            'price' => 25,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 8,
+            'name' => 'servicio 1', 
+            'details' => 'detalles del servicio',
+            'price' => 20,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 8,
+            'name' => 'servicio 2', 
+            'details' => 'detalles del servicio',
+            'price' => 25,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 9,
+            'name' => 'servicio 1', 
+            'details' => 'detalles del servicio',
+            'price' => 20,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 9,
+            'name' => 'servicio 2', 
+            'details' => 'detalles del servicio',
+            'price' => 25,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 10,
+            'name' => 'servicio 1', 
+            'details' => 'detalles del servicio',
+            'price' => 20,
+        ]);
+
+        DB::table('services')->insert([
+            'branch_office_id' => 10,
+            'name' => 'servicio 2', 
+            'details' => 'detalles del servicio',
+            'price' => 25,
+        ]);
+
+
     }
 }

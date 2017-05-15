@@ -22,3 +22,5 @@ Route::get('/conditions', 'FrontendController@conditions')->name('conditions');
 Route::get('/local/news', 'FrontendController@localNews')->name('local.news');
 
 Route::get('/local/reservations', 'FrontendController@localReservations')->name('local.reservations');
+
+Route::get('/local/show/{id}', 'FrontendController@localShow')->name('local.show');

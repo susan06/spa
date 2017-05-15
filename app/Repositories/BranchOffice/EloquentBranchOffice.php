@@ -39,7 +39,7 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
         $result = $query->paginate($take);
 
         if ($search) {
-            $result->appends(['search' => $search]);
+            $result->appends(['score' => $search]);
         }
 
         return $result;
@@ -64,7 +64,7 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
         $result = $query->paginate($take);
 
         if ($search) {
-            $result->appends(['search' => $search]);
+            $result->appends(['score' => $search]);
         }
 
         return $result;

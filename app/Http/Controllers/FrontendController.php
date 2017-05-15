@@ -47,13 +47,33 @@ class FrontendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $banners = $this->banners->where('status', true)->get();
-        $locales = $this->getlocalByScore(10, 'service');
-        $score = 'service';
+        $score = isset($request->score) ? $request->score : 'service';
+        $locales = $this->getlocalByScore(6, $score);
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => true,
+                'view' => view('frontend.branchs.score', compact('locales', 'score'))->render(),
+            ]);
+        }
 
         return view('frontend.index', compact('banners', 'locales', 'score'));
+    }
+
+    /**
+     * Display rhe local by id
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function localShow($id)
+    {
+        $local = $this->branchs->find($id);
+
+        return view('frontend.branchs.show', compact('local'));
     }
 
     /**
@@ -63,7 +83,7 @@ class FrontendController extends Controller
      */
     public function localSearch(Request $request)
     {
-        $locales = $this->getlocalByScore(10, $request->score);
+        $locales = $this->getlocalByScore(6, $request->score);
         $score = $request->score;
 
         if ( $request->ajax() ) {
@@ -87,9 +107,9 @@ class FrontendController extends Controller
      * get locales by score
      *
      */
-    public function getlocalByScore($take, $score, $new = null)
+    public function getlocalByScore($take, $score)
     {
-        return $this->branchs->searchByScore($take, $score, $new);
+        return $this->branchs->searchByScore($take, $score);
     }
 
     /**
@@ -143,6 +163,7 @@ class FrontendController extends Controller
 
         return view('frontend.reservation_web', compact('locales'));
     }
+
     /**
      * Display faqs
      *

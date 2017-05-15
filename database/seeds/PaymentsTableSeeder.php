@@ -25,5 +25,45 @@ class PaymentsTableSeeder extends Seeder
             'branch_office_id' => 2,
             'method_payment_id' => 1
         ]);
+
+        DB::table('payments')->insert([
+            'branch_office_id' => 3,
+            'method_payment_id' => 1
+        ]);      
+
+        DB::table('payments')->insert([
+            'branch_office_id' => 4,
+            'method_payment_id' => 1
+        ]);  
+
+        DB::table('payments')->insert([
+            'branch_office_id' => 5,
+            'method_payment_id' => 1
+        ]);   
+
+        DB::table('payments')->insert([
+            'branch_office_id' => 6,
+            'method_payment_id' => 1
+        ]);    
+
+        DB::table('payments')->insert([
+            'branch_office_id' => 7,
+            'method_payment_id' => 1
+        ]);   
+
+        DB::table('payments')->insert([
+            'branch_office_id' => 8,
+            'method_payment_id' => 1
+        ]);
+
+        DB::table('payments')->insert([
+            'branch_office_id' => 9,
+            'method_payment_id' => 1
+        ]);
+
+        DB::table('payments')->insert([
+            'branch_office_id' => 10,
+            'method_payment_id' => 1
+        ]);
     }
 }
