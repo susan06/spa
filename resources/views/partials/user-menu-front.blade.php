@@ -16,6 +16,14 @@
 
 <div class="div-menu-header">
     <ul class="nav navbar-nav menu-header visible-pc">
+        @if(Auth::check() && Auth::user()->hasRole('client')) 
+        <li>
+            <a href="#" class="-menu-click">
+                <i class="pe-7s-safe"></i>
+                Guardados
+            </a>
+        </li>
+        @endif
         <li>
             <a href="{{ route('local.news') }}" class="active menu-click">
                 <i class="pe-7s-star"></i>
@@ -46,6 +54,14 @@
                 Reserva Online
             </a>
         </li>
+        @if(Auth::check() && Auth::user()->hasRole('client')) 
+        <li>
+            <a href="#" class="-menu-click">
+                <i class="pe-7s-ribbon"></i>
+                Mis reservas
+            </a>
+        </li>
+        @endif
         <li>
             <a href="{{ route('faqs') }}" class="-menu-click">
                 <i class="pe-7s-bookmarks"></i>
@@ -60,16 +76,10 @@
         </li>
         @if(Auth::check())
         <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="pe-7s-user"></i>
-                    {{ Auth::user()->full_name() }}
-                    <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="{{ route('profile.index')}}">@lang('app.profile')</a></li>
-                <li><a href="{{ route('user.setting') }}">@lang('app.setting')</a></li>
-                <li><a href="{{ route('user.password') }}">@lang('app.auth_and_registration')</a></li>
-              </ul>
+            <a href="{{ route('profile.index')}}" class="menu-click">
+            <i class="pe-7s-user"></i>
+                {{ Auth::user()->full_name() }}
+            </a>
         </li>
         <li>
             <a href="{{ route('auth.logout') }}" class="menu-click">

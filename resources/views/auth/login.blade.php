@@ -4,6 +4,10 @@
 
 @section('content') 
 
+<?php                  
+  Session::set('backUrl', URL::previous());
+?>
+
 <div class="row content-login">
   <div class="col-md-4 col-xs-12">
         <div class="flat-form form-login">

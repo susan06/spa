@@ -1,16 +1,18 @@
  <ul>
     <li>
-        <a href="{{ route('login') }}" class="menu-click">
-            <i class="pe-7s-home"></i>
-            Inicio de sesión
-        </a>
-    </li>
-    <li>
         <a href="#" class="-menu-click">
             <i class="pe-7s-search"></i>
             Busqueda avanzada
         </a>
     </li>
+    @if(Auth::check() && Auth::user()->hasRole('client')) 
+    <li>
+        <a href="#" class="-menu-click">
+            <i class="pe-7s-safe"></i>
+            Guardados
+        </a>
+    </li>
+    @endif
     <li>
         <a href="{{ route('local.news') }}" class="menu-click">
             <i class="pe-7s-star"></i>
@@ -41,6 +43,14 @@
             Reserva Online
         </a>
     </li>
+    @if(Auth::check() && Auth::user()->hasRole('client')) 
+    <li>
+        <a href="#" class="-menu-click">
+            <i class="pe-7s-ribbon"></i>
+            Mis reservas
+        </a>
+    </li>
+    @endif
     <li>
         <a href="{{ route('faqs') }}" class="menu-click">
             <i class="pe-7s-bookmarks"></i>
@@ -53,4 +63,25 @@
             Términos y condiciones
         </a>
     </li>
+    @if(Auth::check())
+    <li>
+        <a href="#" class="menu-click">
+            <i class="pe-7s-user"></i>
+            Perfil
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('auth.logout') }}" class="menu-click">
+            <i class="pe-7s-home"></i>
+            @lang('app.sign_out')
+        </a>
+    </li>
+    @else
+    <li>
+        <a href="{{ route('login') }}" class="menu-click">
+            <i class="pe-7s-back"></i>
+            Inicio de sesión
+        </a>
+    </li>
+    @endif
 </ul>

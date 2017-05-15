@@ -51,6 +51,34 @@
             @include('partials.user-menu-front')
 
                 <div id="nav-bar-header" class="visible-mobile">
+
+                    @if(Auth::check() && Auth::user()->hasRole('client')) 
+                    <div id="menu-auth" style="display: block;">
+                        <ul class="nav navbar-nav menu-header">
+                            <li>
+                                <a href="#" class="-menu-click">
+                                    <i class="pe-7s-search"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="-menu-click">
+                                    <i class="pe-7s-safe"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('local.news') }}" class="menu-click">
+                                    <i class="pe-7s-ribbon"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="menu-click">
+                                    <i class="pe-7s-user"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @endif
+
                     <div id="menu-mobile">
                        @include('partials.menu-movil')
                     </div>
@@ -68,28 +96,6 @@
                            @include('partials.menu-movil-foo')
                         </div>
                     </div>
-
-                    <!--<nav class="navbar navbar-fixed navbar-menu navbar-menu-footer visible-mobile">
-                        <div class="container-fluid">
-                            <div class="navbar-header">
-                            
-                                <button type="button" id="nav-bar-button-foo" class="navbar-toggle" data-toggle="collapse">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-
-                                <a class="navbar-brand site-name" href="{{ route('home') }}">
-                                 <img src="{{ asset('images/logo.png') }}">
-                                </a>
-                            </div>
-                        </div>
-                    </nav> 
-
-                    <p class="copyright pull-right visible-pc">
-                        &copy; 2017 {{ settings::get('app_name') }}
-                    </p>-->
                 </div>
             </footer>
 
@@ -133,6 +139,7 @@
  
         $("#nav-bar-button").click(function(){
             $("#menu-mobile").toggle();
+            $("#menu-auth").toggle();
             /*$('html,body').animate({
                 scrollTop: $("#menu-mobile").offset().top
             }, 2000);*/

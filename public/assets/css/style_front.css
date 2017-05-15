@@ -489,10 +489,11 @@ body > .navbar-collapse[data-color="purple"]:after {
 }
 .main-panel > .footer {
   border-top: 1px solid #e7e7e7;
+  /*
   position: fixed;
   bottom: 0;
   z-index: 10;
-  left: 0; 
+  left: 0;*/
   width: 100%;
 }
 
@@ -5538,14 +5539,15 @@ li.selector {
   }
 }
 
-@media (min-width: 321px) and (max-width: 375px) {
+
+@media (min-width: 321px) and (max-width: 376px) {
   .nav-pills-cat > li {
     display: inline-block;
     width: 23.8%;
   }
 }
 
-@media (min-width: 376px) and (max-width: 414px) {
+@media (min-width: 377px) and (max-width: 414px) {
   .nav-pills-cat > li {
     display: inline-block;
     width: 24%;
@@ -5613,64 +5615,74 @@ li.selector {
     }
 }
 
-#menu-mobile, #menu-mobile-foo{
+#menu-mobile, #menu-mobile-foo, #menu-auth{
     display: none;
     background-color: #fff;
     margin: 0px -15px 0px -15px;
 }
 
-#menu-mobile ul, #menu-mobile-foo ul {
+#menu-mobile ul, #menu-mobile-foo ul, #menu-auth ul {
   padding: 0px;
 }
 
-#menu-mobile li, #menu-mobile-foo li {
+#menu-mobile li, #menu-mobile-foo li, #menu-auth li {
     list-style: none;
     font-size: 17px;
     color: #000;
     padding: 10px 20px;
 }
 
-#menu-mobile-foo li {
+#menu-mobile-foo li, #menu-auth li {
     display: inline-block;
      padding: 0px;
 }
 
 #menu-mobile li:hover,
-#menu-mobile-foo li:hover {
+#menu-mobile-foo li:hover,
+#menu-auth li:hover {
     background-color: #fbfbfb;
 }
 
 #menu-mobile li:nth-child(even),
-#menu-mobile-foo li:nth-child(even) {
+#menu-mobile-foo li:nth-child(even),
+#menu-auth li:nth-child(even) {
     background-color: #ddd;
 }
 
 #menu-mobile li:nth-child(even):hover,
-#menu-mobile-foo li:nth-child(even):hover {
+#menu-mobile-foo li:nth-child(even):hover,
+#menu-auth li:nth-child(even):hover {
     background-color: #fbfbfb;
 }
 
 #menu-mobile li a,
-#menu-mobile-foo li a {
+#menu-mobile-foo li a,
+#menu-auth li a {
     color: #000;
 }
 
-#menu-mobile li a i, #menu-mobile-foo li a i {
+#menu-mobile li a i, 
+#menu-mobile-foo li a i,
+#menu-auth li a i {
   font-size: 25px;
   color: #CA2F10;
   font-weight: bold;
   padding: 0px 15px 0px 0px;
 }
 
-#menu-mobile-foo li a i {
+#menu-mobile-foo li a i,
+#menu-auth li a i {
   padding: 0px;
 }
-
 
 @media (max-width: 320px) {
   #menu-mobile-foo li a {
    font-size: 12px;
     padding: 10px 10px;
+  }
+
+  #menu-auth li a {
+    padding: 0px 30px;
   }
 }
 
@@ -5679,12 +5691,29 @@ li.selector {
    font-size: 12px;
     padding: 10px 15px;
   }
+
+  #menu-auth li a {
+    padding: 0px 35px;
+  }
 }
 
-@media (min-width: 361px) and (max-width: 380px) {
+@media (min-width: 361px) and (max-width: 376px) {
+  #menu-mobile-foo li a {
+   font-size: 12px;
+    padding: 10px 16px;
+  }
+  #menu-auth li a {
+    padding: 0px 36px;
+  }
+}
+
+@media (min-width: 377px) and (max-width: 380px) {
   #menu-mobile-foo li a {
    font-size: 13px;
-    padding: 10px 17px;
+    padding: 10px 15px;
+  }
+  #menu-auth li a {
+    padding: 0px 35px;
   }
 }
 
@@ -5693,12 +5722,18 @@ li.selector {
    font-size: 12px;
     padding: 10px 20px;
   }
+  #menu-auth li a {
+    padding: 0px 35px;
+  }
 }
 
 @media (min-width: 412px) and (max-width: 420px) {
   #menu-mobile-foo li a {
    font-size: 15px;
     padding: 10px 15px;
+  }
+  #menu-auth li a {
+    padding: 0px 41px;
   }
 }
 

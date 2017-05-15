@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Auth;
 use Validator;
 use settings;
+use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Cache\RateLimiter;
@@ -120,7 +121,7 @@ class LoginController extends Controller
 
         $this->logAction('auth', trans('log.logged_in'), 'user', $user->id);
 
-        return redirect()->intended('home');;
+        return redirect()->intended($this->redirectPath());
     }
 
      /**
@@ -307,17 +308,40 @@ class LoginController extends Controller
      */
     public function getLogout(Request $request)
     {
+        $client = false;
         if ( Auth::guard()->check() ) {
             $this->users->update(Auth::user()->id, [
                 'online' => false
             ]);
+            $client = Auth::user()->hasRole('client');
             $this->logAction('auth', trans('log.logged_out'), 'user', Auth::user()->id);
             Auth::guard()->logout();
         }
         $request->session()->flush();
         $request->session()->regenerate();
 
+        if ($client) {
+
+            return redirect()->back();
+        }
+
         return redirect('login');
+    }
+
+    /*
+    * redirect path
+    * 
+    */
+    public function redirectPath()
+    {
+     
+        if (Auth::user()->hasRole('client')) {
+
+            return Session::get('backUrl');
+        }
+
+        return $this->redirectTo;
+      
     }
 
 }
