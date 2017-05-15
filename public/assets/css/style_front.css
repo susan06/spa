@@ -5669,7 +5669,7 @@ li.selector {
 @media (max-width: 320px) {
   #menu-mobile-foo li a {
    font-size: 12px;
-    padding: 10px 13px;
+    padding: 10px 10px;
   }
 }
 
