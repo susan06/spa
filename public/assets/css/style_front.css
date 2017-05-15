@@ -493,6 +493,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   bottom: 0;
   z-index: 10;
   left: 0; 
+  width: 100%;
 }
 
 .main-panel .navbar {
