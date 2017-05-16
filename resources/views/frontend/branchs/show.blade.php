@@ -176,7 +176,7 @@
 		    <div class="content">	    
 				<div class="row">
 				  <div class="col-md-12 col-xs-12">
-				  	<p>{{ $local->address }}</p>
+				  	<p>{{ $local->address.'. '.$local->province->name }}</p>
 				  	<p>{{ $local->address_description }}</p>
 					<div id="map-form"></div>
 				  </div>
