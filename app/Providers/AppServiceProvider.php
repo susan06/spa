@@ -32,6 +32,8 @@ use App\Repositories\BranchOffice\BranchOfficeRepository;
 use App\Repositories\Faq\EloquentFaq;
 use App\Repositories\Faq\FaqRepository;
 
+use App\Repositories\Comment\EloquentComment;
+use App\Repositories\Comment\CommentRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -61,5 +63,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(BannerRepository::class, EloquentBanner::class);
         $this->app->singleton(BranchOfficeRepository::class, EloquentBranchOffice::class);
         $this->app->singleton(FaqRepository::class, EloquentFaq::class);
+        $this->app->singleton(CommentRepository::class, EloquentComment::class);
     }
 }

@@ -512,6 +512,12 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $(document).on('click', '.check', function (e) {
+        notify('info', $(this).data('msg'));
+    });
+});
+
 function getPages(page) {
     if(page) {
         showLoading();

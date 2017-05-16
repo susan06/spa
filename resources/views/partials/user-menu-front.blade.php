@@ -61,6 +61,12 @@
                 Mis reservas
             </a>
         </li>
+        <li>
+            <a href="#" class="-menu-click">
+                <i class="pe-7s-mail"></i>
+                Mensajes
+            </a>
+        </li>
         @endif
         <li>
             <a href="{{ route('faqs') }}" class="-menu-click">

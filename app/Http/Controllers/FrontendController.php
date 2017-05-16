@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\Banner\BannerRepository;
 use App\Repositories\BranchOffice\BranchOfficeRepository;
 use App\Repositories\Faq\FaqRepository;
+use App\Repositories\Comment\CommentRepository;
 
 class FrontendController extends Controller
 {
@@ -27,19 +28,26 @@ class FrontendController extends Controller
     private $faqs;
 
     /**
+     * @var FaqRepository
+     */
+    private $comments;
+
+    /**
      * FrontendController constructor.
      * @param 
      */
     public function __construct(
         BannerRepository $banners, 
         BranchOfficeRepository $branchs,
-        FaqRepository $faqs
+        FaqRepository $faqs,
+        CommentRepository $comments
     ){
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
         $this->banners = $banners;
         $this->branchs = $branchs;
         $this->faqs = $faqs;
+        $this->comments = $comments;
     }
 
     /**
@@ -72,8 +80,9 @@ class FrontendController extends Controller
     public function localShow($id)
     {
         $local = $this->branchs->find($id);
+        $comments = $this->comments->where('branch_office_id', $id)->paginate(10);
 
-        return view('frontend.branchs.show', compact('local'));
+        return view('frontend.branchs.show', compact('local', 'comments'));
     }
 
     /**

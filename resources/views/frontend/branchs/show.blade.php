@@ -37,24 +37,24 @@
 
 <div class="row">
   <div class="col-md-12 col-xs-12">
-    <div>
-
+  
     	<div class="row">
 			  <ul class="nav navbar-nav menu-local">
 			    <li>
-			        <a href="#" class="">
+			        <a href="#" data-url="" class="{{ (Auth::check() && $local->isScore()) ? 'active check' : 'save-check' }}" data-msg="Ya ha calificado el local">
 			            <i class="pe-7s-star"></i>
 			            Calificar
 			        </a>
 			    </li>
 			    <li>
-			        <a href="#" class="">
+			        <a href="#" data-url="" class="{{ (Auth::check() && $local->isSave()) ? 'active check' : 'save-check' }}" data-msg="Ya ha guardado en favoritos el local">
 			            <i class="pe-7s-safe"></i>
 			            Guardar
 			        </a>
 			    </li>
 			    <li>
-			        <a href="#" class="active">
+			        <a href="#" data-url="" class="{{ (Auth::check() && $local->isVisit()) ? 'active check' : 'save-check' }}"
+			        data-msg="Ya ha marcado como visitado el local" >
 			            <i class="pe-7s-check"></i>
 			            Visitado
 			        </a>
@@ -89,14 +89,32 @@
 	        </div>
      	</div>
 
-    </div>
   </div>
 </div>
 
 <div class="row">
 
+<div class="col-md-6 col-xs-12">
 
-  <div class="col-md-6 col-xs-12">
+@if(Auth::check() && Auth::user()->hasRole('client') && $local->isScore())
+  <div class="col-md-12 col-xs-12">
+  	<div class="card">
+	  	<div class="header">
+	        <h4 class="title">Mi calificación del local</h4>
+	    </div>
+	    <div class="content">	    
+			<div class="row">
+			  <div class="col-md-12 col-xs-12">
+				   {!! $local->scoreByClient() !!}
+			  </div>
+			</div>
+		</div>
+	</div>
+  </div>
+@endif
+
+
+  <div class="col-md-12 col-xs-12">
   	<div class="card">
 	  	<div class="header">
 	        <h4 class="title">Horario</h4>
@@ -105,23 +123,6 @@
 			<div class="row">
 			  <div class="col-md-12 col-xs-12">
 				   {!! $local->working_hours !!} 
-			  </div>
-			</div>
-		</div>
-	</div>
-  </div>
-
-  <div class="col-md-6 col-xs-12">
-  	<div class="card">
-	  	<div class="header">
-	        <h4 class="title">Métodos de pago</h4>
-	    </div>
-	    <div class="content">	    
-			<div class="row">
-			  <div class="col-md-12 col-xs-12">
-				    @foreach($local->payment as $key => $payment)
-				    	<img class="icon_payment" src="{{ asset('uploads/methodPayments/'.$payment->methodPayment->icon) }}">
-				    @endforeach
 			  </div>
 			</div>
 		</div>
@@ -153,19 +154,60 @@
   <div class="col-md-6 col-xs-12">
   	<div class="card">
 	  	<div class="header">
-	        <h4 class="title">Dirección</h4>
+	        <h4 class="title">Métodos de pago</h4>
 	    </div>
 	    <div class="content">	    
 			<div class="row">
 			  <div class="col-md-12 col-xs-12">
-			  	<p>{{ $local->address }}</p>
-			  	<p>{{ $local->address_description }}</p>
-				<div id="map-form"></div>
+				    @foreach($local->payment as $key => $payment)
+				    	<img class="icon_payment" src="{{ asset('uploads/methodPayments/'.$payment->methodPayment->icon) }}">
+				    @endforeach
 			  </div>
 			</div>
 		</div>
 	</div>
   </div>
+
+	<div class="col-md-12 col-xs-12">
+	  	<div class="card">
+		  	<div class="header">
+		        <h4 class="title">Dirección</h4>
+		    </div>
+		    <div class="content">	    
+				<div class="row">
+				  <div class="col-md-12 col-xs-12">
+				  	<p>{{ $local->address }}</p>
+				  	<p>{{ $local->address_description }}</p>
+					<div id="map-form"></div>
+				  </div>
+				</div>
+			</div>
+		</div>
+  	</div>
+
+</div>
+
+<div class="col-md-6 col-xs-12">
+	@if($comments->count() > 0)
+	  <div class="col-md-12 col-xs-12">
+	  	<div class="card">
+		  	<div class="header">
+		        <h4 class="title">Comentarios</h4>
+		    </div>
+		    <div class="content">	    
+				<div class="row">
+				  <div class="col-md-12 col-xs-12">
+					   <div id="load-comments">
+					   	@include('frontend.branchs.comments')
+					   </div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	  </div>
+	@endif
+
+</div>
 
 </div>
 
