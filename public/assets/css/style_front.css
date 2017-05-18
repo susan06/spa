@@ -4093,6 +4093,11 @@ span.m_13{
   padding: 25px 5px 5px 5px !important;
 }
 
+.box-price a{
+  color: #fff !important;
+}
+
+
 .special-wrap div span {
   display: inline-block;
   vertical-align: middle;
@@ -6155,4 +6160,12 @@ img.icon_payment {
 font-weight: bold;
     margin: 5px;
     text-align: center;
+}
+
+.login-row {
+  padding: 0px 10px 0px 0px;
+}
+
+.login-row-right {
+  padding: 0px 0px;
 }

@@ -514,7 +514,37 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(document).on('click', '.check', function (e) {
-        notify('info', $(this).data('msg'));
+        var $this = $(this);
+        if($this.data('favorite')) {
+            showLoading();
+            $.ajax({
+                url: $(this).data('delete'),
+                type:'GET',
+                success: function(response) {
+                    hideLoading();
+                    if(response.success){
+                        $this.removeClass('active');
+                        $this.removeClass('check');
+                        $this.addClass('save-check');
+                        notify('success', response.message);
+                    } else {
+                        if(response.login){
+                            showLoading();
+                            window.location.href = response.login;
+                        } else {
+                            notify('error', response.message);
+                        }
+                    }
+                },
+                error: function (status) {
+                    hideLoading();
+                    notify('error', status.statusText);
+                }
+            });
+
+        } else {
+          notify('info', $(this).data('msg'));  
+        } 
     });
 });
 
@@ -641,3 +671,32 @@ $(document).on('click', '.menu-click', function () {
     showLoading();
 });
 
+$(document).on('click', '.save-check', function () {
+    showLoading();
+    var url = $(this).data("url");
+    var $this = $(this);
+     $.ajax({
+        url: url,
+        type:'GET',
+        success: function(response) {
+            hideLoading();
+            if(response.success){
+                $this.removeClass('save-check');
+                $this.addClass('active');
+                $this.addClass('check');
+                notify('success', response.message);
+            } else {
+                if(response.login){
+                    showLoading();
+                    window.location.href = response.login;
+                } else {
+                    notify('error', response.message);
+                }
+            }
+        },
+        error: function (status) {
+            hideLoading();
+            notify('error', status.statusText);
+        }
+    });
+});

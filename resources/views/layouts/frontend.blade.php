@@ -61,17 +61,17 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="-menu-click">
+                                <a href="{{ route('local.favorites') }}" class="menu-click">
                                     <i class="pe-7s-safe"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('local.news') }}" class="menu-click">
-                                    <i class="pe-7s-ribbon"></i>
+                                <a href="{{ route('local.visites') }}" class="menu-click">
+                                    <i class="pe-7s-check"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="menu-click">
+                                <a href="#" class="-menu-click">
                                     <i class="pe-7s-user"></i>
                                 </a>
                             </li>

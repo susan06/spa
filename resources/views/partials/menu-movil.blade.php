@@ -7,7 +7,7 @@
     </li>
     @if(Auth::check() && Auth::user()->hasRole('client')) 
     <li>
-        <a href="#" class="-menu-click">
+        <a href="{{ route('local.favorites') }}" class="menu-click">
             <i class="pe-7s-safe"></i>
             Guardados
         </a>
@@ -71,21 +71,21 @@
     </li>
     @if(Auth::check())
     <li>
-        <a href="#" class="menu-click">
+        <a href="#" class="-menu-click">
             <i class="pe-7s-user"></i>
             Perfil
         </a>
     </li>
     <li>
         <a href="{{ route('auth.logout') }}" class="menu-click">
-            <i class="pe-7s-home"></i>
+            <i class="pe-7s-back"></i>
             @lang('app.sign_out')
         </a>
     </li>
     @else
     <li>
         <a href="{{ route('login') }}" class="menu-click">
-            <i class="pe-7s-back"></i>
+            <i class="pe-7s-lock"></i>
             Inicio de sesión
         </a>
     </li>

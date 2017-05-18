@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Repositories\Banner\BannerRepository;
@@ -129,12 +130,13 @@ class FrontendController extends Controller
     public function localNews(Request $request)
     {
         $locales = $this->branchs->orderBy('created_at', 'desc')->paginate(10);
+        $paginate = false;
 
         if ( $request->ajax() ) {
             if (count($locales)) {
                 return response()->json([
                     'success' => true,
-                    'view' => view('frontend.branchs.list', compact('locales'))->render(),
+                    'view' => view('frontend.branchs.list', compact('locales', 'paginate'))->render(),
                 ]);
             } else {
                 return response()->json([
@@ -144,7 +146,7 @@ class FrontendController extends Controller
             }
         }
 
-        return view('frontend.news', compact('locales'));
+        return view('frontend.news', compact('locales', 'paginate'));
     }
   
     /**
@@ -155,12 +157,13 @@ class FrontendController extends Controller
     public function localReservations(Request $request)
     {
         $locales = $this->branchs->where('reservation_web', true)->paginate(10);
+        $paginate = true;
 
         if ( $request->ajax() ) {
             if (count($locales)) {
                 return response()->json([
                     'success' => true,
-                    'view' => view('frontend.branchs.list', compact('locales'))->render(),
+                    'view' => view('frontend.branchs.list', compact('locales', 'paginate'))->render(),
                 ]);
             } else {
                 return response()->json([
@@ -170,7 +173,196 @@ class FrontendController extends Controller
             }
         }
 
-        return view('frontend.reservation_web', compact('locales'));
+        return view('frontend.reservation_web', compact('locales', 'paginate'));
+    }
+
+    /**
+     * Display a listing by favorites
+     *
+     */
+    public function localFavorites(Request $request)
+    {
+        $client = Auth::User()->id;
+        $locales = $this->branchs->getLocalFavorites(10, $client);
+        $paginate = true;
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => true,
+                'view' => view('frontend.branchs.my_list', compact('locales', 'paginate'))->render(),
+            ]);
+        }
+
+        return view('frontend.favorites', compact('locales', 'paginate'));
+    }
+
+    /**
+     * save local in favorite
+     *
+     */
+    public function localStoreFavorite($id, Request $request)
+    {
+        if(Auth::check()) {
+
+            $client = Auth::User()->id;
+
+            $favorite = $this->branchs->storeFavorite($id, $client);
+
+            if($favorite) {
+                $message = 'Se ha añadido el local a sus favoritos';
+
+                if ( $request->ajax() ) {
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => $message
+                    ]);
+                }
+
+                return back()->withSuccess($message);
+            }
+
+            $message = trans('app.error_again');
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message
+                ]);
+            }
+
+            return back()->withErrors($message);
+
+        }
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => false,
+                'login' => route('login')
+            ]);
+        }
+
+        return redirect()->route('login');
+    }
+
+    /**
+     * delete local in favorite
+     *
+     */
+    public function localDeleteFavorite($id, Request $request)
+    {
+        if(Auth::check()) {
+
+            $client = Auth::User()->id;
+
+            $favorite = $this->branchs->deleteFavorite($id, $client);
+
+            if($favorite) {
+                $message = 'Se ha eliminado el local de sus favoritos';
+
+                if ( $request->ajax() ) {
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => $message
+                    ]);
+                }
+
+                return back()->withSuccess($message);
+            }
+
+            $message = trans('app.error_again');
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message
+                ]);
+            }
+
+            return back()->withErrors($message);
+
+        }
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => false,
+                'login' => route('login')
+            ]);
+        }
+
+        return redirect()->route('login');
+    }
+     /**
+     * Display a listing by visit
+     *
+     */
+    public function localVisites(Request $request)
+    {
+        $client = Auth::User()->id;
+        $locales = $this->branchs->getLocalVisites(10, $client);
+        $paginate = true;
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => true,
+                'view' => view('frontend.branchs.my_list', compact('locales', 'paginate'))->render(),
+            ]);
+        }
+
+        return view('frontend.visites', compact('locales', 'paginate'));
+    }
+
+    /**
+     * save local in visit
+     *
+     */
+    public function localStoreVisit($id, Request $request)
+    {
+        if(Auth::check()) {
+
+            $client = Auth::User()->id;
+
+            $visit = $this->branchs->storeVisit($id, $client);
+
+            if($visit) {
+                $message = 'Se ha añadido el local a sus lugares visitados';
+
+                if ( $request->ajax() ) {
+                    
+                    return response()->json([
+                        'success' => true,
+                        'message' => $message
+                    ]);
+                }
+
+                return back()->withSuccess($message);
+            }
+
+            $message = trans('app.error_again');
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message
+                ]);
+            }
+
+            return back()->withErrors($message);
+
+        }
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => false,
+                'login' => route('login')
+            ]);
+        }
+
+        return redirect()->route('login');
     }
 
     /**

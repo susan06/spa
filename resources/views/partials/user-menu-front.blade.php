@@ -18,7 +18,7 @@
     <ul class="nav navbar-nav menu-header visible-pc">
         @if(Auth::check() && Auth::user()->hasRole('client')) 
         <li>
-            <a href="#" class="-menu-click">
+            <a href="{{ route('local.favorites') }}" class="menu-click">
                 <i class="pe-7s-safe"></i>
                 Guardados
             </a>

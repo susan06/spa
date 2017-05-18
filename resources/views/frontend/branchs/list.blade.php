@@ -2,10 +2,10 @@
 @foreach($locales as $key => $local)
 
   <div class="col-md-4 col-xs-12 box_1">
-    <a href="{{ route('local.show', $local->id) }}"><img src="{{ asset('uploads/photos/'.$local->getFirsthPhoto()) }}" class="img-responsive menu-click" alt="{{ $local->getFirsthPhoto() }}"></a>
+    <a href="{{ route('local.show', $local->id) }}" class="menu-click"><img src="{{ asset('uploads/photos/'.$local->getFirsthPhoto()) }}" class="img-responsive menu-click" alt="{{ $local->getFirsthPhoto() }}"></a>
       <div class="box_2">
           <div class="special-wrap">
-              <div class="forclosure"><span class="m_12 box-number box-price">{{ Settings::get('coin').' '.$local->sumPrice() }}</span></div>
+              <div class="forclosure"><span class="m_12 box-number box-price"><a href="{{ route('local.show', $local->id) }}" class="menu-click">{{ Settings::get('coin').' '.$local->sumPrice() }}</a></span></div>
               @if($local->reservation_web)<div class="forclosure"><span class="m_13 bg-nav">Reserva Online</span></div>@endif
           </div>
       </div>
@@ -27,8 +27,10 @@
 @endforeach
   <div class="clearfix"> </div>
 
+@if($paginate)
   <div class="paginate">
   {!! $locales->links() !!}
   </div>
+@endif
 
 </div>

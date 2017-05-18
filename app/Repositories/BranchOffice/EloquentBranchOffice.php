@@ -4,6 +4,8 @@ namespace App\Repositories\BranchOffice;
 
 use App\BranchOffice;
 use App\Score;
+use App\Favorite;
+use App\Visit;
 use App\Repositories\Repository;
 use DB;
 
@@ -68,6 +70,64 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
         }
 
         return $result;
+    }
+
+    /**
+     * get locales favorites
+     *
+     *
+     */
+    public function getLocalFavorites($take = 10, $client) 
+    {
+        return Favorite::where('client_id', $client)->paginate($take);
+    }
+
+    /**
+     * store local in favorite
+     *
+     *
+     */
+    public function storeFavorite($id, $client) 
+    {
+        return Favorite::create([
+            'branch_office_id' => $id,
+            'client_id' => $client
+        ]);
+    }
+
+    /**
+     * delete local in favorite
+     *
+     *
+     */
+    public function deleteFavorite($id, $client) 
+    {
+        $favorite = Favorite::where('client_id', $client)->where('branch_office_id', $id)->first();
+
+        return $favorite->delete();
+    }
+
+    /**
+     * get locales visites
+     *
+     *
+     */
+    public function getLocalVisites($take = 10, $client) 
+    {
+        return Visit::where('client_id', $client)->paginate($take);
+    }
+
+    /**
+     * store local in visit
+     *
+     *
+     */
+    public function storeVisit($id, $client) 
+    {
+        return Visit::create([
+            'branch_office_id' => $id,
+            'client_id' => $client
+        ]);
     }
 
 }

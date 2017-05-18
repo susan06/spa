@@ -47,13 +47,13 @@
 			        </a>
 			    </li>
 			    <li>
-			        <a href="#" data-url="" class="{{ (Auth::check() && $local->isSave()) ? 'active check' : 'save-check' }}" data-msg="Ya ha guardado en favoritos el local">
+			        <a href="#" data-url="{{ route('local.favorite.store', $local->id) }}" data-favorite="true" data-delete="{{ route('local.favorite.delete', $local->id) }}" class="{{ (Auth::check() && $local->isSave()) ? 'active check' : 'save-check' }}" data-msg="Ya ha guardado en favoritos el local">
 			            <i class="pe-7s-safe"></i>
 			            Guardar
 			        </a>
 			    </li>
 			    <li>
-			        <a href="#" data-url="" class="{{ (Auth::check() && $local->isVisit()) ? 'active check' : 'save-check' }}"
+			        <a href="#" data-url="{{ route('local.visit.store', $local->id) }}" class="{{ (Auth::check() && $local->isVisit()) ? 'active check' : 'save-check' }}"
 			        data-msg="Ya ha marcado como visitado el local" >
 			            <i class="pe-7s-check"></i>
 			            Visitado

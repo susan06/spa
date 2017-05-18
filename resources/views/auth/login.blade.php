@@ -64,12 +64,52 @@
             <div id="register" class="form-action hide">
                 <div class="col-md-12 col-xs-12">
                 <form>
-                    <div class="form-group">
-                      <input type="text" placeholder="Username" class="form-control"/>
+
+                    <div class="col-md-12 col-xs-12">
+                      <div class="form-group">
+                        <input type="text" placeholder="@lang('app.email')" class="form-control"/>
+                      </div>
                     </div>
-                    <div class="form-group">
-                       <input type="password" placeholder="Password" class="form-control"/>
+
+                    <div class="col-md-12 col-xs-12">
+                      <div class="col-md-6 col-xs-6 login-row">
+                        <div class="form-group">
+                          <input type="text" placeholder="@lang('app.lastname')" class="form-control"/>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-xs-6 login-row-right">
+                        <div class="form-group">
+                          <input type="text" placeholder="@lang('app.lastname')" class="form-control"/>
+                        </div>
+                      </div>
                     </div>
+
+                    <div class="col-md-12 col-xs-12">
+                      <div class="col-md-6 col-xs-6 login-row">
+                        <div class="form-group">
+                          <input type="text" placeholder="@lang('app.birthday')" class="form-control"/>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-xs-6 login-row-right">
+                        <div class="form-group">
+                          <input type="text" placeholder="@lang('app.phone')" class="form-control"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-xs-12">
+                      <div class="col-md-6 col-xs-6 login-row">
+                        <div class="form-group">
+                          <input type="password" placeholder="@lang('app.password')" class="form-control"/>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-xs-6 login-row-right">
+                        <div class="form-group">
+                          <input type="password" placeholder="@lang('app.confirm_password')" class="form-control"/>
+                        </div>
+                      </div>
+                    </div>
+
                     <div class="form-group">
                         <input type="submit" value="Crear cuenta" class="btn btn-fill btn-danger pull-right" />
                     </div>
