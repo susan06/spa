@@ -64,17 +64,26 @@ class ResetPasswordController extends Controller
                 $this->logAction('auth', trans('log.reseted_password'), 'user', $user->id);
             }
 
+            if ( $request->ajax() ) {
+                switch ($response) {
+                    case Password::PASSWORD_RESET:
+                        return response()->json([
+                            'success' => true,
+                            'message' => trans($response)
+                        ]);
+                    default:
+                        return response()->json([
+                            'success' => false,
+                            'message' => trans($response)
+                        ]);
+                }
+            }
+
             switch ($response) {
                 case Password::PASSWORD_RESET:
-                    return response()->json([
-                        'success' => true,
-                        'message' => trans($response)
-                    ]);
+                    return redirect()->route('login')->withSuccess(trans($response));
                 default:
-                    return response()->json([
-                        'success' => false,
-                        'message' => trans($response)
-                    ]);
+                   return back()->withErrors(trans($response));  
             }
 
         } else {
@@ -90,7 +99,7 @@ class ResetPasswordController extends Controller
                 ]);
             } 
 
-            return redirect('login')->withErrors($messages);         
+            return back()->withErrors($messages);          
         }   
     }
 

@@ -11,6 +11,7 @@ use App\Repositories\Role\RoleRepository;
 use App\Support\User\UserStatus;
 use App\Http\Requests\User\UpdateProfile;
 use App\Http\Requests\User\UpdateAvatar;
+use App\Repositories\Province\ProvinceRepository;
 
 class ProfileController extends Controller
 {
@@ -20,15 +21,23 @@ class ProfileController extends Controller
     private $users;
 
     /**
+     * @var ProvinceRepository
+     */
+    private $provinces;
+
+    /**
      * UsersController constructor.
      * @param UserRepository $users
      */
-    public function __construct(UserRepository $users)
-    {
+    public function __construct(
+        UserRepository $users, 
+        ProvinceRepository $provinces
+    ) {
         $this->middleware('auth');
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
         $this->users = $users;
+        $this->provinces = $provinces;
     }
 
     /**
@@ -41,15 +50,19 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
+        $view = (Auth::user()->hasRole('client')) ? 'users.profile_client' : 'users.profile';
+
+        $provinces = ['' => 'seleccionar'] + $this->provinces->lists();
+
         if ( $request->ajax() ) {
 
             return response()->json([
                 'success' => true,
-                'view' => view('users.profile', compact('user'))->render(),
+                'view' => view($view, compact('user', 'provinces'))->render(),
             ]);
         }
 
-        return view('users.profile', compact('user'));
+        return view($view, compact('user', 'provinces'));
     }
 
     /**
@@ -73,14 +86,16 @@ class ProfileController extends Controller
     public function update(UpdateProfile $request, $id)
     {
         $data = [
-            'username' => $request->username,
+            //'username' => $request->username,
             'name' => $request->name,
             'lastname' => $request->lastname,
-            'email' => $request->email,
+            //'email' => $request->email,
             'phone' => $request->phone,
-            'mobile' => $request->mobile,
+            'gender' => $request->gender,
             'birthday' => $request->birthday,
-            'address' => $request->address
+            'address' => $request->address,
+            'address2' => $request->address2,
+            'province_id' => $request->province_id
         ];
 
         $user = $this->users->update($id, $data);

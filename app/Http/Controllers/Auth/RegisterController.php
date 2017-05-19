@@ -66,8 +66,8 @@ class RegisterController extends Controller
             'lastname' => 'required|max:30',
             'email' => 'required|email|max:255|unique:users',
             'phone' => 'required|numeric',
-            'mobile' => 'required|numeric',
-            'agent_external' => 'required',
+            'birthday' => 'required|date',
+            //'mobile' => 'required|numeric',
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|min:6'
         ];
@@ -108,8 +108,7 @@ class RegisterController extends Controller
             'lastname' => $request->lastname,
             'email' => $request->email,
             'phone' => $request->phone,
-            'mobile' => $request->mobile,
-            'agent_external' => $request->agent_external,
+            'birthday' =>$request->birthday,
             'password' => $request->password,
             'password_confirmation' => $request->password_confirmation
         ];
@@ -119,7 +118,7 @@ class RegisterController extends Controller
         $validator = $this->validator($data);
         if ( $validator->passes() ) {
             $user = $this->users->create(array_merge(
-                $request->only('name', 'lastname', 'email', 'phone', 'mobile'),
+                $request->only('name', 'lastname', 'email', 'phone', 'birthday'),
                 [
                     'status' => UserStatus::BANNED, 
                     'password' => $request->password, 
@@ -127,11 +126,16 @@ class RegisterController extends Controller
                 ]
             ));   
 
-            $role = $roles->where('name', $request->agent_external)->first();
-            $this->users->setRole($user->id, $role->id);
-            $this->logAction('create', trans('log.created_account_agent_external'), 'user');
+            $role = $roles->where('name', 'client')->get();
+            $this->users->setRole($user->id, $role);
+            $this->logAction('create', trans('log.created_account_agent_client'), 'user');
 
-            $message = trans('app.account_created_login_agent_external');
+            if (Settings::get('reg_email_confirmation')) {
+                $this->sendConfirmationEmail($mailer, $user);
+                $message = trans('app.account_create_confirm_email');
+            } else {
+                $message = trans('app.account_created_login');
+            }
 
             if ( $request->ajax() ) {
 
@@ -156,7 +160,10 @@ class RegisterController extends Controller
                 ]);
             } 
 
-            return redirect('login')->withErrors($messages);
+            return redirect('login')
+                ->withInput($request->except('password','password_confirmation'))
+                ->withErrors($messages)
+                ->with('register', true);
             
         }   
     }

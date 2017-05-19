@@ -31,6 +31,7 @@ class BranchOffice extends Model
         'phone_one',
         'phone_second',
         'working_hours',
+        'week',
     	'domicile',
         'email',
         'reservation_web',

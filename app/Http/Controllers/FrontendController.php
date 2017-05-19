@@ -366,6 +366,65 @@ class FrontendController extends Controller
     }
 
     /**
+     * save vote of local
+     *
+     */
+    public function localStoreVote($id, Request $request)
+    {
+        if(Auth::check()) {
+
+            $client = Auth::User()->id;
+
+            $data = [
+                'branch_office_id' => $id,
+                'client_id' => $client,
+                'service' => $request->service,
+                'environment' => $request->environment,
+                'attention' => $request->attention,
+                'price' => $request->price,
+            ];
+
+            $vote = $this->branchs->storeVote($data);
+
+            if($vote) {
+                $message = 'Se ha registrado su calificación';
+
+                if ( $request->ajax() ) {
+
+                    return response()->json([
+                        'success' => true,
+                        'url_return' => route('local.show', $id)
+                    ]);
+                }
+
+                return back()->withSuccess($message);
+            }
+
+            $message = trans('app.error_again');
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message
+                ]);
+            }
+
+            return back()->withErrors($message);
+
+        }
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => false,
+                'login' => route('login')
+            ]);
+        }
+
+        return redirect()->route('login');
+    }
+
+    /**
      * Display faqs
      *
      * @return \Illuminate\Http\Response

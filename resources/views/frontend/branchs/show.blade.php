@@ -41,7 +41,7 @@
     	<div class="row">
 			  <ul class="nav navbar-nav menu-local">
 			    <li>
-			        <a href="#" data-url="" class="{{ (Auth::check() && $local->isScore()) ? 'active check' : 'save-check' }}" data-msg="Ya ha calificado el local">
+			        <a href="#" data-url="" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" class="{{ (Auth::check() && $local->isScore()) ? 'active check' : 'show-start' }}" data-msg="Ya ha calificado el local">
 			            <i class="pe-7s-star"></i>
 			            Calificar
 			        </a>
@@ -60,9 +60,9 @@
 			        </a>
 			    </li>
 			    <li>
-			        <a href="#" class="">
-			            <i class="pe-7s-alarm"></i>
-			            Reservar
+			        <a href="#" class="orange">
+			            <i class="pe-7s-back orange"></i>
+			            Recomendar
 			        </a>
 			    </li>
 			</ul>   		
@@ -89,129 +89,201 @@
 	        </div>
      	</div>
 
+     	@if($local->reservation_web)
+    	<div class="row">
+    		<div class="box-reservation">
+    			<div class="title">Reserva Online Gratis</div>
+    			<div class="content">
+    				<div class="row">
+			            <div class="col-md-7 col-xs-12">
+			                <div id="date_reservation"></div>
+			            </div>
+			            <div class="col-md-5 col-xs-12">
+			                <div id="time_reservation"></div>
+			            </div>
+			            <div class="col-md-12 col-xs-12">
+			            	<button class="btn btn-fill btn-danger btn-reservar col-md-12 col-xs-12">Reservar</button>
+			            </div>
+			        </div>
+    			</div>
+    		</div>
+    	</div>
+    	@endif
+
   </div>
 </div>
 
 <div class="row">
 
-<div class="col-md-6 col-xs-12">
+	<div class="col-md-6 col-xs-12">
 
-@if(Auth::check() && Auth::user()->hasRole('client') && $local->isScore())
-  <div class="col-md-12 col-xs-12">
-  	<div class="card">
-	  	<div class="header">
-	        <h4 class="title">Mi calificación del local</h4>
-	    </div>
-	    <div class="content">	    
-			<div class="row">
+			@if(Auth::check() && Auth::user()->hasRole('client') && $local->isScore())
 			  <div class="col-md-12 col-xs-12">
-				   {!! $local->scoreByClient() !!}
+			  	<div class="card">
+				  	<div class="header">
+				        <h4 class="title">Mi calificación del local</h4>
+				    </div>
+				    <div class="content">	    
+						<div class="row">
+						  <div class="col-md-12 col-xs-12">
+							   {!! $local->scoreByClient() !!}
+						  </div>
+						</div>
+					</div>
+				</div>
 			  </div>
-			</div>
-		</div>
-	</div>
-  </div>
-@endif
+			 @endif
 
 
-  <div class="col-md-12 col-xs-12">
-  	<div class="card">
-	  	<div class="header">
-	        <h4 class="title">Horario</h4>
-	    </div>
-	    <div class="content">	    
-			<div class="row">
 			  <div class="col-md-12 col-xs-12">
-				   {!! $local->working_hours !!} 
+			  	<div class="card">
+				  	<div class="header">
+				        <h4 class="title">Horario</h4>
+				    </div>
+				    <div class="content">	    
+						<div class="row">
+						  <div class="col-md-12 col-xs-12">
+							   {!! $local->working_hours !!} 
+						  </div>
+						</div>
+					</div>
+				</div>
 			  </div>
-			</div>
-		</div>
-	</div>
-  </div>
 
-  <div class="col-md-6 col-xs-12">
-  	<div class="card">
-	  	<div class="header">
-	        <h4 class="title">Servicios</h4>
-	    </div>
-	    <div class="content">	    
-			<div class="row">
-			  <div class="col-md-12 col-xs-12">
-			  	<table class="table table-hover table-striped">
-				    @foreach($local->services as $key => $services)
-				    <tr>
-				    	<td>{{ $services->name }}</td>
-				    	<td>{{ Settings::get('coin').' '.$services->price }}</td>
-				    </tr>
-				    @endforeach
-				</table>
+			  <div class="col-md-6 col-xs-12">
+			  	<div class="card">
+				  	<div class="header">
+				        <h4 class="title">Servicios</h4>
+				    </div>
+				    <div class="content">	    
+						<div class="row">
+						  <div class="col-md-12 col-xs-12">
+						  	<table class="table table-hover table-striped">
+							    @foreach($local->services as $key => $services)
+							    <tr>
+							    	<td>{{ $services->name }}</td>
+							    	<td>{{ Settings::get('coin').' '.$services->price }}</td>
+							    </tr>
+							    @endforeach
+							</table>
+						  </div>
+						</div>
+					</div>
+				</div>
 			  </div>
-			</div>
-		</div>
-	</div>
-  </div>
 
-  <div class="col-md-6 col-xs-12">
-  	<div class="card">
-	  	<div class="header">
-	        <h4 class="title">Métodos de pago</h4>
-	    </div>
-	    <div class="content">	    
-			<div class="row">
-			  <div class="col-md-12 col-xs-12">
-				    @foreach($local->payment as $key => $payment)
-				    	<img class="icon_payment" src="{{ asset('uploads/methodPayments/'.$payment->methodPayment->icon) }}">
-				    @endforeach
+			  <div class="col-md-6 col-xs-12">
+			  	<div class="card">
+				  	<div class="header">
+				        <h4 class="title">Métodos de pago</h4>
+				    </div>
+				    <div class="content">	    
+						<div class="row">
+						  <div class="col-md-12 col-xs-12">
+							    @foreach($local->payment as $key => $payment)
+							    	<img class="icon_payment" src="{{ asset('uploads/methodPayments/'.$payment->methodPayment->icon) }}">
+							    @endforeach
+						  </div>
+						</div>
+					</div>
+				</div>
 			  </div>
-			</div>
-		</div>
-	</div>
-  </div>
 
-	<div class="col-md-12 col-xs-12">
-	  	<div class="card">
-		  	<div class="header">
-		        <h4 class="title">Dirección</h4>
-		    </div>
-		    <div class="content">	    
-				<div class="row">
-				  <div class="col-md-12 col-xs-12">
-				  	<p>{{ $local->address.'. '.$local->province->name }}</p>
-				  	<p>{{ $local->address_description }}</p>
-					<div id="map-form"></div>
-				  </div>
+			<div class="col-md-12 col-xs-12">
+			  	<div class="card">
+				  	<div class="header">
+				        <h4 class="title">Dirección</h4>
+				    </div>
+				    <div class="content">	    
+						<div class="row">
+						  <div class="col-md-12 col-xs-12">
+						  	<p>{{ $local->address.'. '.$local->province->name }}</p>
+						  	<p>{{ $local->address_description }}</p>
+							<div id="map-form"></div>
+						  </div>
+						</div>
+					</div>
+				</div>
+		  	</div>
+
+	</div>
+
+	<div class="col-md-6 col-xs-12">
+		@if($comments->count() > 0)
+		  <div class="col-md-12 col-xs-12">
+		  	<div class="card">
+			  	<div class="header">
+			        <h4 class="title">Comentarios</h4>
+			    </div>
+			    <div class="content">	    
+					<div class="row">
+					  <div class="col-md-12 col-xs-12">
+						   <div id="load-comments">
+						   	@include('frontend.branchs.comments')
+						   </div>
+					  </div>
+					</div>
 				</div>
 			</div>
-		</div>
-  	</div>
+		  </div>
+		@endif
+
+	</div>
 
 </div>
 
-<div class="col-md-6 col-xs-12">
-	@if($comments->count() > 0)
-	  <div class="col-md-12 col-xs-12">
-	  	<div class="card">
-		  	<div class="header">
-		        <h4 class="title">Comentarios</h4>
-		    </div>
-		    <div class="content">	    
-				<div class="row">
-				  <div class="col-md-12 col-xs-12">
-					   <div id="load-comments">
-					   	@include('frontend.branchs.comments')
-					   </div>
-				  </div>
-				</div>
-			</div>
-		</div>
-	  </div>
-	@endif
+<div class="modal fade modal-general" id="start-modal" tabindex="-1" role="dialog" aria-labelledby="tos-label" style="z-index: 9999;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title">Calificar</h3>
+            </div>
+            <div class="modal-body">
+             	{!! Form::open(['route' => ['local.vote.store', $local->id], 'id' => 'form-generic']) !!}
 
-</div>
+	             <div class="star-rating-comment">
+	            	<span class="start-title">Servicio</span>
+	                <div class="starrr stars-existing-1" data-rating='0'></div>
+	                {!! Form::hidden('service', 0, ['id' => 'quantify_start_1']) !!}
+	            </div>
+	            <div class="star-rating-comment">
+	                <span class="start-title">Ambiente</span>
+	                <div class="starrr stars-existing-2" data-rating='0'></div>
+	                {!! Form::hidden('environment', 0, ['id' => 'quantify_start_2']) !!}
+	             </div>
+	            <div class="star-rating-comment">
+	                <span class="start-title">Servicio</span>
+	                <div class="starrr stars-existing-3" data-rating='0'></div>
+	                {!! Form::hidden('attention', 0, ['id' => 'quantify_start_3']) !!}
+	             </div>
+	            <div class="star-rating-comment">
+	                <span class="start-title">Precio</span>
+	                <div class="starrr stars-existing-4" data-rating='0'></div>
+	                {!! Form::hidden('price', 0, ['id' => 'quantify_start_4']) !!}
+	            </div>
 
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger btn-submit">Calificar</button>
+            </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
 </div>
 
 @endsection
+
+@section('styles')
+    {!! HTML::style("vendors/starrr/dist/starrr.css") !!}
+
+    @if($local->reservation_web)
+		{!! HTML::style("assets/css/datetimepicker/bootstrap-datetimepicker.css") !!}
+	@endif
+@endsection
+
 
 @section('scripts_head')
 @parent
@@ -221,14 +293,54 @@
 
 @section('scripts')
 
+ <!-- starrr -->
+ {!! HTML::script('vendors/starrr/dist/starrr.js') !!}
+
 <script type="text/javascript">
+
+
+    $('.stars-existing-1').starrr({
+      rating: 0
+    });
+
+    $('.stars-existing-1').on('starrr:change', function (e, value) {
+      $('#quantify_start_1').val(value);
+    });
+
+    $('.stars-existing-2').starrr({
+      rating: 0
+    });
+
+    $('.stars-existing-2').on('starrr:change', function (e, value) {
+      $('#quantify_start_2').val(value);
+    });
+
+
+    $('.stars-existing-3').starrr({
+      rating: 0
+    });
+
+    $('.stars-existing-3').on('starrr:change', function (e, value) {
+      $('#quantify_start_3').val(value);
+    });
+
+
+    $('.stars-existing-4').starrr({
+      rating: 0
+    });
+
+    $('.stars-existing-4').on('starrr:change', function (e, value) {
+      $('#quantify_start_4').val(value);
+    });
+
 
   var map = null;
   var infowindow = null;
   var marker = null;
   var map_center = {lat: {{$local->lat}}, lng: {{$local->lng}} };  
+  var url_login = "{{ route('login') }}";
 
-  function initMapBranch() {
+  	function initMapBranch() {
 	    map = new google.maps.Map(document.getElementById('map-form'), {
 	      center: map_center,
 	      zoom: 16
@@ -248,11 +360,29 @@
 
 	    map.setCenter(marker.getPosition());
 
-}
+	}
 
   $(document).ready(function() {
     initMapBranch();
   });
+
+  var day_disabled = [{!! $local->week !!}];
+  var today = moment(new Date());
+
+  $('#date_reservation').datetimepicker({
+    format: 'DD-MM-YYYY',
+    minDate: today,
+    maxDate: moment(today).add(7, 'day'),
+    inline: true,
+    daysOfWeekDisabled: day_disabled,
+    sideBySide: true
+  });
+
+   $('#time_reservation').datetimepicker({
+    format: 'LT',
+    inline: true,
+  });
+
 
 </script>
 

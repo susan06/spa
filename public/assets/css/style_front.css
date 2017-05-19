@@ -1058,6 +1058,11 @@ body > .navbar-collapse[data-color="purple"]:after {
   background-color: #fc727a;
 }
 
+
+.alert-error {
+  background-color: #F21A1A;
+}
+
 .table .radio,
 .table .checkbox {
   position: relative;
@@ -5614,7 +5619,8 @@ li.selector {
     display: block;
 }
 
-@media screen and (min-width: 767px) {
+
+@media screen and (min-width: 769px) {
     .visible-mobile {
         display: none;
     }
@@ -5713,7 +5719,7 @@ li.selector {
 @media (max-width: 320px) {
   #menu-mobile-foo li a {
    font-size: 12px;
-    padding: 10px 10px;
+    padding: 10px 12px;
   }
 
   #menu-auth li a {
@@ -5724,7 +5730,7 @@ li.selector {
 @media (min-width: 321px) and (max-width: 360px) {
   #menu-mobile-foo li a {
    font-size: 12px;
-    padding: 10px 15px;
+    padding: 10px 16px;
   }
 
   #menu-auth li a {
@@ -5735,7 +5741,7 @@ li.selector {
 @media (min-width: 361px) and (max-width: 376px) {
   #menu-mobile-foo li a {
    font-size: 12px;
-    padding: 10px 16px;
+    padding: 10px 18px;
   }
   #menu-auth li a {
     padding: 0px 36px;
@@ -5765,12 +5771,19 @@ li.selector {
 @media (min-width: 412px) and (max-width: 420px) {
   #menu-mobile-foo li a {
    font-size: 15px;
-    padding: 10px 15px;
+    padding: 10px 17px;
   }
   #menu-auth li a {
     padding: 0px 41px;
   }
 }
+
+@media (min-width: 700px) and (max-width: 770px) {
+  #menu-auth li a {
+    padding: 0px 85px;
+  }
+}
+
 
 #menu-mobile li:last-child,
 #menu-mobile-foo li:last-child {
@@ -6110,7 +6123,8 @@ background: #e74c3c;
 }
 
 .title-local-bottom {
-  margin: -18px 0px 5px;
+    margin: -18px 0px 5px;
+    text-align: center;
 }
 
 #map-form {
@@ -6168,4 +6182,76 @@ font-weight: bold;
 
 .login-row-right {
   padding: 0px 0px;
+}
+
+.profile_avatar {
+ text-align: center;
+}
+
+.avatar-view-img {
+    width: 50% !important;
+    height: 80% !important;
+    border: 4px solid #eee;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.modal-backdrop.in {
+    opacity: 0; 
+}
+
+.modal-backdrop {
+  z-index: 0;
+}
+
+.orange {
+      color: #ffa534 !important;
+}
+
+.box-reservation {
+    border: 2px solid #eee;
+    border-radius: 5px;
+    margin: 10px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.box-reservation > .title {
+    background-color: #ffa534;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px 0px;
+    color: #fff;
+}
+
+.box-reservation > .content {
+  padding: 20px;
+    background-color: #fff;
+}
+
+.btn-reservar {
+  margin-top: 15px;
+}
+
+@media (max-width: 500px) {
+  .box-reservation {
+    width: 90%;
+  }
+}
+
+div.timepicker-picker > table > tbody > tr:nth-child(1) > td:nth-child(1) > a.btn,
+div.timepicker-picker > table > tbody > tr:nth-child(1) > td:nth-child(3) > a.btn,
+div.timepicker-picker > table > tbody > tr:nth-child(3) > td:nth-child(1) > a.btn,
+div.timepicker-picker > table > tbody > tr:nth-child(3) > td:nth-child(3) > a.btn
+{
+    border-color: transparent;
+    font-size: 40px;
+    background-color: white;
+}
+
+div.timepicker-picker > table > tbody > tr:nth-child(2) > td:nth-child(4) > button.btn-primary {
+  background-color: #e74c3c !important;
+  border: #e74c3c !important;
+  color: #fff;
 }

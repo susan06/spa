@@ -53,13 +53,13 @@
           <section class="col col-6">
             <label class="label">@lang('app.phone')</label>
               <label class="input"> 
-                <input type="text" name="phone" id="phone" value="{{ old('phone') }}">
+                <input type="text" name="phone" id="phone" class="phones" value="{{ old('phone') }}" data-inputmask="'mask' : '9999999999'">
               </label>
           </section>
           <section class="col col-6">
               <label class="label">@lang('app.mobile')</label>
               <label class="input"> 
-                <input type="text" name="mobile" id="mobile" value="{{ old('mobile') }}">
+                <input type="text" name="phone" id="mobile" value="{{ old('mobile') }}" class="birthday" data-inputmask="'mask' : '99-99-9999'">
               </label>
           </section>
         </div>        

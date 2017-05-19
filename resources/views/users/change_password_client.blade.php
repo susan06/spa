@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.frontend')
 
 @section('page-title',  trans('app.auth_and_registration'))
 
@@ -8,7 +8,7 @@
   <div class="col-md-12 col-xs-12">
     <div class="card">
       <div class="header">
-        <h4>{{ trans('app.auth_and_registration') }}
+        <h4 class="title">{{ trans('app.auth_and_registration') }}
             <small>{{trans('app.change_password')}}</small></h4>
       </div>
       <div class="content">

@@ -2,6 +2,7 @@
 
 return [
     'admin' => 'Admin',
+    'local' => 'Local',
     'show' => 'ver',
     'home' => 'Inicio',
     'my_profile' => 'Mi Perfil',
@@ -73,7 +74,7 @@ return [
     'all_status' => 'Todos los estatus',
     'categories' => 'Categorias',
     'select_category' => 'Seleccionar categoría',
-    'change_photo' => 'Cambiar imagen',
+    'change_photo' => 'Subir imagen',
     'image' => 'Imagen',
     'add' => 'Agregar',
     'delete' => 'Eliminar',
@@ -481,7 +482,6 @@ return [
     'leave_blank_if_you_dont_want_to_change' => 'Dejar en blanco si no desea cambiarlo',
     'update_details' => 'Actualizar Detalles',
     'avatar' => 'Avatar',
-    'change_photo' => 'Cambiar Fotografía',
     'upload_photo' => 'Subir Fotografía',
     'gravatar' => 'Gravatar',
     'cancel' => 'Cancelar',

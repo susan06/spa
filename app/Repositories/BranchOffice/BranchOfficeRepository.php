@@ -54,4 +54,11 @@ interface BranchOfficeRepository extends RepositoryInterface
      *
      */
     public function storeVisit($id, $client);
+
+     /**
+     * store vote of local
+     *
+     *
+     */
+    public function storeVote(array $data);
 }

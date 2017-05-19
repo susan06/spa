@@ -4,32 +4,35 @@
 
 @section('content') 
 
-<div class="center-block">
-  <div class="login-block">
-  {!! Form::open(['url' => '/password/remind', 'class'=>'orb-form', 'method' => 'post', 'id' => 'login-form']) !!}
-      <header>
-        <div class="image-block">
-         <a href="{{ url('login') }}">
-        {{ HTML::image('assets/images/logos/logo3.png', Settings::get('app_name')) }}
-        </a>
+
+<div class="row content-login">
+  <div class="col-md-4 col-xs-12">
+        <div class="flat-form form-login">
+            <ul class="tabs">
+                <li style="width: 100%;">
+                    <a href="#" class="active">@lang('app.i_forgot_my_password')</a>
+                </li>
+            </ul>
+
+            <div class="form-action">
+              <br>
+                <div class="col-md-12 col-xs-12">
+                   {!! Form::open(['url' => '/password/remind', 'class'=>'', 'method' => 'post', 'id' => '']) !!}
+
+                    <div class="col-md-12 col-xs-12">
+                      <div class="form-group">
+                        <input type="text" name="email" placeholder="@lang('app.email')" value="{{ old('email') }}" class="form-control"/>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-xs-12">
+                        <input type="submit" value="@lang('app.send_password_link_reset')" class="btn btn-fill btn-danger menu-click" />
+                    </div>
+                {!! Form::close() !!}               
+            </div>
         </div>
-        @lang('app.i_forgot_my_password')
-        <small><h4><a href="{{ url('login') }}">@lang('app.login')</a></h4></small> 
-      </header>
-      <fieldset>
-        <section>
-          <label class="label">@lang('app.email')</label>
-            <label class="input"> 
-              <input type="text" name="email" id="email" value="{{ old('email') }}">
-            </label>
-        </section>
-      </fieldset>
-      <footer>
-        {!! Form::submit(trans('app.send_password_link_reset'), ['class' => 'btn btn-default btn-submit']) !!}
-      </footer>
-    {!! Form::close() !!}
   </div>
-  @include('copyrights')
+
 </div>
 
 @endsection

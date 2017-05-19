@@ -34,3 +34,5 @@ Route::get('/local/delete/favorite/{id}', 'FrontendController@localDeleteFavorit
 Route::get('/local/visit', 'FrontendController@localVisites')->name('local.visites')->middleware('auth');
 
 Route::get('/local/store/visit/{id}', 'FrontendController@localStoreVisit')->name('local.visit.store')->middleware('auth');
+
+Route::post('/local/store/vote/{id}', 'FrontendController@localStoreVote')->name('local.vote.store')->middleware('auth');

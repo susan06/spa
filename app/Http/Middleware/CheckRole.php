@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Auth\Guard;
 
 class CheckRole
 {
@@ -13,10 +14,10 @@ class CheckRole
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next)
     {
-        if (! $request->user()->hasRole($role)) {
-            // Redirect...
+        if (Auth::user()->hasRole('client')) {
+            return redirect('/');
         }
 
         return $next($request);

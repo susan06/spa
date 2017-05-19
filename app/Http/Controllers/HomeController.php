@@ -27,6 +27,7 @@ class HomeController extends Controller
     public function __construct(UserRepository $users, ActivityRepository $activities)
     {
         $this->middleware('auth');
+        $this->middleware(['panel:admin|owner']);
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
         $this->users = $users;

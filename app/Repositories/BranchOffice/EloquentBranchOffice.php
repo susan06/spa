@@ -130,4 +130,14 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
         ]);
     }
 
+    /**
+     * store vote of local
+     *
+     *
+     */
+    public function storeVote(array $data) 
+    {
+        return Score::create($data);
+    }
+
 }

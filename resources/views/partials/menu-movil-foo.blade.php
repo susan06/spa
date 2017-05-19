@@ -12,9 +12,9 @@
         </a>
     </li>
     <li>
-        <a href="#" class="-menu-click">
-            <i class="pe-7s-ribbon"></i>
-            Ranking
+        <a href="{{ route('faqs') }}" class="-menu-click">
+            <i class="pe-7s-bookmarks"></i>
+            FAQs
         </a>
     </li>
      <li>

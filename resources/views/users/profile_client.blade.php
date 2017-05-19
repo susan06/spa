@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.frontend')
 
 @section('page-title', trans('app.profile'))
 
@@ -91,10 +91,29 @@
                     </div>
                  </div>
 
+                 <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                          <label>@lang('app.address') 2</label>
+                        {!! Form::text('address2', old('address2'), ['class' => 'form-control', 'id' => 'address2']) !!}
+                    </div>
+                  </div>  
+
                 </div> 
 
+                <div class="row">
+
+                 <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <label>Provincias </label>
+                        {!! Form::select('province_id', $provinces, old('province_id'), ['class' => 'form-control', 'id' => 'province_id']) !!}
+                    </div>
+                  </div>  
+
+                </div>
+
                 <div class="row">   
-                  <button type="submit" class="btn btn-danger btn-fill menu-click pull-right">@lang('app.update')</button>
+                  <button type="submit" class="btn btn-danger btn-fill menu-click pull-left">@lang('app.update')</button>
+                  <a href="{{ route('user.password') }}" class="btn btn-info btn-fill menu-click pull-right">@lang('app.auth_and_registration')</a>
                 </div>
 
                 <div class="clearfix"></div>

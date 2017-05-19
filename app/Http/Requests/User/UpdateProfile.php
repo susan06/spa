@@ -27,10 +27,11 @@ class UpdateProfile extends RequestForm
         return [
             'name' => 'required|min:3',
             'lastname' => 'required|min:3',
-            'phone' => 'required|numeric|min:9',
-            'mobile' => 'required|numeric|min:9',
-            'email' => 'required|email|max:255|unique:users,email,'.$id,
-            'username' => 'max:100|unique:users,username,'.$id,
+            'phone' => 'numeric|min:9',
+            'address' => 'required',
+            //'mobile' => 'required|numeric|min:9',
+            //'email' => 'required|email|max:255|unique:users,email,'.$id,
+            //'username' => 'max:100|unique:users,username,'.$id,
         ];
     }
 }

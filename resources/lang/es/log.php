@@ -28,7 +28,7 @@ return [
     'logged_in' => 'Inicio de sesión',
     'logged_out' => 'Desconexión de sesión',
     'created_account' => 'Creación de cuenta',
-    'created_account_agent_external' => 'Creación de cuenta para agente externo',
+    'created_account_client' => 'Creación de cuenta con perfil de cliente',
     'updated_avatar' => 'Actualización del avatar de perfil.',
     'updated_profile' => 'Actualización de datos de perfil.',
     'deleted_user' => 'Eliminación del usuario :name.',

@@ -37,7 +37,7 @@ class UserController extends Controller
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
         $this->middleware('session.database', ['only' => ['sessions', 'invalidateSession']]);
-        $this->middleware('permission:users.manage', ['except' => ['changeStatusDoing']]);
+        $this->middleware('permission:users.manage', ['except' => ['password', 'change_password']]);
         $this->users = $users;
     }
 
@@ -250,7 +250,9 @@ class UserController extends Controller
      */
     public function password() {
 
-        return view('users.change_password');
+        $view = (Auth::user()->hasRole('client')) ? 'users.change_password_client' : 'users.change_password';
+
+        return view($view);
     }
 
     /**

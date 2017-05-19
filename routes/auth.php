@@ -18,3 +18,4 @@
     Route::post('password/remind', 'Auth\ForgotPasswordController@sendPasswordReminder');
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@getReset');
     Route::post('password/reset', 'Auth\ResetPasswordController@postReset');
+ 

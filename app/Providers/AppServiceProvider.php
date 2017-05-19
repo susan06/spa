@@ -35,6 +35,10 @@ use App\Repositories\Faq\FaqRepository;
 use App\Repositories\Comment\EloquentComment;
 use App\Repositories\Comment\CommentRepository;
 
+use App\Repositories\Province\EloquentProvince;
+use App\Repositories\Province\ProvinceRepository;
+
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -64,5 +68,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(BranchOfficeRepository::class, EloquentBranchOffice::class);
         $this->app->singleton(FaqRepository::class, EloquentFaq::class);
         $this->app->singleton(CommentRepository::class, EloquentComment::class);
+        $this->app->singleton(ProvinceRepository::class, EloquentProvince::class);
     }
 }

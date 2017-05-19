@@ -19,22 +19,10 @@
             Nuevos
         </a>
     </li>
-    <li>
-        <a href="#" class="-menu-click">
-            <i class="pe-7s-ribbon"></i>
-            Ranking
-        </a>
-    </li>
      <li>
         <a href="#" class="-menu-click">
             <i class="pe-7s-map-2"></i>
             Locales cerca
-        </a>
-    </li>
-    <li>
-        <a href="#" class="-menu-click">
-            <i class="pe-7s-compass"></i>
-            Localidad
         </a>
     </li>
     <li>

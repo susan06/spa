@@ -16,6 +16,12 @@
 
 <div class="div-menu-header">
     <ul class="nav navbar-nav menu-header visible-pc">
+        <li>
+            <a href="#" class="-menu-click">
+                <i class="pe-7s-search"></i>
+                Buscar
+            </a>
+        </li>
         @if(Auth::check() && Auth::user()->hasRole('client')) 
         <li>
             <a href="{{ route('local.favorites') }}" class="menu-click">
@@ -30,22 +36,10 @@
                 Nuevos
             </a>
         </li>
-        <li>
-            <a href="#" class="-menu-click">
-                <i class="pe-7s-ribbon"></i>
-                Ranking
-            </a>
-        </li>
          <li>
             <a href="#" class="-menu-click">
                 <i class="pe-7s-map-2"></i>
                 Locales cerca
-            </a>
-        </li>
-        <li>
-            <a href="#" class="-menu-click">
-                <i class="pe-7s-compass"></i>
-                Localidad
             </a>
         </li>
         <li>
@@ -77,7 +71,7 @@
         <li>
             <a href="{{ route('conditions') }}" class="-menu-click">
                 <i class="pe-7s-notebook"></i>
-                Términos y condiciones
+                Térm. & Cond.
             </a>
         </li>
         @if(Auth::check())

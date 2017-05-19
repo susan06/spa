@@ -3933,3 +3933,16 @@ div[data-role="editor-toolbar"] {
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
   border: 1px solid #ccc; }
+
+
+.profile_avatar {
+ text-align: center;
+}
+
+.avatar-view-img {
+    width: 60% !important;
+    height: 90% !important;
+    border: 4px solid #eee;
+    border-radius: 20px;
+    cursor: pointer;
+}
