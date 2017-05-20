@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Validator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Repositories\Banner\BannerRepository;
@@ -373,44 +374,70 @@ class FrontendController extends Controller
     {
         if(Auth::check()) {
 
-            $client = Auth::User()->id;
-
-            $data = [
-                'branch_office_id' => $id,
-                'client_id' => $client,
-                'service' => $request->service,
-                'environment' => $request->environment,
-                'attention' => $request->attention,
-                'price' => $request->price,
+            $rules = [
+                'service' => 'required',
+                'environment' => 'required',
+                'attention' => 'required',
+                'price' => 'required'
             ];
 
-            $vote = $this->branchs->storeVote($data);
+            $validator = Validator::make($request->all(), $rules);
 
-            if($vote) {
-                $message = 'Se ha registrado su calificación';
+            if ( $validator->passes() ) {
+
+                $client = Auth::User()->id;
+
+                $data = [
+                    'branch_office_id' => $id,
+                    'client_id' => $client,
+                    'service' => $request->service,
+                    'environment' => $request->environment,
+                    'attention' => $request->attention,
+                    'price' => $request->price,
+                ];
+
+                $vote = $this->branchs->storeVote($data);
+
+                if($vote) {
+                    $message = 'Se ha registrado su calificación';
+
+                    if ( $request->ajax() ) {
+
+                        return response()->json([
+                            'success' => true,
+                            'url_return' => route('local.show', $id)
+                        ]);
+                    }
+
+                    return back()->withSuccess($message);
+                }
+
+                $message = trans('app.error_again');
 
                 if ( $request->ajax() ) {
 
                     return response()->json([
-                        'success' => true,
-                        'url_return' => route('local.show', $id)
+                        'success' => false,
+                        'message' => $message
                     ]);
                 }
 
-                return back()->withSuccess($message);
+                return back()->withErrors($message);
+
+            } else {
+                $messages = $validator->errors()->getMessages();
+
+                if ( $request->ajax() ) {
+
+                    return response()->json([
+                        'success' => false,
+                        'validator' => true,
+                        'message' => $messages
+                    ]);
+                } 
+
+                return back()->withErrors($messages); 
             }
-
-            $message = trans('app.error_again');
-
-            if ( $request->ajax() ) {
-
-                return response()->json([
-                    'success' => false,
-                    'message' => $message
-                ]);
-            }
-
-            return back()->withErrors($message);
 
         }
 

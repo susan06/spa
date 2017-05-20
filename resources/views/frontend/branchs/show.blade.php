@@ -232,7 +232,7 @@
 
 </div>
 
-<div class="modal fade modal-general" id="start-modal" tabindex="-1" role="dialog" aria-labelledby="tos-label" style="z-index: 9999;">
+<div class="modal fade modal-general" id="start-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
