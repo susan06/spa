@@ -59,7 +59,7 @@
     </li>
     @if(Auth::check())
     <li>
-        <a href="#" class="-menu-click">
+        <a href="{{ route('profile.index')}}" class="menu-click">
             <i class="pe-7s-user"></i>
             Perfil
         </a>

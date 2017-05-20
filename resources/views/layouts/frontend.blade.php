@@ -71,7 +71,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="-menu-click">
+                                <a href="{{ route('profile.index')}}" class="-menu-click">
                                     <i class="pe-7s-user"></i>
                                 </a>
                             </li>
