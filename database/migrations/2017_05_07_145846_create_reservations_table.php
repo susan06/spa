@@ -24,6 +24,11 @@ class CreateReservationsTable extends Migration
                     'approved',
                     'rejected',
                 ])->default('pendient');
+            $table->enum('rejected_by', [
+                    'client',
+                    'owner',
+                ])->nullable();
+            $table->string('details_client')->nullable();
             $table->timestamps();  
             $table->engine = 'InnoDB'; 
 

@@ -699,18 +699,66 @@ $(document).on('click', '.save-check', function () {
     });
 });
 
-var current_model = 'modal';
-
 $(document).on('click', '.show-start', function () {
     var $this = $(this);
     showLoading();
     if($this.data('auth') == true) {
         hideLoading();
-        current_model = 'modal';
         $('#start-modal').modal('show');
     } else {
         window.location.href = url_login;
     }
+});
+
+$(document).on('click', '.btn-submit-modal', function (e) {
+    e.preventDefault();
+    showLoading();
+    var $this = $(this);
+    var form = $('#form-generic-modal'); 
+    var type = $('#form-generic-modal input[name="_method"]').val();
+    if(typeof type == "undefined") {
+        type = form.attr('method');
+    }
+    $.ajax({
+        url: form.attr('action'),
+        type: type,
+        data: form.serialize(),
+        dataType: 'json',
+        success: function(response) {
+            hideLoading();
+            if(response.success){
+    
+                $('.modal-general').modal('hide');
+                
+                if(response.url_return) {
+                    showLoading();
+                    window.location.href = response.url_return;
+                }
+
+                if(response.message) {
+                    notify('success', response.message);
+                }
+
+            } else {
+                if(response.login){
+                    showLoading();
+                    window.location.href = response.login;
+                } 
+                if(response.validator) {
+                  var message = '';
+                  $.each(response.message, function(key, value) {
+                    message += value+' ';
+                  });
+                  notify('error', message);
+                } 
+            }
+           
+        },
+        error: function (status) {
+            hideLoading();
+            notify('error', status.statusText);
+        }
+    });
 });
 
 $(document).on('click', '.btn-submit', function (e) {
@@ -730,31 +778,21 @@ $(document).on('click', '.btn-submit', function (e) {
         success: function(response) {
             hideLoading();
             if(response.success){
-                if(current_model == 'modal') {
-                    $('.modal-general').modal('hide');
-                } else {
-                    if(current_model == 'content' && !response.url_return) {
-                        if(response.url_next){
-                            $('#content-title').text(response.title_next);
-                            getPages(response.url_next);
-                        } else {
-                           //
-                        }
-                    } else {
-                        if(response.url_return) {
-                            showLoading();
-                            window.location.href = response.url_return;
-                        }
-                    } 
-                }
+
+                if(response.url_next){
+                    $('#content-title').text(response.title_next);
+                    getPages(response.url_next);
+                } 
+                    
                 if(response.url_return) {
                     showLoading();
                     window.location.href = response.url_return;
                 }
+
                 if(response.message) {
                     notify('success', response.message);
                 }
-                //getPages(CURRENT_URL);
+                
             } else {
                 if(response.login){
                     showLoading();

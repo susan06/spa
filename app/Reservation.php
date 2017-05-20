@@ -24,7 +24,9 @@ class Reservation extends Model
         'client_id',
         'date',
         'hour',
-        'status'
+        'details_client',
+        'status',
+        'rejected_by'
     ];
 
     /**

@@ -94,17 +94,28 @@
     		<div class="box-reservation">
     			<div class="title">Reserva Online Gratis</div>
     			<div class="content">
+    			{!! Form::open(['route' => ['local.reservation.store', $local->id], 'id' => 'form-generic']) !!}
     				<div class="row">
 			            <div class="col-md-7 col-xs-12">
 			                <div id="date_reservation"></div>
+			                {!! Form::hidden('date',old('date'), ['id' => 'date-input-reservation']) !!}
 			            </div>
 			            <div class="col-md-5 col-xs-12">
 			                <div id="time_reservation"></div>
+			                {!! Form::hidden('hour',old('hour'), ['id' => 'time-input-reservation']) !!}
+			            </div>
+			            <div class="resumen">
+			            	<span class="title">Resumen de su reserva</span>
+			            	<span class="content">
+			            		Día: <span class="date-span"></span> <br>
+			            		Hora: <span class="time-span"></span>
+			            	</span>
 			            </div>
 			            <div class="col-md-12 col-xs-12">
-			            	<button class="btn btn-fill btn-danger btn-reservar col-md-12 col-xs-12">Reservar</button>
+			            	<button type="button" disabled="disabled" id="btn-reservar" class="btn btn-fill btn-danger btn-reservar col-md-12 col-xs-12">Reservar</button>
 			            </div>
 			        </div>
+			        {!! Form::close() !!}
     			</div>
     		</div>
     	</div>
@@ -242,7 +253,7 @@
                 <h3 class="modal-title">Calificar</h3>
             </div>
             <div class="modal-body">
-             	{!! Form::open(['route' => ['local.vote.store', $local->id], 'id' => 'form-generic']) !!}
+             	{!! Form::open(['route' => ['local.vote.store', $local->id], 'id' => 'form-generic-modal']) !!}
 
 	             <div class="star-rating-comment">
 	            	<span class="start-title">Servicio</span>
@@ -267,7 +278,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-danger btn-submit">Calificar</button>
+                <button type="submit" class="btn btn-danger btn-submit-modal">Calificar</button>
             </div>
             {!! Form::close() !!}
         </div>
@@ -367,7 +378,9 @@
   });
 
   var day_disabled = [{!! $local->week !!}];
-  var today = moment(new Date());
+  var hour_min = moment({h:{!! $local->min_time !!}});
+  var hour_max = moment({h:{!! $local->max_time !!}});
+  today =  moment(new Date()).add(1, 'day');
 
   $('#date_reservation').datetimepicker({
     format: 'DD-MM-YYYY',
@@ -375,15 +388,31 @@
     maxDate: moment(today).add(7, 'day'),
     inline: true,
     daysOfWeekDisabled: day_disabled,
-    sideBySide: true
+    sideBySide: true,
+    defaultDate: false
   });
 
    $('#time_reservation').datetimepicker({
     format: 'LT',
+    minDate: hour_min,
+    maxDate: hour_max,
     inline: true,
+    defaultDate: false
   });
 
+$("#date_reservation").on("dp.change", function(e) {
+   $('#date-input-reservation').val(e.date.format('YYYY-MM-DD'));
+   $('.date-span').html(e.date.format('DD/MM/YYYY'));
+   $('.resumen').show();
+});
 
+$("#time_reservation").on("dp.change", function(e) {
+   $('#time-input-reservation').val(e.date.format('hh:mm A'));
+   $('.time-span').html(e.date.format('hh:mm A'));
+   $('.resumen').show();
+   document.getElementById('btn-reservar').disabled = false;
+});
+  
 </script>
 
 @endsection

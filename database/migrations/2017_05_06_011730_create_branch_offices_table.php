@@ -25,6 +25,8 @@ class CreateBranchOfficesTable extends Migration
             $table->text('phone_second')->nullable();
             $table->text('working_hours');
             $table->string('week')->default('0,6');
+            $table->integer('min_time')->default(8);
+            $table->integer('max_time')->default(20);
             $table->string('email');
             $table->boolean('domicile')->default(false);
             $table->boolean('reservation_web')->default(false);

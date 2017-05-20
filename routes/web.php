@@ -36,3 +36,6 @@ Route::get('/local/visit', 'FrontendController@localVisites')->name('local.visit
 Route::get('/local/store/visit/{id}', 'FrontendController@localStoreVisit')->name('local.visit.store')->middleware('auth');
 
 Route::post('/local/store/vote/{id}', 'FrontendController@localStoreVote')->name('local.vote.store')->middleware('auth');
+
+Route::post('/local/store/reservation/{id}', 'FrontendController@localStoreReservation')->name('local.reservation.store')->middleware('auth');
+

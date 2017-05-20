@@ -6201,7 +6201,7 @@ font-weight: bold;
 }
 
 .modal-backdrop {
-  z-index: 0;
+  z-index: -5;
 }
 
 .orange {
@@ -6258,4 +6258,42 @@ div.timepicker-picker > table > tbody > tr:nth-child(2) > td:nth-child(4) > butt
 
 .form-general {
   padding: 10px;
+}
+
+div.timepicker-hours > table > tbody > tr > td.hour {
+  background-color: #f7c4be;
+  color: #fff;
+}
+
+div.timepicker-hours > table > tbody > tr >  td.disabled {
+  background-color: transparent !important;
+  color: #ccc !important;
+}
+
+.resumen {
+  display: none;
+  text-align: center;
+  margin: 10px 0px;
+}
+
+.resumen > .title {
+    clear: both;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0px;
+}
+
+.resumen > .content {
+  
+}
+
+.resumen > .content > .date-span {
+  font-size: 16px;
+    font-weight: bold;
+}
+
+.resumen > .content > .time-span {
+  font-size: 16px;
+    font-weight: bold;
 }
