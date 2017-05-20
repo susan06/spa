@@ -404,13 +404,22 @@ $("#date_reservation").on("dp.change", function(e) {
    $('#date-input-reservation').val(e.date.format('YYYY-MM-DD'));
    $('.date-span').html(e.date.format('DD/MM/YYYY'));
    $('.resumen').show();
+    if($('#time-input-reservation').val()) {
+   		document.getElementById('btn-reservar').disabled = false;
+	} else {
+		document.getElementById('btn-reservar').disabled = true;
+	}
 });
 
 $("#time_reservation").on("dp.change", function(e) {
    $('#time-input-reservation').val(e.date.format('hh:mm A'));
    $('.time-span').html(e.date.format('hh:mm A'));
    $('.resumen').show();
-   document.getElementById('btn-reservar').disabled = false;
+    if($('#date-input-reservation').val()) {
+   		document.getElementById('btn-reservar').disabled = false;
+	} else {
+		document.getElementById('btn-reservar').disabled = true;
+	}
 });
   
 </script>
