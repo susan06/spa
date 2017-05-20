@@ -51,7 +51,7 @@
                   <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                         <label>@lang('app.email') </label>
-                        {!! Form::text('email', old('email'), ['class' => 'form-control col-md-7 col-xs-12', 'id' => 'email', 'readOnly' => 'readOnly']) !!}
+                        {!! Form::text('email', old('email'), ['class' => 'form-control', 'id' => 'email', 'readOnly' => 'readOnly']) !!}
                     </div>
                   </div>
 
