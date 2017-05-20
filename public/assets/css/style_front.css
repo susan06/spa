@@ -6255,3 +6255,7 @@ div.timepicker-picker > table > tbody > tr:nth-child(2) > td:nth-child(4) > butt
   border: #e74c3c !important;
   color: #fff;
 }
+
+.form-general {
+  padding: 10px;
+}

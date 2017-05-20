@@ -26,7 +26,7 @@
             </div>
 
             <div class="col-md-7 col-sm-7 col-xs-12">
-                {!! Form::model($user, ['route' => ['profile.update', $user->id], 'method' => 'PUT', 'class' => '']) !!}
+                {!! Form::model($user, ['route' => ['profile.update', $user->id], 'method' => 'PUT', 'class' => 'form-general']) !!}
 
                 <div class="row">
 
@@ -112,8 +112,10 @@
                 </div>
 
                 <div class="row">   
+                <div class="col-md-12 col-xs-12">
                   <button type="submit" class="btn btn-danger btn-fill menu-click pull-left">@lang('app.update')</button>
                   <a href="{{ route('user.password') }}" class="btn btn-info btn-fill menu-click pull-right">@lang('app.auth_and_registration')</a>
+                </div>
                 </div>
 
                 <div class="clearfix"></div>
