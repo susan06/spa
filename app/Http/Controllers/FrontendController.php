@@ -6,10 +6,14 @@ use Auth;
 use Validator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Mailers\NotificationMailer;
+use App\Repositories\Faq\FaqRepository;
 use App\Repositories\Banner\BannerRepository;
 use App\Repositories\BranchOffice\BranchOfficeRepository;
-use App\Repositories\Faq\FaqRepository;
 use App\Repositories\Comment\CommentRepository;
+use App\Repositories\Reservation\ReservationRepository;
+use App\Http\Requests\Reservation\CreateReservation;
+
 
 class FrontendController extends Controller
 {
@@ -30,9 +34,14 @@ class FrontendController extends Controller
     private $faqs;
 
     /**
-     * @var FaqRepository
+     * @var commentRepository
      */
     private $comments;
+
+    /**
+     * @var ReservationRepository
+     */
+    private $reservations;
 
     /**
      * FrontendController constructor.
@@ -42,7 +51,8 @@ class FrontendController extends Controller
         BannerRepository $banners, 
         BranchOfficeRepository $branchs,
         FaqRepository $faqs,
-        CommentRepository $comments
+        CommentRepository $comments,
+        ReservationRepository $reservations
     ){
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
@@ -50,6 +60,7 @@ class FrontendController extends Controller
         $this->branchs = $branchs;
         $this->faqs = $faqs;
         $this->comments = $comments;
+        $this->reservations = $reservations;
     }
 
     /**
@@ -450,6 +461,131 @@ class FrontendController extends Controller
 
         return redirect()->route('login');
     }
+
+     /**
+     * Display list of reservation of client
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function myReservations(Request $request)
+    {
+        $client = Auth::User()->id;
+        $reservations = $this->reservations->where('client_id', $client)->orderBy('created_at', 'desc')->paginate(10);
+
+        if ( $request->ajax() ) {
+            if (count($reservations)) {
+                return response()->json([
+                    'success' => true,
+                    'view' => view('frontend.reservations.list', compact('reservations'))->render(),
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('app.no_records_found')
+                ]);
+            }
+        }
+
+        return view('frontend.reservations.mylist', compact('reservations'));
+    }
+
+    /**
+     * save local in favorite
+     *
+     */
+    public function localStoreReservation($id, CreateReservation $request, NotificationMailer $mailer)
+    {
+        if(Auth::check()) {
+
+            $client = Auth::User()->id;
+
+            $data = [
+                'branch_office_id' => $id,
+                'client_id' => $client,
+                'date' => $request->date,
+                'hour' => $request->hour,
+            ];
+
+            $reservation = $this->reservations->create($data);
+
+            if($reservation) {
+                $mailer->sendReservationOwner($reservation);
+
+                $message = 'Se ha guardado su reservación, puede encontrarla en la sección de MIS RESERVAS';
+
+                if ( $request->ajax() ) {
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => $message,
+                        'reservation' => true
+                    ]);
+                }
+
+                return back()->withSuccess($message);
+            }
+
+            $message = trans('app.error_again');
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message
+                ]);
+            }
+
+            return back()->withErrors($message);
+
+        }
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => false,
+                'login' => route('login')
+            ]);
+        }
+
+        return redirect()->route('login');
+    }
+
+    /**
+     * change status of reservation
+     *
+     */
+    public function reservationCancel($id, Request $request, NotificationMailer $mailer)
+    {
+        $reservation = $this->reservations->update($id, ['status' => 'rejected']);
+
+        if($reservation) {
+            $mailer->sendReservationStatusOwner($reservation);
+
+            $message = 'Se ha cambiado el estatus de su reserva';
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => true,
+                    'message' => $message
+                ]);
+            }
+
+            return back()->withSuccess($message);
+        }
+
+        $message = trans('app.error_again');
+
+        if ( $request->ajax() ) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $message
+            ]);
+        }
+
+        return back()->withErrors($message);
+    }
+
 
     /**
      * Display faqs

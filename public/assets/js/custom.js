@@ -354,83 +354,6 @@ $(document).on('click', '.create-edit-show', function () {
     });
 });
 
-//save or update form modal
-$(document).on('click', '.btn-submit', function (e) {
-    var $this = $(this);
-    showLoading();
-    if($this.data('editor')) {
-        copyContent();
-        var details = CKEDITOR.instances['editor'].getData();
-        $('textarea#editor').val(details);
-    }
-    if($this.data('current') && $this.data('current') != ''){
-        CURRENT_URL = $this.data('current');
-    }
-    e.preventDefault();
-    var form = $('#form-modal'); 
-    var type = $('#form-modal input[name="_method"]').val();
-    if(typeof type == "undefined") {
-        type = form.attr('method');
-    }
-    $.ajax({
-        url: form.attr('action'),
-        type: type,
-        data: form.serialize(),
-        dataType: 'json',
-        success: function(response) {
-            hideLoading();
-            if(response.success){
-                if(current_model == 'modal') {
-                    $('#general-modal').modal('hide');
-                } else {
-                    if(response.url_return) {
-                        showLoading();
-                        window.location.href = response.url_return;
-                    } else {
-                        if(current_model == 'content') {
-                            $('#content-title').text(current_title);
-                            $('.btn-create').show();
-                            $('.top_search').show();
-                        }
-                    }
-                }
-                if(response.current_url){
-                    CURRENT_URL = response.current_url;
-                }
-                if(!$this.data('loading')) {
-                    notify('success', response.message);
-                }
-                //form.get(0).reset();
-                if($this.data('close')){
-                    $('#general-modal').modal('hide');
-                    CURRENT_URL = false;
-                }
-                if($this.data('tab')) {
-                    $('a[href="#'+$this.data('tab')+'"]').trigger("click");
-                    CURRENT_URL = false;
-                }
-                getPages(CURRENT_URL);
-            } else {
-                if(response.validator) {
-                  var message = '';
-                  $.each(response.message, function(key, value) {
-                    message += value+' ';
-                  });
-                  notify('error', message);
-                } else {
-                  notify('error', response.message);
-                }
-            }
-           
-        },
-        error: function (status) {
-            hideLoading();
-            notify('error', status.statusText);
-        }
-    });
-});
-
-
 //cancel return page old
 $(document).on('click', '.btn-cancel', function (e) {
     e.preventDefault();
@@ -673,6 +596,11 @@ $(document).on('click', '.save-check', function () {
     showLoading();
     var url = $(this).data("url");
     var $this = $(this);
+
+    if($this.data('auth') == false) {
+        window.location.href = url_login;
+    }
+
      $.ajax({
         url: url,
         type:'GET',
@@ -767,9 +695,15 @@ $(document).on('click', '.btn-submit', function (e) {
     var $this = $(this);
     var form = $('#form-generic'); 
     var type = $('#form-generic input[name="_method"]').val();
+
     if(typeof type == "undefined") {
         type = form.attr('method');
     }
+
+    if($this.data('auth') && $this.data('auth') == false) {
+        window.location.href = url_login;
+    }
+
     $.ajax({
         url: form.attr('action'),
         type: type,
@@ -777,6 +711,7 @@ $(document).on('click', '.btn-submit', function (e) {
         dataType: 'json',
         success: function(response) {
             hideLoading();
+            console.log(response);
             if(response.success){
 
                 if(response.url_next){
@@ -787,6 +722,12 @@ $(document).on('click', '.btn-submit', function (e) {
                 if(response.url_return) {
                     showLoading();
                     window.location.href = response.url_return;
+                }
+
+                if(response.reservation) {
+                    $('#date-input-reservation').val('');
+                    $('#time-input-reservation').val('');
+                    $('.resumen').hide();
                 }
 
                 if(response.message) {
@@ -812,5 +753,51 @@ $(document).on('click', '.btn-submit', function (e) {
             hideLoading();
             notify('error', status.statusText);
         }
+    });
+});
+
+$(document).on('click', '.btn-cancel-status', function () {
+    var $this = $(this);
+    swal({   
+        title: $this.attr('title'),   
+        text: $this.data('confirm-text'),   
+        type: "warning",   
+        showCancelButton: true,   
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: "#DD6B55",   
+        confirmButtonText: $this.data('confirm-delete'),   
+        closeOnConfirm: true },
+        function(isConfirm){   
+            if (isConfirm) {
+                showLoading(); 
+                $.ajax({
+                    type: 'GET',
+                    url: $this.data('href'),
+                    dataType: 'json',
+                    success: function (response) { 
+                        hideLoading();                          
+                        if(response.success) {  
+                            notify('success', response.message);
+                            if(response.view) {
+                                $('#tab-content').html(response.view);
+                                //loadResposiveTable();
+                            } 
+                            if($this.data('current')){
+                                CURRENT_URL = $this.data('current');
+                            } 
+                            if($this.data('close')){
+                                $('#general-modal').modal('hide');
+                            }
+                            getPages(CURRENT_URL);  
+                        } else {
+                            notify('error', response.message);
+                        }
+                    },
+                    error: function (status) {
+                        hideLoading();
+                        notify('error', status.statusText);
+                    }
+                });     
+        } 
     });
 });

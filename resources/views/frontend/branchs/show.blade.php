@@ -47,13 +47,13 @@
 			        </a>
 			    </li>
 			    <li>
-			        <a href="#" data-url="{{ route('local.favorite.store', $local->id) }}" data-favorite="true" data-delete="{{ route('local.favorite.delete', $local->id) }}" class="{{ (Auth::check() && $local->isSave()) ? 'active check' : 'save-check' }}" data-msg="Ya ha guardado en favoritos el local">
+			        <a href="#" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" data-url="{{ route('local.favorite.store', $local->id) }}" data-favorite="true" data-delete="{{ route('local.favorite.delete', $local->id) }}" class="{{ (Auth::check() && $local->isSave()) ? 'active check' : 'save-check' }}" data-msg="Ya ha guardado en favoritos el local">
 			            <i class="pe-7s-safe"></i>
 			            Guardar
 			        </a>
 			    </li>
 			    <li>
-			        <a href="#" data-url="{{ route('local.visit.store', $local->id) }}" class="{{ (Auth::check() && $local->isVisit()) ? 'active check' : 'save-check' }}"
+			        <a href="#" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" data-url="{{ route('local.visit.store', $local->id) }}" class="{{ (Auth::check() && $local->isVisit()) ? 'active check' : 'save-check' }}"
 			        data-msg="Ya ha marcado como visitado el local" >
 			            <i class="pe-7s-check"></i>
 			            Visitado
@@ -112,7 +112,7 @@
 			            	</span>
 			            </div>
 			            <div class="col-md-12 col-xs-12">
-			            	<button type="button" disabled="disabled" id="btn-reservar" class="btn btn-fill btn-danger btn-reservar col-md-12 col-xs-12">Reservar</button>
+			            	<button type="submit" disabled="disabled" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" id="btn-reservar" class="btn btn-fill btn-danger btn-reservar col-md-12 col-xs-12 btn-submit">Reservar</button>
 			            </div>
 			        </div>
 			        {!! Form::close() !!}

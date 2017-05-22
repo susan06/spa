@@ -21,7 +21,7 @@
                 <div class="content">
                 <table bgcolor="#fff">
                     <tr>
-                        <td align="left"><a href="miviajeseguro.com" target="_blank">{{ HTML::image('assets/images/logos/logo.png', Settings::get('app_name'), array('class' => 'navbar-img')) }}</a></td>
+                        <td align="left"><a href="{{ route('index') }}" target="_blank">{{ HTML::image('assets/images/logos/logo.png', Settings::get('app_name'), array('class' => 'navbar-img')) }}</a></td>
                     </tr>
                 </table>
                 </div>      
@@ -37,7 +37,7 @@
         <tr>
             <td class="container" align="middle">
                 <p>
-                    Visita <a href="miviajeseguro.com">miviajeseguros.com</a>
+                    Visita <a href="{{ route('index') }}">{{ route('index') }}</a>
                 </p>
             </td>
         </tr>  

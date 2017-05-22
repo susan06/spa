@@ -38,6 +38,8 @@ use App\Repositories\Comment\CommentRepository;
 use App\Repositories\Province\EloquentProvince;
 use App\Repositories\Province\ProvinceRepository;
 
+use App\Repositories\Reservation\EloquentReservation;
+use App\Repositories\Reservation\ReservationRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -69,5 +71,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(FaqRepository::class, EloquentFaq::class);
         $this->app->singleton(CommentRepository::class, EloquentComment::class);
         $this->app->singleton(ProvinceRepository::class, EloquentProvince::class);
+        $this->app->singleton(ReservationRepository::class, EloquentReservation::class);
     }
 }

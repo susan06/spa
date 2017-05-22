@@ -43,6 +43,30 @@ class Reservation extends Model
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y G:ia');
     }
 
+    public function getDateAttribute($date)
+    {
+        return Carbon::createFromFormat('Y-m-d', $date)->format('d/m/Y');
+    }
+
+    public function getStatus()
+    {
+        switch($this->status) {
+            case 'pendient':
+                $status = '<span class="label label-warning">'.trans("app.{$this->status}").'</span>';
+                break;
+
+            case 'approved':
+                $status = '<span class="label label-success">'.trans("app.{$this->status}").'</span>';
+                break;
+
+            case 'rejected':
+                //$by = ($this->rejected_by == 'owner') ? '<span class="label label-danger">Por el dueño</span>' : '';
+                $status = '<span class="label label-danger">'.trans("app.{$this->status}").'</span>';
+        }
+
+        return $status;
+    }
+
     /**
      * Relationships
      *

@@ -33,7 +33,7 @@
     </li>
     @if(Auth::check() && Auth::user()->hasRole('client')) 
     <li>
-        <a href="#" class="-menu-click">
+        <a href="{{ route('local.my.reservations') }}" class="menu-click">
             <i class="pe-7s-ribbon"></i>
             Mis reservas
         </a>

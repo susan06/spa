@@ -37,5 +37,8 @@ Route::get('/local/store/visit/{id}', 'FrontendController@localStoreVisit')->nam
 
 Route::post('/local/store/vote/{id}', 'FrontendController@localStoreVote')->name('local.vote.store')->middleware('auth');
 
-Route::post('/local/store/reservation/{id}', 'FrontendController@localStoreReservation')->name('local.reservation.store')->middleware('auth');
+Route::post('/local/store/reservation/{id}', 'FrontendController@localStoreReservation')->name('local.reservation.store');
 
+Route::get('/my/reservations', 'FrontendController@myReservations')->name('local.my.reservations');
+
+Route::get('/reservation/cancel/{id}', 'FrontendController@reservationCancel')->name('reservation.cancel');

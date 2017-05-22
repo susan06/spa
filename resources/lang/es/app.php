@@ -720,6 +720,10 @@ return [
     'invitations_sended' => 'Invitaciones enviadas',
     'registered' => 'Registrado',
     'noregistered' => 'No Registrado',
+   'pendient' => 'Pendiente',
+   'approved' => 'Aprobada',
+   'rejected' => 'Cancelada',
+   'hour' => 'Hora',
 
 
 ];
