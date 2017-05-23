@@ -222,6 +222,8 @@
 
 	<div class="col-md-6 col-xs-12">
 		<div class="card">
+		<div class="row">
+		<div class="comment-disqus">
 			@if (App::environment() === 'production')
 			<div id="disqus_thread"></div>
 
@@ -241,6 +243,8 @@
 
 			<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 			@endif
+		</div>
+		</div>
 		</div>
 	</div>
 

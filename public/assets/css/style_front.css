@@ -6384,5 +6384,9 @@ span.tag a {
   /**** comments ****/
 
   .disqus-footer__wrapper {
-    display: none;
+    display: none !important;
   }
+
+.comment-disqus {
+  padding: 0px 10px;
+}
