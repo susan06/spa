@@ -414,6 +414,8 @@ class FrontendController extends Controller
 
                     if ( $request->ajax() ) {
 
+                        $request->session()->flash('success', $message);
+                        
                         return response()->json([
                             'success' => true,
                             'url_return' => route('local.show', $id)
@@ -584,6 +586,59 @@ class FrontendController extends Controller
         }
 
         return back()->withErrors($message);
+    }
+
+    /**
+     * save recommendation od local
+     *
+     */
+    public function reservationStoreRecommend($id, Request $request, NotificationMailer $mailer)
+    {
+        if(Auth::check()) {
+
+            $client = Auth::User()->id;
+            $friends = $request->friends;
+            $friends = explode(',',$friends);
+
+            foreach ($friends as $key => $value) {
+
+                $data = [
+                    'branch_office_id' => $id,
+                    'client_id' => $client,
+                    'friend' => $value
+                ];
+
+                if(filter_var($value, FILTER_VALIDATE_EMAIL)) {
+
+                    $friend = $this->branchs->storeRecommend($data);
+
+                    $mailer->sendRecommendation($id, $value, Auth::user()->full_name());
+                }
+                
+                if ( $request->ajax() ) {
+
+                    $request->session()->flash('success', trans('app.invitations_sended'));
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => trans('app.invitations_sended'),
+                        'url_return' => route('local.show', $id)
+                    ]);
+                } 
+
+                return back()->withSuccess(trans('app.invitations_sended'));
+            }
+
+        }
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => false,
+                'login' => route('login')
+            ]);
+        }
+
+        return redirect()->route('login');
     }
 
 

@@ -212,4 +212,9 @@ class BranchOffice extends Model
         return $this->hasMany(Score::class, 'branch_office_id');
     }
 
+     public function recommendations()
+    {
+        return $this->hasMany(Recommendation::class, 'branch_office_id');
+    }
+
 }

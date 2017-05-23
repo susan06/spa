@@ -41,26 +41,26 @@
     	<div class="row">
 			  <ul class="nav navbar-nav menu-local">
 			    <li>
-			        <a href="#" data-url="" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" class="{{ (Auth::check() && $local->isScore()) ? 'active check' : 'show-start' }}" data-msg="Ya ha calificado el local">
+			        <a href="javascript:void(0)" data-url="" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" class="{{ (Auth::check() && $local->isScore()) ? 'active check' : 'show-start' }}" data-msg="Ya ha calificado el local">
 			            <i class="pe-7s-star"></i>
 			            Calificar
 			        </a>
 			    </li>
 			    <li>
-			        <a href="#" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" data-url="{{ route('local.favorite.store', $local->id) }}" data-favorite="true" data-delete="{{ route('local.favorite.delete', $local->id) }}" class="{{ (Auth::check() && $local->isSave()) ? 'active check' : 'save-check' }}" data-msg="Ya ha guardado en favoritos el local">
+			        <a href="javascript:void(0)" data-active="true" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" data-url="{{ route('local.favorite.store', $local->id) }}" data-favorite="true" data-delete="{{ route('local.favorite.delete', $local->id) }}" class="{{ (Auth::check() && $local->isSave()) ? 'active check' : 'save-check' }}" data-msg="Ya ha guardado en favoritos el local">
 			            <i class="pe-7s-safe"></i>
 			            Guardar
 			        </a>
 			    </li>
 			    <li>
-			        <a href="#" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" data-url="{{ route('local.visit.store', $local->id) }}" class="{{ (Auth::check() && $local->isVisit()) ? 'active check' : 'save-check' }}"
-			        data-msg="Ya ha marcado como visitado el local" >
+			        <a href="javascript:void(0)" data-active="true" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" data-url="{{ route('local.visit.store', $local->id) }}" class="{{ (Auth::check() && $local->isVisit()) ? 'active check' : 'save-check' }}"
+			        data-msg="Ya ha marcado como visitado el local">
 			            <i class="pe-7s-check"></i>
 			            Visitado
 			        </a>
 			    </li>
 			    <li>
-			        <a href="#" class="orange">
+			        <a href="javascript:void(0)" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" class="show-recommend" class="orange">
 			            <i class="pe-7s-back orange"></i>
 			            Recomendar
 			        </a>
@@ -77,6 +77,7 @@
     		<p><i class="pe-7s-mail"></i>
     		{{ $local->email }}
     		</p>
+    		<p><h4><strong>N° veces recomendado: {{ $local->recommendations->count() }}</strong></h4></p>
     	</div>
 
         <div class="row">
@@ -285,6 +286,34 @@
     </div>
 </div>
 
+<div class="modal fade modal-general" id="recommendation-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title">Recomienda el local a tus amigos</h3>
+            </div>
+            <div class="modal-body">
+             	{!! Form::open(['route' => ['local.recommend.store', $local->id], 'id' => 'form-generic-modal-2']) !!}
+
+             	<div class="form-group form-recommendation">
+		          <label class="col-sm-12 col-xs-12 control-label">@lang('app.add_friends'), separar por una coma</label>
+		          <div class="col-sm-12 col-xs-12">
+		            <input type="text" id="tags_1"  name="friends" class="tags form-control" value="" required="required" placeholder="@lang('app.add_friends')" />
+		          </div>
+		        </div>
+			           
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger btn-submit-modal-2">Enviar Notificaciones</button>
+            </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('styles')
@@ -306,6 +335,9 @@
 
  <!-- starrr -->
  {!! HTML::script('vendors/starrr/dist/starrr.js') !!}
+
+  <!-- jQuery Tags Input -->
+  {!! HTML::script('vendors/jquery.tagsinput/src/jquery.tagsinput.js') !!}
 
 <script type="text/javascript">
 
@@ -421,6 +453,26 @@ $("#time_reservation").on("dp.change", function(e) {
 		document.getElementById('btn-reservar').disabled = true;
 	}
 });
+
+/// tags for email of friend //
+
+ 	function onAddTag(tag) {
+        alert("Added a tag: " + tag);
+      }
+
+      function onRemoveTag(tag) {
+        alert("Removed a tag: " + tag);
+      }
+
+      function onChangeTag(input, tag) {
+        alert("Changed a tag: " + tag);
+      }
+
+      $(document).ready(function() {
+        $('#tags_1').tagsInput({
+          width: 'auto'
+        });
+      });
   
 </script>
 

@@ -717,13 +717,15 @@ return [
     'invited_friends_win_discount' => 'Refiere a tus amigos y gana descuentos cuando estos realicen su primer pedido.',
     'add_friends' => 'Agregar amigos',
     'send_invitation' => 'Enviar invitación',
-    'invitations_sended' => 'Invitaciones enviadas',
+    'invitations_sended' => 'Se ha enviado la recomendación a los email ingresados',
     'registered' => 'Registrado',
     'noregistered' => 'No Registrado',
    'pendient' => 'Pendiente',
    'approved' => 'Aprobada',
    'rejected' => 'Cancelada',
    'hour' => 'Hora',
+   'invite_email' => 'recomendación de :client, ve el sitio: :site',
+   'invite_to_register_by' => 'Tu amigo(a) :friend, te está invitando para que visites :site y veas el siguiente local:'
 
 
 ];

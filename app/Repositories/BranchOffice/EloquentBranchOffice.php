@@ -6,6 +6,7 @@ use App\BranchOffice;
 use App\Score;
 use App\Favorite;
 use App\Visit;
+use App\Recommendation;
 use App\Repositories\Repository;
 use DB;
 
@@ -138,6 +139,16 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
     public function storeVote(array $data) 
     {
         return Score::create($data);
+    }
+
+    /**
+     * store recommendation of local
+     *
+     *
+     */
+    public function storeRecommend(array $data) 
+    {
+        return Recommendation::firstOrCreate($data);
     }
 
 }

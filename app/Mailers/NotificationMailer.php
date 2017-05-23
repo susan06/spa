@@ -2,6 +2,7 @@
 
 namespace App\Mailers;
 
+use Settings;
 use App\User;
 use App\BranchOffice;
 use App\Reservation;
@@ -39,5 +40,15 @@ class NotificationMailer extends AbstractMailer
         $subject = 'Se ha cancelado una reservación';
 
         $this->sendTo($owner->email, $subject, $view, $data);
+    }
+
+    public function sendRecommendation($id_local, $email, $friend)
+    {
+        $local = BranchOffice::find($id_local);
+        $view = 'emails.notifications.recommendation_friends';
+        $data = ['local' => $local, 'email' => $email, 'friend' => $friend, 'site' => Settings::get('app_name')];
+        $subject = trans('app.invite_email', ['client' => $friend, 'site' => Settings::get('app_name') ]);
+
+        $this->sendTo($email, $subject, $view, $data);
     }
 }

@@ -44,7 +44,7 @@ class UsersSeeder extends Seeder
         $user_3 = User::create([
             'name' => 'client',
             'lastname' => 'client',
-            'email' => 'client@site.com',
+            'email' => 'susangmedina@gmail.com',
             'username' => 'client',
             'password' => 'secret',
             'status' => UserStatus::ACTIVE,
@@ -53,5 +53,6 @@ class UsersSeeder extends Seeder
 
         $client = Role::where('name', 'client')->first();
         $user_3->attachRole($client);
+
     }
 }

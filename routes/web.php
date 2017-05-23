@@ -42,3 +42,7 @@ Route::post('/local/store/reservation/{id}', 'FrontendController@localStoreReser
 Route::get('/my/reservations', 'FrontendController@myReservations')->name('local.my.reservations');
 
 Route::get('/reservation/cancel/{id}', 'FrontendController@reservationCancel')->name('reservation.cancel');
+
+Route::get('/reservation/recommend/{id}', 'FrontendController@reservationStoreRecommend')->name('local.recommend.store');
+
+Route::post('/reservation/recommend/{id}', 'FrontendController@reservationStoreRecommend')->name('local.recommend.store');
