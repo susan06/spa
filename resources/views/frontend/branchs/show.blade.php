@@ -330,16 +330,6 @@
 	@endif
 @endsection
 
-<style type="text/css">
-.disqus-footer__wrapper {
-    display: none !important;
-}
-
-.comment-disqus {
-  padding: 0px 10px;
-}
-</style>
-
 @section('scripts_head')
 @parent
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?&key={{ env('API_KEY_GOOGLE')}}&libraries=places&language=ES"></script>
