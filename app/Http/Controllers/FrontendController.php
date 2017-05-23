@@ -415,7 +415,7 @@ class FrontendController extends Controller
                     if ( $request->ajax() ) {
 
                         $request->session()->flash('success', $message);
-                        
+
                         return response()->json([
                             'success' => true,
                             'url_return' => route('local.show', $id)
@@ -488,7 +488,7 @@ class FrontendController extends Controller
             }
         }
 
-        return view('frontend.reservations.mylist', compact('reservations'));
+        return view('frontend.reservations.myList', compact('reservations'));
     }
 
     /**
