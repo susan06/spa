@@ -6380,3 +6380,9 @@ span.tag a {
     display: inline-block;
     width: 100%;
   }
+
+  /**** comments ****/
+
+  .disqus-footer__wrapper {
+    display: none;
+  }
