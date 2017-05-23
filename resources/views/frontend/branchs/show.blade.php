@@ -330,6 +330,15 @@
 	@endif
 @endsection
 
+<style type="text/css">
+.disqus-footer__wrapper {
+    display: none !important;
+}
+
+.comment-disqus {
+  padding: 0px 10px;
+}
+</style>
 
 @section('scripts_head')
 @parent
