@@ -9271,3 +9271,13 @@ a.panel-link {
 a.panel-link:hover {
     text-decoration: none;
 }
+
+.btn-toolbar {
+    margin: 0px 0px 5px 0px;
+    border: 1px solid #eee;
+    background-color: whitesmoke;
+}
+
+.btn-toolbar>.btn, .btn-toolbar>.btn-group, .btn-toolbar>.input-group {
+    margin-left: 10px;
+}

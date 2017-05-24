@@ -26,23 +26,19 @@ Route::get('/local/reservations', 'FrontendController@localReservations')->name(
 Route::get('/local/show/{id}', 'FrontendController@localShow')->name('local.show');
 
 Route::get('/local/favorite', 'FrontendController@localFavorites')->name('local.favorites')->middleware('auth');
+Route::get('/local/store/favorite/{id}', 'FrontendController@localStoreFavorite')->name('local.favorite.store');
+Route::get('/local/delete/favorite/{id}', 'FrontendController@localDeleteFavorite')->name('local.favorite.delete');
 
-Route::get('/local/store/favorite/{id}', 'FrontendController@localStoreFavorite')->name('local.favorite.store')->middleware('auth');
-
-Route::get('/local/delete/favorite/{id}', 'FrontendController@localDeleteFavorite')->name('local.favorite.delete')->middleware('auth');
-
-Route::get('/local/visit', 'FrontendController@localVisites')->name('local.visites')->middleware('auth');
-
-Route::get('/local/store/visit/{id}', 'FrontendController@localStoreVisit')->name('local.visit.store')->middleware('auth');
-
-Route::post('/local/store/vote/{id}', 'FrontendController@localStoreVote')->name('local.vote.store')->middleware('auth');
-
+Route::get('/local/visit', 'FrontendController@localVisites')->name('local.visites');
+Route::get('/local/store/visit/{id}', 'FrontendController@localStoreVisit')->name('local.visit.store');
+Route::post('/local/store/vote/{id}', 'FrontendController@localStoreVote')->name('local.vote.store');
 Route::post('/local/store/reservation/{id}', 'FrontendController@localStoreReservation')->name('local.reservation.store');
-
 Route::get('/my/reservations', 'FrontendController@myReservations')->name('local.my.reservations');
-
 Route::get('/reservation/cancel/{id}', 'FrontendController@reservationCancel')->name('reservation.cancel');
-
 Route::get('/reservation/recommend/{id}', 'FrontendController@reservationStoreRecommend')->name('local.recommend.store');
-
 Route::post('/reservation/recommend/{id}', 'FrontendController@reservationStoreRecommend')->name('local.recommend.store');
+
+Route::get('/message/show/{id}', 'FrontendController@messageShow')->name('message.show');
+Route::get('/message/create', 'FrontendController@messageCreate')->name('message.create');
+Route::post('/message/store', 'FrontendController@messageCreateStore')->name('message.store');
+Route::get('/messages', 'FrontendController@messages')->name('messages');

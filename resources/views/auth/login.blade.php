@@ -22,9 +22,9 @@
             <div id="login" class="form-action show">
 
               <div class="col-md-12 col-xs-12 btn-social">
-                <a href="#" class="btn-login btn-lg btn-block omb_btn-facebook">
+                <button type="button" class="btn-face btn-lg btn-block omb_btn-facebook">
                   <span class="">Entrar con Facebook</span>
-                </a>
+                </button>
               </div>
 
                 <div class="col-md-12 col-xs-12">
@@ -37,8 +37,9 @@
                       </div>
 
                     <div class="col-md-12 col-xs-12 btn-social">
-                      <input type="submit" value="Login" class="btn-login btn-lg btn-block omb_btn-login" />
-                      </a>
+                      <button type="submit" class="btn-login btn-danger btn-lg btn-block menu-click" />
+                      Login
+                      </button>
                     </div>
 
                     <div class="col-xs-5 col-md-6 pull-left">
@@ -52,7 +53,7 @@
                     <div class="col-xs-12 col-md-6 pull-right">
                       <p class="omb_forgotPwd">
                       @if(Settings::get('forgot_password'))
-                        <a href="{{ url('password/remind') }}">@lang('app.i_forgot_my_password')</a>
+                        <a href="{{ url('password/remind') }}" class="menu-click">@lang('app.i_forgot_my_password')</a>
                       @endif
                       </p>
                     </div>
@@ -122,7 +123,7 @@
                   @endif
 
                     <div class="form-group">
-                        <input type="submit" value="Crear cuenta" class="btn btn-fill btn-danger menu-click pull-right" />
+                        <button type="submit" class="btn btn-fill btn-danger menu-click pull-right">Crear cuenta</button>
                     </div>
                 {!! Form::close() !!}               
             </div>

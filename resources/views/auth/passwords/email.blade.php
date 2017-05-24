@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="col-md-12 col-xs-12">
-                        <input type="submit" value="@lang('app.send_password_link_reset')" class="btn btn-fill btn-danger menu-click" />
+                        <button type="submit" class="btn btn-fill btn-danger menu-click">@lang('app.send_password_link_reset')</button>
                     </div>
                 {!! Form::close() !!}               
             </div>

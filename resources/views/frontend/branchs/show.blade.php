@@ -77,7 +77,10 @@
     		<p><i class="pe-7s-mail"></i>
     		{{ $local->email }}
     		</p>
-    		<p><h4><strong>N° veces recomendado: {{ $local->recommendations->count() }}</strong></h4></p>
+    		<h4 class="mg-top-10"><strong>N° veces recomendado: {{ $local->recommendations->count() }}</strong></h4>
+    		@if((Auth::check()))
+    			<a href="{{ route('message.create', 'send_from='.url()->current()) }}" class="btn btn-fill btn-warning menu-click">Queja o sugerencia</a>
+    		@endif
     	</div>
 
         <div class="row">

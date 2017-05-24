@@ -88,7 +88,7 @@
                 @yield('content')   
             </div>
 
-            <footer class="footer">
+            <footer class="footer visible-ipad">
                 <div class="container-fluid" id="ejemplo">
 
                     <div id="nav-bar-foo" class="visible-mobile">

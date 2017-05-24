@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="col-md-12 col-xs-12">
-                        <input type="submit" value="@lang('app.update_password')" class="btn btn-fill btn-danger menu-click" />
+                        <button type="submit" class="btn btn-fill btn-danger menu-click">@lang('app.update_password')</button>
                     </div>
                 {!! Form::close() !!}               
             </div>

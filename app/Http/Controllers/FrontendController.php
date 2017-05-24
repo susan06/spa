@@ -8,12 +8,14 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Mailers\NotificationMailer;
 use App\Repositories\Faq\FaqRepository;
+use App\Repositories\User\UserRepository;
+use App\Http\Requests\Message\CreateMessage;
 use App\Repositories\Banner\BannerRepository;
-use App\Repositories\BranchOffice\BranchOfficeRepository;
 use App\Repositories\Comment\CommentRepository;
+use App\Repositories\Message\MessageRepository;
+use App\Repositories\BranchOffice\BranchOfficeRepository;
 use App\Repositories\Reservation\ReservationRepository;
 use App\Http\Requests\Reservation\CreateReservation;
-
 
 class FrontendController extends Controller
 {
@@ -44,6 +46,16 @@ class FrontendController extends Controller
     private $reservations;
 
     /**
+     * @var MessageRepository
+     */
+    private $messages;
+
+    /**
+     * @var UserRepository
+     */
+    private $users;
+
+    /**
      * FrontendController constructor.
      * @param 
      */
@@ -52,15 +64,22 @@ class FrontendController extends Controller
         BranchOfficeRepository $branchs,
         FaqRepository $faqs,
         CommentRepository $comments,
-        ReservationRepository $reservations
+        ReservationRepository $reservations,
+        MessageRepository $messages,
+        UserRepository $users
     ){
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
+        $this->middleware('auth.front', ['except' => [
+            'index', 'localShow', 'localSearch', 'getlocalByScore', 'localNews', 'localReservations', 'conditions', 'faqs'
+        ]]);
         $this->banners = $banners;
         $this->branchs = $branchs;
         $this->faqs = $faqs;
         $this->comments = $comments;
         $this->reservations = $reservations;
+        $this->messages = $messages;
+        $this->users = $users;
     }
 
     /**
@@ -214,48 +233,35 @@ class FrontendController extends Controller
      */
     public function localStoreFavorite($id, Request $request)
     {
-        if(Auth::check()) {
+        $client = Auth::User()->id;
 
-            $client = Auth::User()->id;
+        $favorite = $this->branchs->storeFavorite($id, $client);
 
-            $favorite = $this->branchs->storeFavorite($id, $client);
-
-            if($favorite) {
-                $message = 'Se ha añadido el local a sus favoritos';
-
-                if ( $request->ajax() ) {
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => $message
-                    ]);
-                }
-
-                return back()->withSuccess($message);
-            }
-
-            $message = trans('app.error_again');
+        if($favorite) {
+            $message = 'Se ha añadido el local a sus favoritos';
 
             if ( $request->ajax() ) {
 
                 return response()->json([
-                    'success' => false,
+                    'success' => true,
                     'message' => $message
                 ]);
             }
 
-            return back()->withErrors($message);
-
+            return back()->withSuccess($message);
         }
 
+        $message = trans('app.error_again');
+
         if ( $request->ajax() ) {
+
             return response()->json([
                 'success' => false,
-                'login' => route('login')
+                'message' => $message
             ]);
         }
 
-        return redirect()->route('login');
+        return back()->withErrors($message);
     }
 
     /**
@@ -264,48 +270,35 @@ class FrontendController extends Controller
      */
     public function localDeleteFavorite($id, Request $request)
     {
-        if(Auth::check()) {
+        $client = Auth::User()->id;
 
-            $client = Auth::User()->id;
+        $favorite = $this->branchs->deleteFavorite($id, $client);
 
-            $favorite = $this->branchs->deleteFavorite($id, $client);
-
-            if($favorite) {
-                $message = 'Se ha eliminado el local de sus favoritos';
-
-                if ( $request->ajax() ) {
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => $message
-                    ]);
-                }
-
-                return back()->withSuccess($message);
-            }
-
-            $message = trans('app.error_again');
+        if($favorite) {
+            $message = 'Se ha eliminado el local de sus favoritos';
 
             if ( $request->ajax() ) {
 
                 return response()->json([
-                    'success' => false,
+                    'success' => true,
                     'message' => $message
                 ]);
             }
 
-            return back()->withErrors($message);
-
+            return back()->withSuccess($message);
         }
 
+        $message = trans('app.error_again');
+
         if ( $request->ajax() ) {
+
             return response()->json([
                 'success' => false,
-                'login' => route('login')
+                'message' => $message
             ]);
         }
 
-        return redirect()->route('login');
+        return back()->withErrors($message);
     }
      /**
      * Display a listing by visit
@@ -333,20 +326,77 @@ class FrontendController extends Controller
      */
     public function localStoreVisit($id, Request $request)
     {
-        if(Auth::check()) {
+        $client = Auth::User()->id;
+
+        $visit = $this->branchs->storeVisit($id, $client);
+
+        if($visit) {
+            $message = 'Se ha añadido el local a sus lugares visitados';
+
+            if ( $request->ajax() ) {
+                
+                return response()->json([
+                    'success' => true,
+                    'message' => $message
+                ]);
+            }
+
+            return back()->withSuccess($message);
+        }
+
+        $message = trans('app.error_again');
+
+        if ( $request->ajax() ) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $message
+            ]);
+        }
+
+        return back()->withErrors($message);
+    }
+
+    /**
+     * save vote of local
+     *
+     */
+    public function localStoreVote($id, Request $request)
+    {
+        $rules = [
+            'service' => 'required',
+            'environment' => 'required',
+            'attention' => 'required',
+            'price' => 'required'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ( $validator->passes() ) {
 
             $client = Auth::User()->id;
 
-            $visit = $this->branchs->storeVisit($id, $client);
+            $data = [
+                'branch_office_id' => $id,
+                'client_id' => $client,
+                'service' => $request->service,
+                'environment' => $request->environment,
+                'attention' => $request->attention,
+                'price' => $request->price,
+            ];
 
-            if($visit) {
-                $message = 'Se ha añadido el local a sus lugares visitados';
+            $vote = $this->branchs->storeVote($data);
+
+            if($vote) {
+                $message = 'Se ha registrado su calificación';
 
                 if ( $request->ajax() ) {
-                    
+
+                    $request->session()->flash('success', $message);
+
                     return response()->json([
                         'success' => true,
-                        'message' => $message
+                        'url_return' => route('local.show', $id)
                     ]);
                 }
 
@@ -365,103 +415,20 @@ class FrontendController extends Controller
 
             return back()->withErrors($message);
 
+        } else {
+            $messages = $validator->errors()->getMessages();
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => false,
+                    'validator' => true,
+                    'message' => $messages
+                ]);
+            } 
+
+            return back()->withErrors($messages); 
         }
-
-        if ( $request->ajax() ) {
-            return response()->json([
-                'success' => false,
-                'login' => route('login')
-            ]);
-        }
-
-        return redirect()->route('login');
-    }
-
-    /**
-     * save vote of local
-     *
-     */
-    public function localStoreVote($id, Request $request)
-    {
-        if(Auth::check()) {
-
-            $rules = [
-                'service' => 'required',
-                'environment' => 'required',
-                'attention' => 'required',
-                'price' => 'required'
-            ];
-
-            $validator = Validator::make($request->all(), $rules);
-
-            if ( $validator->passes() ) {
-
-                $client = Auth::User()->id;
-
-                $data = [
-                    'branch_office_id' => $id,
-                    'client_id' => $client,
-                    'service' => $request->service,
-                    'environment' => $request->environment,
-                    'attention' => $request->attention,
-                    'price' => $request->price,
-                ];
-
-                $vote = $this->branchs->storeVote($data);
-
-                if($vote) {
-                    $message = 'Se ha registrado su calificación';
-
-                    if ( $request->ajax() ) {
-
-                        $request->session()->flash('success', $message);
-
-                        return response()->json([
-                            'success' => true,
-                            'url_return' => route('local.show', $id)
-                        ]);
-                    }
-
-                    return back()->withSuccess($message);
-                }
-
-                $message = trans('app.error_again');
-
-                if ( $request->ajax() ) {
-
-                    return response()->json([
-                        'success' => false,
-                        'message' => $message
-                    ]);
-                }
-
-                return back()->withErrors($message);
-
-            } else {
-                $messages = $validator->errors()->getMessages();
-
-                if ( $request->ajax() ) {
-
-                    return response()->json([
-                        'success' => false,
-                        'validator' => true,
-                        'message' => $messages
-                    ]);
-                } 
-
-                return back()->withErrors($messages); 
-            }
-
-        }
-
-        if ( $request->ajax() ) {
-            return response()->json([
-                'success' => false,
-                'login' => route('login')
-            ]);
-        }
-
-        return redirect()->route('login');
     }
 
      /**
@@ -497,58 +464,45 @@ class FrontendController extends Controller
      */
     public function localStoreReservation($id, CreateReservation $request, NotificationMailer $mailer)
     {
-        if(Auth::check()) {
+        $client = Auth::User()->id;
 
-            $client = Auth::User()->id;
+        $data = [
+            'branch_office_id' => $id,
+            'client_id' => $client,
+            'date' => $request->date,
+            'hour' => $request->hour,
+        ];
 
-            $data = [
-                'branch_office_id' => $id,
-                'client_id' => $client,
-                'date' => $request->date,
-                'hour' => $request->hour,
-            ];
+        $reservation = $this->reservations->create($data);
 
-            $reservation = $this->reservations->create($data);
+        if($reservation) {
+            $mailer->sendReservationOwner($reservation);
 
-            if($reservation) {
-                $mailer->sendReservationOwner($reservation);
-
-                $message = 'Se ha guardado su reservación, puede encontrarla en la sección de MIS RESERVAS';
-
-                if ( $request->ajax() ) {
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => $message,
-                        'reservation' => true
-                    ]);
-                }
-
-                return back()->withSuccess($message);
-            }
-
-            $message = trans('app.error_again');
+            $message = 'Se ha guardado su reservación, puede encontrarla en la sección de MIS RESERVAS';
 
             if ( $request->ajax() ) {
 
                 return response()->json([
-                    'success' => false,
-                    'message' => $message
+                    'success' => true,
+                    'message' => $message,
+                    'reservation' => true
                 ]);
             }
 
-            return back()->withErrors($message);
-
+            return back()->withSuccess($message);
         }
 
+        $message = trans('app.error_again');
+
         if ( $request->ajax() ) {
+
             return response()->json([
                 'success' => false,
-                'login' => route('login')
+                'message' => $message
             ]);
         }
 
-        return redirect()->route('login');
+        return back()->withErrors($message);
     }
 
     /**
@@ -594,51 +548,38 @@ class FrontendController extends Controller
      */
     public function reservationStoreRecommend($id, Request $request, NotificationMailer $mailer)
     {
-        if(Auth::check()) {
+        $client = Auth::User()->id;
+        $friends = $request->friends;
+        $friends = explode(',',$friends);
 
-            $client = Auth::User()->id;
-            $friends = $request->friends;
-            $friends = explode(',',$friends);
+        foreach ($friends as $key => $value) {
 
-            foreach ($friends as $key => $value) {
+            $data = [
+                'branch_office_id' => $id,
+                'client_id' => $client,
+                'friend' => $value
+            ];
 
-                $data = [
-                    'branch_office_id' => $id,
-                    'client_id' => $client,
-                    'friend' => $value
-                ];
+            if(filter_var($value, FILTER_VALIDATE_EMAIL)) {
 
-                if(filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                $friend = $this->branchs->storeRecommend($data);
 
-                    $friend = $this->branchs->storeRecommend($data);
-
-                    $mailer->sendRecommendation($id, $value, Auth::user()->full_name());
-                }
-                
-                if ( $request->ajax() ) {
-
-                    $request->session()->flash('success', trans('app.invitations_sended'));
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => trans('app.invitations_sended'),
-                        'url_return' => route('local.show', $id)
-                    ]);
-                } 
-
-                return back()->withSuccess(trans('app.invitations_sended'));
+                $mailer->sendRecommendation($id, $value, Auth::user()->full_name());
             }
+            
+            if ( $request->ajax() ) {
 
+                $request->session()->flash('success', trans('app.invitations_sended'));
+
+                return response()->json([
+                    'success' => true,
+                    'message' => trans('app.invitations_sended'),
+                    'url_return' => route('local.show', $id)
+                ]);
+            } 
+
+            return back()->withSuccess(trans('app.invitations_sended'));
         }
-
-        if ( $request->ajax() ) {
-            return response()->json([
-                'success' => false,
-                'login' => route('login')
-            ]);
-        }
-
-        return redirect()->route('login');
     }
 
 
@@ -680,68 +621,90 @@ class FrontendController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
+     * Display a messages
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function messages(Request $request)
     {
-        //
+        $client = Auth::User()->id;
+
+        $messages = $this->messages->where('user_from', $client)->paginate(10);
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => true,
+                'view' => view('frontend.messages.list', compact('messages'))->render(),
+            ]);
+        }
+
+        return view('frontend.messages.index', compact('messages'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
-     * Display the specified resource.
+     * create message, queja o sugerencia
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function messageCreate(Request $request)
     {
-        //
+        $send_from = isset($request->send_from) ? $request->send_from : null;
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => true,
+                'view' => view('frontend.messages.fields', compact('send_from'))->render(),
+            ]);
+        }
+
+        return view('frontend.messages.create', compact('send_from'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
+     /**
+     * save message
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function messageCreateStore(CreateMessage $request)
     {
-        //
-    }
+        $client = Auth::User()->id;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $data = [
+            'user_to' => $this->users->getAdmin()->id,
+            'user_from' => $client,
+            'description' => $request->description,
+            'send_from' => $request->send_from,
+        ];
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $message = $this->messages->create($data);
+
+        if($message) {
+
+            $message = 'Se ha enviado su mensaje al supervisor del sistema';
+
+            $request->session()->flash('success', $message);
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => true,
+                    'message' => $message,
+                    'url_return' => $request->send_from
+                ]);
+            }
+
+            return back()->withSuccess($message);
+        }
+
+        $message = trans('app.error_again');
+
+        if ( $request->ajax() ) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $message
+            ]);
+        }
+
+        return back()->withErrors($message);
     }
 }

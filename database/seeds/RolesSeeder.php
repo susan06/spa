@@ -13,7 +13,7 @@ class RolesSeeder extends Seeder
     {
         DB::table('roles')->insert([
             'name' => 'admin',
-            'display_name' => 'Super Administrador',
+            'display_name' => 'Administrador',
             'description' => 'System Administrator',
             'removable' => false
         ]);

@@ -16,6 +16,7 @@ class ReservationSeeder extends Seeder
             'client_id' => 3,
             'date' => '2017-05-25',
         	'hour' => '02:00 PM',
+            'created_at' => \Carbon\Carbon::now()
         ]);
 
         DB::table('reservations')->insert([
@@ -23,6 +24,7 @@ class ReservationSeeder extends Seeder
             'client_id' => 3,
             'date' => '2017-05-26',
         	'hour' => '03:00 PM',
+            'created_at' => \Carbon\Carbon::now()
         ]);
     }
 }

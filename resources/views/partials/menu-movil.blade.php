@@ -39,7 +39,7 @@
         </a>
     </li>
     <li>
-        <a href="#" class="-menu-click">
+        <a href="{{ route('messages') }}" class="menu-click">
             <i class="pe-7s-mail"></i>
             Mensajes
         </a>

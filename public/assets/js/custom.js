@@ -598,9 +598,9 @@ $(document).on('click', '.save-check', function () {
     var $this = $(this);
     var active = $(this).data("active");
 
-    if($this.data('auth') == false) {
+    /*if($this.data('auth') == false) {
         window.location.href = url_login;
-    }
+    }*/
 
      $.ajax({
         url: url,

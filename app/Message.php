@@ -22,8 +22,10 @@ class Message extends Model
     protected $fillable = [
         'user_from', 
         'user_to', 
+        'subject',
         'description',
-        'read_on'
+        'read_on',
+        'send_from'
     ];
 
     /**
@@ -38,5 +40,15 @@ class Message extends Model
     public function getUpdatedAtAttribute($date)
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y G:ia');
+    }
+
+    /**
+     * Relationships
+     *
+     */
+
+    public function remitente()
+    {
+        return $this->belongsTo(User::class, 'user_to');
     }
 }

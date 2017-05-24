@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Reservation;
+namespace App\Http\Requests\Message;
 
-use Auth;
 use App\Http\Requests\RequestForm;
 
-class CreateReservation extends RequestForm
+class CreateMessage extends RequestForm
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +23,9 @@ class CreateReservation extends RequestForm
      */
     public function rules()
     {
-        return [
-            'date' => 'required|date',
-            'hour' => 'required',
+         return [
+            'subject' => 'required',
+            'description' => 'required',
         ];
     }
 }

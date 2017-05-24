@@ -14,13 +14,15 @@ class RecommendationsSeeder extends Seeder
         DB::table('recommendations')->insert([
             'branch_office_id' => 1,
             'client_id' => 3,
-            'friend' => 'susangmedina@gmail.com'
+            'friend' => 'susangmedina@gmail.com',
+            'created_at' => \Carbon\Carbon::now()
         ]);
 
         DB::table('recommendations')->insert([
             'branch_office_id' => 1,
             'client_id' => 3,
-            'friend' => 'rodolfo@gmail.com'
+            'friend' => 'rodolfo@gmail.com',
+            'created_at' => \Carbon\Carbon::now()
         ]);
     }
 }

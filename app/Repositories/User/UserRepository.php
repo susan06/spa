@@ -66,4 +66,10 @@ interface UserRepository extends RepositoryInterface
      */
     public function latest($count = 20);
 
+    /**
+     * get admin data
+     *
+     */
+    public function getAdmin();
+
 }

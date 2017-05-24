@@ -143,4 +143,19 @@ class EloquentUser extends Repository implements UserRepository
             ->get();
     }
 
+    /**
+     * get admin data
+     *
+     */
+    public function getAdmin()
+    {
+        $query = User::whereHas(
+            'roles', function($q){
+                $q->where('name','=', 'admin');
+            }
+        )->first();
+
+        return $query;
+    }
+
 }

@@ -17,7 +17,9 @@ class CreateMessagesTable extends Migration
             $table->increments('id');
             $table->integer('user_from')->unsigned()->nullable();
             $table->integer('user_to')->unsigned()->nullable();
+            $table->string('subject')->nullable();
             $table->text('description')->nullable();
+            $table->string('send_from')->nullable();
             $table->boolean('read_on')->default(false);
             $table->timestamps();
             $table->engine = 'InnoDB';
