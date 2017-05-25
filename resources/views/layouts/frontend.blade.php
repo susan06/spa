@@ -56,7 +56,7 @@
                     <div id="menu-auth" style="display: block;">
                         <ul class="nav navbar-nav menu-header">
                             <li>
-                                <a href="#" class="-menu-click">
+                                <a href="{{ route('local.search') }}" class="menu-click">
                                     <i class="pe-7s-search"></i>
                                 </a>
                             </li>
@@ -71,7 +71,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('profile.index')}}" class="-menu-click">
+                                <a href="{{ route('profile.index')}}" class="menu-click">
                                     <i class="pe-7s-user"></i>
                                 </a>
                             </li>

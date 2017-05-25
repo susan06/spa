@@ -1,6 +1,6 @@
  <ul>
     <li>
-        <a href="#" class="-menu-click">
+        <a href="{{ route('local.search') }}" class="menu-click">
             <i class="pe-7s-search"></i>
             Busqueda avanzada
         </a>
