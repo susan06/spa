@@ -4416,6 +4416,10 @@ div.boxed_mini_details {
   border-top: 4px solid #eee;
 }
 
+div.boxed_mini_details-search {
+    margin: -40px 0px 0px !important;
+}
+
 div.boxed_details {
   text-align: center;
   padding: 5px 0px 5px 0px;
@@ -6477,6 +6481,10 @@ span.tag a {
   margin: 10px 0px;
 }
 
+.mg-buttom-10 {
+  margin: 0px 0px 10px;
+}
+
 .btn-toolbar {
     margin: 0px 0px 5px 0px;
     border: 1px solid #eee;
@@ -6492,3 +6500,37 @@ span.tag a {
     font-size: smaller;
     color: #717070;
   }
+
+.pointer {
+  cursor: pointer;
+}
+
+.modal-message-content {
+border: 1px solid #eee;
+    padding: 10px;
+    background-color: rgba(51, 51, 51, 0.02);
+    clear: both;
+}
+
+.col-search {
+  border-right: 2px solid #eee;
+}
+
+@media (max-width: 425px) {
+ .col-search {
+  border-right: 0px;
+} 
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #ca2f10;
+    border-color: #ca2f10;
+}
+
+@media screen and (min-width: 768px) {
+
+  .custom-collapse .collapse{
+    display:block;
+  }  
+}
+

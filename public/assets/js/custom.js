@@ -318,7 +318,7 @@ $(document).on('click', '.create-edit-show', function () {
     if($this.data('div')){
         divId = $this.data('div');
     } else {
-        divId = 'content-table';
+        divId = 'content-tabletab-content';
     }
     var href = $this.data('href');
     if($this.data('url')){
@@ -573,8 +573,10 @@ $(document).on('click', '.tab-ext', function(e){
             data: $data,
             success: function(response) {
                 hideLoading();
+                if($('html,body').width() < 768) {
+                    $('#btn-search-toggle').trigger('click');
+                }
                 if(response.success){
-                    //$('#tab-content').html(url);
                     $('#tab-content').html(response.view);
                 } else {
                     notify('error', response.message);

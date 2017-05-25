@@ -22,6 +22,57 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
         parent::__construct($branchOffice);
     }
 
+        /**
+     * search 
+     *
+     *
+     */
+    public function search($take = 10, $request = nulll) 
+    {
+        $result = [];
+
+        if ($request && $request->all()) {
+
+            if ($request->get('reservation_web')) {
+                
+                $result = $this->model->where('reservation_web', true)->paginate(10);
+                $result->appends(['reservation_web' => true]);
+            }
+
+            if ($request->get('recommendation')) {
+                
+                $result = $this->searchByRecommendation($take);
+                $result->appends(['recommendation' => true]);
+            }
+
+            if ($request->get('score')) {
+                $result = $this->searchByScore(10, $request->get('score'));
+            }
+
+            $result->appends(['search' => true]);
+
+        } 
+
+        return $result;
+    }
+
+    /**
+     * search by recommendation
+     *
+     */
+    private function searchByRecommendation($take = 10)
+    {
+        $query = Recommendation::groupBy('branch_office_id');
+        $query->selectRaw('*, count(branch_office_id) as count_branch');
+
+        $query->orderBy('count_branch', 'DESC');
+
+        $result = $query->paginate($take);
+
+        return $result;
+    }
+
+
     /**
      * Paginate and search
      *
@@ -36,31 +87,6 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
     {
         $query = Score::groupBy('branch_office_id');
         $query->selectRaw('*, avg(service) as avg_service, avg(service) as avg_service, avg(environment) as avg_environment, avg(attention) as avg_attention, avg(price) as avg_price, count(branch_office_id) as count_branch');
-
-        $query->orderBy('avg_'.$search, 'DESC');
-
-        $result = $query->paginate($take);
-
-        if ($search) {
-            $result->appends(['score' => $search]);
-        }
-
-        return $result;
-    }
-
-    /**
-     * search by created_at or puntaje
-     *
-     *
-     */
-    public function search($take = 10, $search = null)
-    {
-        $query = Score::groupBy('branch_office_id');
-        $query->selectRaw('*, avg(service) as avg_service, avg(service) as avg_service, avg(environment) as avg_environment, avg(attention) as avg_attention, avg(price) as avg_price, count(branch_office_id) as count_branch');
-
-        if($new) {
-            $query->orderBy('created_at', 'DESC');
-        }
 
         $query->orderBy('avg_'.$search, 'DESC');
 

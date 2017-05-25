@@ -1,11 +1,11 @@
 <div class="content table-responsive table-full-width">
-  <table id="datatable-responsive" class="table table-hover table-striped" cellspacing="0" width="100%">
+  <table class="table table-hover table-striped" cellspacing="0" width="100%">
   <tbody>
       @foreach ($messages as $message)
-          <tr>
+          <tr class="pointer create-edit-show" data-title="{{ 'Mensaje para: '.$message->remitente->roles->first()->display_name }}" data-model="modal" data-href="{{ route('message.show', $message->id) }}">
               <td>
                 <div class="message-time">
-                <a href="javascript:void(0)" data-href="{{ route('message.show', $message->id) }}" class="create-edit-show-modal message-user pull-left"> 
+                <a href="javascript:void(0)" class="message-user pull-left"> 
                 {{ $message->remitente->roles->first()->display_name }}
                 </a>
                 <span class="pull-right">

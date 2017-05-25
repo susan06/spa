@@ -104,6 +104,30 @@ class FrontendController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function localSearch(Request $request)
+    {
+        $locales = $this->branchs->search(10, $request);
+        $search = ($request->search) ?  true : false;
+        $view = ($request->reservation_web) ? 'frontend.branchs.list_search' : 'frontend.branchs.list_search_score';
+        $score = $request->score;
+        $recommendation = $request->recommendation;
+
+        if ( $request->ajax() ) {
+
+            return response()->json([
+                'success' => true,
+                'view' => view($view, compact('locales', 'search', 'score', 'recommendation'))->render(),
+            ]);
+        }
+
+        return view('frontend.branchs.search', compact('locales', 'search'));
+    }
+
+    /**
      * Display rhe local by id
      *
      * @param  int  $id
@@ -122,7 +146,7 @@ class FrontendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function localSearch(Request $request)
+    public function localScore(Request $request)
     {
         $locales = $this->getlocalByScore(6, $request->score);
         $score = $request->score;
@@ -641,23 +665,38 @@ class FrontendController extends Controller
         return view('frontend.messages.index', compact('messages'));
     }
 
-
     /**
      * create message, queja o sugerencia
      *
      */
     public function messageCreate(Request $request)
     {
-        $send_from = isset($request->send_from) ? $request->send_from : null;
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => true,
+                'view' => view('frontend.messages.fields')->render(),
+            ]);
+        }
+
+        return view('frontend.messages.create');
+    }
+
+    /**
+     * message show
+     *
+     */
+    public function messageShow($id, Request $request)
+    {
+        $message = $this->messages->find($id);
 
         if ( $request->ajax() ) {
             return response()->json([
                 'success' => true,
-                'view' => view('frontend.messages.fields', compact('send_from'))->render(),
+                'view' => view('frontend.messages.show_modal', compact('message'))->render(),
             ]);
         }
 
-        return view('frontend.messages.create', compact('send_from'));
+        return view('frontend.messages.show_modal', compact('message'));
     }
 
      /**

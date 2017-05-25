@@ -17,7 +17,7 @@
 <div class="div-menu-header">
     <ul class="nav navbar-nav menu-header visible-pc">
         <li>
-            <a href="#" class="-menu-click">
+            <a href="{{ route('local.search') }}" class="menu-click">
                 <i class="pe-7s-search"></i>
                 Buscar
             </a>

@@ -7,18 +7,18 @@ use App\Repositories\RepositoryInterface;
 interface BranchOfficeRepository extends RepositoryInterface
 {
     /**
+     * search 
+     *
+     *
+     */
+    public function search($take = 10, $request = null);
+
+    /**
      * search by score
      *
      *
      */
     public function searchByScore($take = 10, $search = null);
-
-    /**
-     * search by created_at or puntaje
-     *
-     *
-     */
-    public function search($take = 10, $search = null);
 
     /**
      * get locales favorites

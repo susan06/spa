@@ -13,18 +13,15 @@
 
 Route::get('/', 'FrontendController@index')->name('index');
 
-Route::get('/local/search', 'FrontendController@localSearch')->name('local.search');
-
 Route::get('/faqs', 'FrontendController@faqs')->name('faqs');
 
 Route::get('/conditions', 'FrontendController@conditions')->name('conditions');
 
+Route::get('/local/search', 'FrontendController@localSearch')->name('local.search');
+Route::get('/local/score', 'FrontendController@localScore')->name('local.score');
 Route::get('/local/news', 'FrontendController@localNews')->name('local.news');
-
 Route::get('/local/reservations', 'FrontendController@localReservations')->name('local.reservations');
-
 Route::get('/local/show/{id}', 'FrontendController@localShow')->name('local.show');
-
 Route::get('/local/favorite', 'FrontendController@localFavorites')->name('local.favorites')->middleware('auth');
 Route::get('/local/store/favorite/{id}', 'FrontendController@localStoreFavorite')->name('local.favorite.store');
 Route::get('/local/delete/favorite/{id}', 'FrontendController@localDeleteFavorite')->name('local.favorite.delete');

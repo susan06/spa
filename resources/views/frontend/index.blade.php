@@ -40,10 +40,10 @@
   <div class="end_pills">
     <!-- End Carousel Inner -->
     <ul class="nav nav-pills nav-pills-cat nav-justified">
-        <li class="tab-ext active" data-url="{{ route('local.search', 'score=service') }}"><a href="#">Servicio</a></li>
-        <li class="tab-ext" data-url="{{ route('local.search', 'score=environment') }}"><a href="#">Ambiente</a></li>
-        <li class="tab-ext" data-url="{{ route('local.search', 'score=attention') }}"><a href="#">Atención</a></li>
-        <li class="tab-ext" data-url="{{ route('local.search', 'score=price') }}"><a href="#">Precio</a></li>
+        <li class="tab-ext active" data-url="{{ route('local.score', 'score=service') }}"><a href="#">Servicio</a></li>
+        <li class="tab-ext" data-url="{{ route('local.score', 'score=environment') }}"><a href="#">Ambiente</a></li>
+        <li class="tab-ext" data-url="{{ route('local.score', 'score=attention') }}"><a href="#">Atención</a></li>
+        <li class="tab-ext" data-url="{{ route('local.score', 'score=price') }}"><a href="#">Precio</a></li>
     </ul>
   </div>
 </div>
