@@ -1851,24 +1851,68 @@ a.list-group-item-warning:focus {
  * Bootstrap Alerts
  * ======================================================================== */
 
+.alert span[data-notify="icon"] {
+  font-size: 30px;
+  display: block;
+  left: 15px;
+  position: absolute;
+  top: 50%;
+  margin-top: -15px;
+}
+.alert button.close {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -13px;
+  z-index: 1033;
+  background-color: #FFFFFF;
+  display: block;
+  border-radius: 50%;
+  opacity: .4;
+  line-height: 11px;
+  width: 25px;
+  height: 25px;
+  outline: 0 !important;
+  text-align: center;
+  padding: 3px;
+  font-weight: 300;
+}
+.alert button.close:hover {
+  opacity: .55;
+}
+.alert .close ~ span {
+  display: block;
+  max-width: 89%;
+  /*color: #333;*/
+  font-weight: 500;
+}
+.alert[data-notify="container"] {
+  padding: 10px 10px 10px 20px;
+  border-radius: 4px;
+}
+.alert.alert-with-icon {
+  padding-left: 65px;
+}
 
-.alert {
-	border: 0
+.alert-info {
+  background-color: #63d8f1;
 }
-.alert a {
-	color: #fff;
-	text-decoration: underline
+
+.alert-success {
+  background-color: #88c425;
 }
-.alert a:hover {
-	color: #fff
+
+.alert-warning {
+  background-color: #ffbc67;
 }
-.alert strong {
-	text-transform: uppercase;
-	font-weight: 700;
-	font-size: .9em
+
+.alert-danger {
+  background-color: #fc727a;
 }
-.alert i {
-	font-size: .8em
+
+
+.alert-error {
+  background-color: #F21A1A;
 }
 /* ========================================================================
  * Bootstrap Badge

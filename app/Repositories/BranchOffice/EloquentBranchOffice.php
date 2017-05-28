@@ -7,6 +7,7 @@ use App\Score;
 use App\Favorite;
 use App\Visit;
 use App\Recommendation;
+use App\Company;
 use App\Repositories\Repository;
 use DB;
 
@@ -175,6 +176,34 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
     public function storeRecommend(array $data) 
     {
         return Recommendation::firstOrCreate($data);
+    }
+
+    /**
+     * count company
+     *
+     *
+     */
+    public function countCompany()
+    {
+        return Company::count();
+    } 
+
+
+    /**
+     * search by recommendation
+     *
+     */
+    public function searchLocalVisitByCLient($take = 10, $client)
+    {
+        $query = Visit::where('client_id', $client);
+        $query->groupBy('branch_office_id');
+        $query->selectRaw('*, count(branch_office_id) as count_branch');
+
+        $query->orderBy('count_branch', 'DESC');
+
+        $result = $query->paginate($take);
+
+        return $result;
     }
 
 }

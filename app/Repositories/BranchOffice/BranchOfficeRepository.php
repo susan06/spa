@@ -69,4 +69,17 @@ interface BranchOfficeRepository extends RepositoryInterface
      */
     public function storeRecommend(array $data); 
 
+    /**
+     * count company
+     *
+     *
+     */
+    public function countCompany(); 
+
+    /**
+     * search by recommendation
+     *
+     */
+    public function searchLocalVisitByCLient($take = 10, $client);
+
 }

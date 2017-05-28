@@ -98,4 +98,23 @@ class SettingController extends Controller
 
         return view('setting.conditions_and_privacy');
     }
+
+    /**
+     * Show the form setting search
+     *
+     * @return \Illuminate\Http\Response
+     *
+     */
+    public function parameterSearch(Request $request)
+    {
+        if ( $request->ajax() ) {
+
+            return response()->json([
+                'success' => true,
+                'view' => view('setting.parameter_search')->render(),
+            ]);
+        }
+
+        return view('setting.parameter_search');
+    }
 }

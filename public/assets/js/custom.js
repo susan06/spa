@@ -77,154 +77,10 @@ $(document).ready(function() {
         });
     }
 
-    // ========================================================================
-    //  Togglers
-    // ========================================================================
-
-    // toogle sidebar
-    $('.left-toggler').click(function (e) {
-        $(".responsive-admin-menu").toggleClass("sidebar-toggle");
-        $(".content-wrapper").toggleClass("main-content-toggle-left");
-        e.preventDefault();
-    });
-
-    // We should listen touch elements of touch devices
-    $('.smooth-overflow').on('touchstart', function (event) {});
-
-    // toogle sidebar
-    $('.right-toggler').click(function (e) {
-        $(".main-wrap").toggleClass("userbar-toggle");
-        e.preventDefault();
-    });
-
-    // toogle chatbar
-    $('.chat-toggler').click(function (e) {
-        $(".chat-users-menu").toggleClass("chatbar-toggle");
-        e.preventDefault();
-    });
-
-
-    // Toggle Chevron in Bootstrap Collapsible Panels
-    $('.btn-close').click(function (e) {
-        e.preventDefault();
-        $(this).parent().parent().parent().fadeOut();
-    });
-
-    $('.btn-minmax').click(function (e) {
-        e.preventDefault();
-        var $target = $(this).parent().parent().next('.panel-body');
-        if ($target.is(':visible')) $('i', $(this)).removeClass('fa fa-chevron-circle-up').addClass('fa fa-chevron-circle-down');
-        else $('i', $(this)).removeClass('fa-chevron-circle-down').addClass('fa fa-chevron-circle-up');
-        $target.slideToggle();
-    });
-
-    // ========================================================================
-    //  Keep open Bootstrap Dropdown on click
-    // ========================================================================
-
-    $('.keep_open').click(function (event) {
-        event.stopPropagation();
-    });
-
-    // ========================================================================
-    //  Sign Out Modal
-    // ========================================================================            
-
-
-    $(".goaway").click(function (e) {
-        e.preventDefault();
-        $('#signout').modal();
-        $('#yesigo').click(function () {
-            window.open($('.goaway').data('url'), '_self');
-            $('#signout').modal('hide');
-        });
-    });
-
-    // ========================================================================
-    //  Scroll To Top
-    // ========================================================================
-
-    $('.smooth-overflow').on('scroll', function () {
-
-        if ($(this).scrollTop() > 100) {
-            $('.scroll-top-wrapper').addClass('show');
-        } else {
-            $('.scroll-top-wrapper').removeClass('show');
-        }
-    });
-
-    $('.scroll-top-wrapper').on('click', scrollToTop);
-
-    function scrollToTop() {
-        var verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
-        var element = $('body');
-        var offset = element.offset();
-        var offsetTop = offset.top;
-        $('.smooth-overflow').animate({
-            scrollTop: offsetTop
-        }, 400, 'linear');
-    }
 
 });
 // /plugin
 
-// ========================================================================
-//  Left Responsive Menu
-// ========================================================================   
-
-$(document).ready(function () {
-
-    // Responsive Menu//
-    $(".responsive-menu").click(function () {
-        $(".responsive-admin-menu #menu").slideToggle();
-    });
-    $(window).resize(function () {
-        $(".responsive-admin-menu #menu").removeAttr("style");
-    });
-
-(function multiLevelAccordion($root) {
-
-    var $accordions = $('.accordion', $root).add($root);
-    $accordions.each(function () {
-
-        var $this = $(this);
-        var $active = $('> li > a.submenu.active', $this);
-        $active.next('ul').css('display', 'block');
-        $active.addClass('downarrow');
-        var a = $active.attr('data-id') || '';
-
-        var $links = $this.children('li').children('a.submenu');
-        $links.click(function (e) {
-            if (a !== "") {
-                $("#" + a).prev("a").removeClass("downarrow");
-                $("#" + a).slideUp("fast");
-            }
-            if (a == $(this).attr("data-id")) {
-                $("#" + $(this).attr("data-id")).slideUp("fast");
-                $(this).removeClass("downarrow");
-                a = "";
-            } else {
-                $("#" + $(this).attr("data-id")).slideDown("fast");
-                a = $(this).attr("data-id");
-                $(this).addClass("downarrow");
-            }
-            e.preventDefault();
-        });
-    });
-})($('#menu'));
-
-// Responsive Menu Adding Opened Class//
-
-$(".responsive-admin-menu #menu li").hover(
-    function () {
-        $(this).addClass("opened").siblings("li").removeClass("opened");
-    },
-    function () {
-        $(this).removeClass("opened");
-    }
-);
-
-});
 
 // Switchery
 $(document).ready(function() {
@@ -249,7 +105,7 @@ $.ajaxSetup({
     headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
 });
 
-var divId = 'content-table';
+var divId = 'tab-content';
 
 //delete register
 $(document).on('click', '.btn-delete', function () {
@@ -276,7 +132,7 @@ $(document).on('click', '.btn-delete', function () {
                         if(response.success) {  
                             notify('success', response.message);
                             if(response.view) {
-                                $('#content-table').html(response.view);
+                                $('#tab-content').html(response.view);
                                 loadResposiveTable();
                             } 
                             if($this.data('current')){
@@ -318,7 +174,7 @@ $(document).on('click', '.create-edit-show', function () {
     if($this.data('div')){
         divId = $this.data('div');
     } else {
-        divId = 'content-tabletab-content';
+        divId = 'tab-content';
     }
     var href = $this.data('href');
     if($this.data('url')){
@@ -341,7 +197,7 @@ $(document).on('click', '.create-edit-show', function () {
                     $('.btn-create').hide();
                     current_title = $('#content-title').text();
                     $('#content-title').text(title);
-                    $('#content-table').html(response.view);
+                    $('#tab-content').html(response.view);
                 }
             } else {
                 notify('error', response.message);
@@ -387,7 +243,7 @@ $(document).on('click', '.search', function () {
             success: function(response) {
                 hideLoading();
                 if(response.success){
-                    $('#content-table').html(response.view);
+                    $('#tab-content').html(response.view);
                     loadResposiveTable();
                 } else {
                     notify('error', response.message);
@@ -415,8 +271,33 @@ $(document).on('change', '#status', function () {
         success: function(response) {
             hideLoading();
             if(response.success){
-                $('#content-table').html(response.view);
-                loadResposiveTable();
+                $('#tab-content').html(response.view);
+                //loadResposiveTable();
+            } else {
+                notify('error', response.message);
+            }
+        },
+        error: function (status) {
+            hideLoading();
+            notify('error', status.statusText);
+        }
+    });
+});
+
+// search statusby roles all
+$(document).on('change', '#select_roles', function () {
+    showLoading();
+    var $this = $(this);
+    $.ajax({
+        url: CURRENT_URL,
+        type:"GET",
+        data:{ role: $this.val() },
+        dataType: 'json',
+        success: function(response) {
+            hideLoading();
+            if(response.success){
+                $('#tab-content').html(response.view);
+                //loadResposiveTable();
             } else {
                 notify('error', response.message);
             }
@@ -481,9 +362,10 @@ function getPages(page) {
                 if(response.success){
                     $('#tab-content').html(response.view);
                     CURRENT_URL = page;
+                    /*
                     $('html,body').animate({
                         scrollTop: $(".top").offset().top
-                    }, 2000);
+                    }, 2000);*/
                 }
             },
             error: function (status) {
@@ -673,8 +555,9 @@ $(document).on('click', '.btn-submit-modal', function (e) {
         success: function(response) {
             hideLoading();
             if(response.success){
-    
-                $('.modal-general').modal('hide');
+
+                $('#modal-general').modal('hide');
+                $('.modal').modal('hide');
                 
                 if(response.url_return) {
                     showLoading();
@@ -684,6 +567,8 @@ $(document).on('click', '.btn-submit-modal', function (e) {
                 if(response.message) {
                     notify('success', response.message);
                 }
+
+                getPages(CURRENT_URL);
 
             } else {
                 if(response.login){
@@ -724,8 +609,9 @@ $(document).on('click', '.btn-submit-modal-2', function (e) {
         success: function(response) {
             hideLoading();
             if(response.success){
-    
-                $('.modal-general').modal('hide');
+        
+                $('#modal-general').modal('hide');
+                ('.modal').modal('hide');
                 
                 if(response.url_return) {
                     showLoading();
@@ -735,6 +621,8 @@ $(document).on('click', '.btn-submit-modal-2', function (e) {
                 if(response.message) {
                     notify('success', response.message);
                 }
+
+                getPages(CURRENT_URL);
 
             } else {
                 if(response.login){
@@ -780,7 +668,7 @@ $(document).on('click', '.btn-submit', function (e) {
         dataType: 'json',
         success: function(response) {
             hideLoading();
-            console.log(response);
+            //console.log(response);
             if(response.success){
 
                 if(response.url_next){
@@ -802,6 +690,8 @@ $(document).on('click', '.btn-submit', function (e) {
                 if(response.message) {
                     notify('success', response.message);
                 }
+
+                getPages(CURRENT_URL);
                 
             } else {
                 if(response.login){

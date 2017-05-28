@@ -1,4 +1,4 @@
-<div class="col-md-6 col-sm-8 col-xs-12 pull-right">
+<div class="col-md-6 col-sm-8 col-xs-12 pull-right mg-botom-15-movil">
 	<div class="input-group">
 
 		<input type="text" name="search" id="search" class="form-control" placeholder="@lang('app.write_here')">

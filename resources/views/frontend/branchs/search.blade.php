@@ -20,18 +20,30 @@
 				      <span>Busqueda avanzada</span>
 				  </button> 
 		  			<ul class="list-group collapse item-search" id="side-menu-collapse">
+		  			@if(Settings::get('reservation_web'))
 					  <li class="list-group-item tab-ext pointer" 
 					  	data-url="{{ route('local.search', 'reservation_web=true&search=true') }}">Reserva Online</li>
+					@endif
+					@if(Settings::get('recommendation'))
 					  <li class="list-group-item tab-ext pointer" data-url="{{ route('local.search', 'recommendation=service&search=true') }}">Más recomendado</li>
+					@endif
+					@if(Settings::get('service'))
 					  <li class="list-group-item tab-ext pointer" 
 					  	data-url="{{ route('local.search', 'score=service&search=true') }}">Servicio</li>
+					 @endif
+					@if(Settings::get('environment'))
 					  <li class="list-group-item tab-ext pointer" 
 					  	data-url="{{ route('local.search', 'score=environment&search=true') }}">Ambiente</li>
+					 @endif
+					@if(Settings::get('attention'))
 					  <li class="list-group-item tab-ext pointer" 
 					  	data-url="{{ route('local.search', 'score=attention&search=true') }}">Atención</li>
+					 @endif
+					@if(Settings::get('price'))
 					  <li class="list-group-item tab-ext pointer" 
 					  	data-url="{{ route('local.search', 'score=price&search=true') }}">Precio</li>
 					</ul>
+					@endif
 				</div>
 
 			  	</div>

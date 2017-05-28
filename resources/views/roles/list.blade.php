@@ -1,17 +1,17 @@
 <div class="content table-responsive table-full-width">
   <table id="datatable-responsive" class="table table-hover table-striped" cellspacing="0" width="100%">
     <thead>
-        <th>@lang('app.name')</th>
+        <th class="hide-front">@lang('app.name')</th>
         <th>@lang('app.display_name')</th>
-        <th>@lang('app.description')</th>
+        <th class="hide-front">@lang('app.description')</th>
         <th class="text-center">@lang('app.actions')</th>
         </thead>
     <tbody>
         @foreach ($roles as $role)
             <tr>
-                <td>{{ $role->name }}</td>
+                <td class="hide-front">{{ $role->name }}</td>
                 <td>{{ $role->display_name }}</td>
-                <td>{{ $role->description }}</td>
+                <td class="hide-front">{{ $role->description }}</td>
                 <td class="text-center">
                     <a type="button" data-href="{{ route('role.edit', $role->id) }}" class="btn btn-fill btn-primary create-edit-show" data-model="modal"
                        title="@lang('app.edit_role')" data-toggle="tooltip" data-placement="top">
@@ -29,6 +29,8 @@
         @endforeach
     </tbody>
 </table>
+<div class="col-md-12 col-xs-12">
     {{ $roles->links() }}
+</div>
 </div>
  

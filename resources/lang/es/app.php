@@ -725,7 +725,9 @@ return [
    'rejected' => 'Cancelada',
    'hour' => 'Hora',
    'invite_email' => 'recomendación de :client, ve el sitio: :site',
-   'invite_to_register_by' => 'Tu amigo(a) :friend, te está invitando para que visites :site y veas el siguiente local:'
+   'invite_to_register_by' => 'Tu amigo(a) :friend, te está invitando para que visites :site y veas el siguiente local:',
+   'setting_search' => 'Módulos de búsqueda',
+   'clients' => 'Clientes',
 
 
 ];

@@ -15,7 +15,7 @@ class EloquentUser extends Repository implements UserRepository
      *
      * @var array
      */
-    protected $attributes = ['name', 'lastname', 'email'];
+    protected $attributes = ['name', 'lastname', 'email', 'created_at'];
     
     /**
      * EloquentUser constructor
@@ -37,9 +37,17 @@ class EloquentUser extends Repository implements UserRepository
      *
      *
      */
-    public function paginate_search($take = 10, $search = null, $status = null)
+    public function paginate_search($take = 10, $search = null, $status = null, $role = null)
     {
         $query = User::query();
+
+        if ($role) {
+            $query->orwhereHas(
+                'roles', function($q) use ($role) {
+                    $q->where('name', $role);
+                }
+            );
+        }
 
         if ($search) {
             $searchTerms = explode(' ', $search);
@@ -48,6 +56,7 @@ class EloquentUser extends Repository implements UserRepository
                     foreach ($this->attributes as $attribute) {
                         $q->orwhere($attribute, "like", "%{$term}%");
                     }
+                   
                 }
             });
         }
@@ -64,6 +73,10 @@ class EloquentUser extends Repository implements UserRepository
 
         if ($status) {
             $result->appends(['status' => $status]);
+        }
+
+        if ($role) {
+            $result->appends(['role' => $role]);
         }
 
         return $result;
@@ -157,5 +170,79 @@ class EloquentUser extends Repository implements UserRepository
 
         return $query;
     }
+
+    /**
+     * count clientes
+     *
+     *
+     */
+    public function countByRole($role)
+    {
+        $result = User::whereHas(
+                'roles', function($q) use($role){
+                    $q->where('name', $role);
+                }
+            );
+
+        return $result->count();
+    } 
+
+    /**
+     * Paginate and search by clients
+     *
+     *
+     */
+    public function paginate_search_client($take = 10, $search = null)
+    {
+        $query = User::whereHas(
+                'roles', function($q) {
+                    $q->where('name', 'client');
+                }
+            );
+
+        if ($search) {
+            $searchTerms = explode(' ', $search);
+            $query->where( function ($q) use($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    foreach ($this->attributes as $attribute) {
+                        $q->orwhere($attribute, "like", "%{$term}%");
+                    }
+                   
+                }
+            });
+        }
+
+
+        $result = $query->paginate($take);
+
+        if ($search) {
+            $result->appends(['search' => $search]);
+        }
+
+        return $result;
+    }
+
+    /**
+     * count clientes
+     *
+     *
+     */
+    public function totalClients()
+    {
+        $query = User::whereHas(
+                'roles', function($q) {
+                    $q->where('name', 'client');
+                }
+            );
+
+        $total['totales'] = $query->count();
+        $total['3meses'] = $query->where(function($q){
+                $q->where('last_login', '>=', Carbon::now()->subMonths(3));
+                $q->where('last_login', '<=', Carbon::now());
+            })->count();
+
+        return $total;
+    } 
+
 
 }

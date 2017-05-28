@@ -1,8 +1,8 @@
 <div class="modal-body">
 @if($edit)
-{!! Form::model($user, ['route' => ['user.update', $user->id], 'method' => 'PUT', 'id' => 'form-modal', 'class' => 'form-horizontal form-label-left']) !!}
+{!! Form::model($user, ['route' => ['user.update', $user->id], 'method' => 'PUT', 'id' => 'form-generic', 'class' => 'form-horizontal form-label-left']) !!}
 @else
- {!! Form::open(['route' => 'user.store', 'id' => 'form-modal', 'class' => 'form-horizontal form-label-left']) !!}
+ {!! Form::open(['route' => 'user.store', 'id' => 'form-generic', 'class' => 'form-horizontal form-label-left']) !!}
 @endif
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="@lang('app.name')">@lang('app.name') <span class="required">*</span>
@@ -25,16 +25,19 @@
     {!! Form::text('email', old('email'), ['class' => 'form-control', 'id' => 'email']) !!}
     </div>
   </div>
+  @if(!$edit)
+  <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="@lang('app.email')">@lang('app.password') <span class="required">*</span>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    {!! Form::password('password',['class' => 'form-control', 'id' => 'password']) !!}
+    </div>
+  </div>
+  @endif
  <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="@lang('app.phone')">@lang('app.phone')</label>
     <div class="col-md-6 col-sm-6 col-xs-12">
     {!! Form::text('phone', old('phone'), ['class' => 'form-control phones', 'id' => 'phone', 'data-inputmask' => "'mask' : '999999999'"]) !!}
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="@lang('app.phone_mobile')">@lang('app.phone_mobile')</label>
-    <div class="col-md-6 col-sm-6 col-xs-12">
-    {!! Form::text('mobile', old('mobile'), ['class' => 'form-control phones', 'id' => 'mobile', 'data-inputmask' => "'mask' : '999999999'"]) !!}
     </div>
   </div>
   <div class="form-group">
@@ -49,9 +52,7 @@
     </label>
     <div class="col-md-6 col-sm-6 col-xs-12 orb-form">
       @foreach($roles as $role) 
-        <label class="checkbox">
-          <input type="checkbox" id='{{$role->name}}' name="role[]" value="{{$role->id}}" {{(isset($user) && $user->hasRole($role->name)) ? 'checked': ''}}><i></i> {{$role->display_name}}
-        </label>
+          <input type="checkbox" id='{{$role->name}}' name="role[]" value="{{$role->id}}" {{(isset($user) && $user->hasRole($role->name)) ? 'checked': ''}}><i></i> {{$role->display_name}}<br>
       @endforeach
     </div>
   </div>

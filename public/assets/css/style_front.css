@@ -6517,9 +6517,12 @@ border: 1px solid #eee;
 }
 
 @media (max-width: 425px) {
- .col-search {
-  border-right: 0px;
-} 
+   .col-search {
+    border-right: 0px;
+  } 
+  .mg-botom-15-movil {
+    margin-bottom: 15px;
+  }
 }
 
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {

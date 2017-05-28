@@ -20,6 +20,7 @@ use App\Http\Requests\User\CreateUser;
 use App\Http\Requests\User\UpdateUser;
 use App\Http\Requests\User\UpdatePassword;
 
+
 class UserController extends Controller
 {
     /**
@@ -46,7 +47,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, RoleRepository $roleRepository)
     {
         $date = DateTime::createFromFormat('d-m-Y', $request->search);
 
@@ -55,13 +56,15 @@ class UserController extends Controller
         } else {
             $search = $request->search;
         }
-        $users = $this->users->paginate_search(10, $request->search, $request->status);
+        $users = $this->users->paginate_search(10, $request->search, $request->status, $request->role);
         $status = ['' => trans('app.all_status')] + UserStatus::lists();
+        $roles = ['' => 'Todos los roles'] + $roleRepository->lists('display_name', 'name');
+
         if ( $request->ajax() ) {
             if (count($users)) {
                 return response()->json([
                     'success' => true,
-                    'view' => view('users.list', compact('users','status'))->render(),
+                    'view' => view('users.list', compact('users','status', 'roles'))->render(),
                 ]);
             } else {
                 return response()->json([
@@ -71,7 +74,7 @@ class UserController extends Controller
             }
         }
 
-        return view('users.index', compact('users', 'status'));
+        return view('users.index', compact('users', 'status', 'roles'));
     }
 
     /**
@@ -83,7 +86,7 @@ class UserController extends Controller
     {
         $edit = false;
         $status = ['' => trans('app.selected_item')] + UserStatus::lists();
-        $roles = $roleRepository->all();
+        $roles =  $roleRepository->all();
 
         if ( $request->ajax() ) {
             return response()->json([
@@ -110,9 +113,8 @@ class UserController extends Controller
             'email' => $request->email,
             'status' => $request->status,
             'phone' => $request->phone,
-            'mobile' => $request->mobile,
             'birthday' => $request->birthday,
-            'password' => 'secret',
+            'password' => $request->password,
             'status' => $request->status
         ];
        
@@ -124,7 +126,7 @@ class UserController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => trans('app.user_created_defaut_pass')
+                'message' => trans('app.user_created')
             ]);
         } else {
             
@@ -141,13 +143,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, ActivityRepository $activities_user)
+    public function show($id, Request $request)
     {
         $user = $this->users->find($id);
 
-        $activities = $activities_user->getLatestActivitiesForUser($user->id, 10);
-
-        return view('users.show', compact('user', 'activities'));
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -159,7 +159,7 @@ class UserController extends Controller
     public function edit($id, Request $request, RoleRepository $roleRepository)
     {
         $edit = true;
-        $roles = $roleRepository->all();
+        $roles =  $roleRepository->all();
         $status = UserStatus::lists();
         $user = $this->users->find($id);
 
@@ -191,7 +191,6 @@ class UserController extends Controller
             'email' => $request->email,
             'status' => $request->status,
             'phone' => $request->phone,
-            'mobile' => $request->mobile,
             'birthday' => $request->birthday
         ];
 

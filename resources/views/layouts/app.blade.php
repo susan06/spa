@@ -46,17 +46,18 @@
 
     <div class="loader loader-default" id="loading"></div>
 
-        <div class="sidebar" data-color="red" data-image="{{asset('assets/images/sidebar-1.jpg')}}">
+        <div class="sidebar" data-color="red" data-image="{{asset('assets/css/sidebar-1.png')}}">
 
             <div class="sidebar-wrapper">
-                <div class="logo">
-                    <a href="{{ route('home') }}" class="simple-text">
-                        {{ settings::get('app_name') }}
-                    </a>
-                </div>
+ 
+                    <div class="logo">
+                        <a href="{{ route('home') }}">
+                            <img src="{{ asset('images/logo.png') }}" alt="{{ settings::get('app_name') }}"> 
+                        </a>
+                    </div>
 
-                @include('partials.menu')
-
+                    @include('partials.menu')
+             
             </div>
 
         </div>

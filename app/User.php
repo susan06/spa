@@ -255,5 +255,10 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role');
     }
 
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'province_id');
+    }
+
 
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page-title', trans('app.roles'))
+@section('page-title', trans('app.clients'))
 
 @section('content')
 
@@ -9,24 +9,27 @@
       <div class="col-md-12">
         <div class="card">
             <div class="header">
-                <h4 class="title">{{ trans('app.roles') }}</h4>
-                <p class="category">{{trans('app.available_system_roles')}}</p>
+                <h4 class="title">{{ trans('app.clients') }}</h4>
             </div>
             <div class="content">
                 <div class="row">
+
+                <div class="col-md-2 col-sm-2 col-xs-4 mg-botom-15-movil">
+                  <span class="label label-warning">TOTAL: {{ $total['totales'] }}</span>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-4 mg-botom-15-movil">
+                  <span class="label label-success">ACTIVOS: {{ $total['3meses'] }}</span>
+                </div>
+
+
                     @include('partials.search') 
 
-                    <div class="col-md-3 col-sm-3 col-xs-12 mg-botom-15-movil">
-                       <a href="javascript:void(0)" data-href="{{route('role.create') }}" class="btn btn-danger btn-fill  create-edit-show" data-model="modal" title="@lang('app.create_role')">
-                          @lang('app.add_role')
-                      </a>
-                    </div>
                   </div>
 
                   <div class="row">
                     <div class="inner-spacer">
                       <div id="tab-content">
-                         @include('roles.list')
+                        @include('clients.list')
                       </div>
                     </div>
                   </div>
@@ -35,5 +38,6 @@
       </div>
   </div>
 </div>
+
 
 @endsection

@@ -614,7 +614,7 @@ class FrontendController extends Controller
      */
     public function faqs(Request $request)
     {
-        $faqs = $this->faqs->all();
+        $faqs = $this->faqs->where('status', 'Published')->get();
         if ( $request->ajax() ) {
             if (count($faqs)) {
                 return response()->json([

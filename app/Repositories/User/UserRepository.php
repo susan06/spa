@@ -17,7 +17,7 @@ interface UserRepository extends RepositoryInterface
      * @return mixed
      *
      */
-    public function paginate_search($take = 10, $search = null, $status = null);
+    public function paginate_search($take = 10, $search = null, $status = null, $role = null);
 
      /**
      * Find user by confirmation token.
@@ -72,4 +72,17 @@ interface UserRepository extends RepositoryInterface
      */
     public function getAdmin();
 
+    /**
+     * count by role
+     *
+     *
+     */
+    public function countByRole($role);
+
+    /**
+     * Paginate and search by clients
+     *
+     *
+     */
+    public function paginate_search_client($take = 10, $search = null);
 }

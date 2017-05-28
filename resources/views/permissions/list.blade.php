@@ -17,13 +17,13 @@
                     </td>
                 @endforeach
                 <td class="text-center">
-                    <a type="button" data-href="{{ route('permission.edit', $permission->id) }}" class="btn btn-fill btn-primary create-edit-show" data-model="modal"
+                    <a type="button" data-href="{{ route('permission.edit', $permission->id) }}" class="btn btn-fill btn-info create-edit-show" data-model="modal"
                        title="@lang('app.edit_permission')" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-pencil"></i>
                     </a>
                     @if($permission->removable)
                     <a type="button" data-href="{{ route('permission.destroy', $permission->id) }}" 
-                      class="btn btn-round btn-danger btn-delete" 
+                      class="btn btn-fill btn-danger btn-delete" 
                       data-confirm-text="@lang('app.are_you_sure_delete_permission')"
                       data-confirm-delete="@lang('app.yes_delete_him')"
                       title="@lang('app.delete_user')" data-toggle="tooltip" data-placement="top">

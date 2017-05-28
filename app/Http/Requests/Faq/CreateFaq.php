@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Faq;
 
 use App\Http\Requests\RequestForm;
 
-class CreateUser extends RequestForm
+class CreateFaq extends RequestForm
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,10 @@ class CreateUser extends RequestForm
      */
     public function rules()
     {
-        return [
-            'name' => 'required|min:3',
-            'lastname' => 'required|min:3',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
+         return [
+            'question' => 'required',
+            'answer' => 'required',
             'status' => 'required',
-            'phone' => 'numeric',
-            'role' => 'required|exists:roles,id',
-            'birthday' => 'date'
         ];
     }
 }

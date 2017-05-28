@@ -1,8 +1,8 @@
 <div class="modal-body">
 @if($edit)
-{!! Form::model($role, ['route' => ['role.update', $role->id], 'method' => 'PUT', 'id' => 'form-modal', 'class' => 'form-horizontal']) !!}
+{!! Form::model($role, ['route' => ['role.update', $role->id], 'method' => 'PUT', 'id' => 'form-generic-modal', 'class' => 'form-horizontal']) !!}
 @else
- {!! Form::open(['route' => 'role.store', 'id' => 'form-modal', 'class' => 'form-horizontal']) !!}
+ {!! Form::open(['route' => 'role.store', 'id' => 'form-generic-modal', 'class' => 'form-horizontal']) !!}
 @endif
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="@lang('app.name')">@lang('app.name') <span class="required">*</span>
@@ -28,9 +28,9 @@
 </div>
 <div class="modal-footer">
   @if($edit)
-    <button type="submit" class="btn btn-primary btn-submit col-sm-2 col-xs-6">@lang('app.update')</button>
+    <button type="submit" class="btn btn-primary btn-submit-modal col-sm-2 col-xs-6">@lang('app.update')</button>
   @else
-      <button type="submit" class="btn btn-primary btn-submit col-sm-2 -xs-6">@lang('app.save')</button>
+      <button type="submit" class="btn btn-primary btn-submit-modal col-sm-2 -xs-6">@lang('app.save')</button>
   @endif
   <button type="button" class="btn btn-default col-sm-2 col-xs-5" data-dismiss="modal">@lang('app.close')</button>
 </div>

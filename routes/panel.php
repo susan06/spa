@@ -26,8 +26,11 @@
       Route::get('/conditions_and_privacy',
         'SettingController@conditions_and_privacy')
         ->name('setting.conditions_and_privacy');
-
    });
+
+  Route::get('/parameter-search',
+        'SettingController@parameterSearch')
+        ->name('settings.search');
 
   /**
    * Adminitrations of Users
@@ -108,4 +111,27 @@
    * Notifications
    */
   Route::resource('notifications', 'NotificationController');
+
+  /*
+   *
+   * clients
+   */
+
+  Route::group([
+       'prefix' => 'client'
+   ], function () {
+
+    Route::get('/local/visit/{user}', [
+        'as' => 'client.local.visit',
+        'uses' => 'ClientController@localVisit'
+    ]);
+
+  });
+
+  Route::resource('client', 'ClientController');
+
+  /**
+   * faqs
+   */    
+  Route::resource('faq', 'FaqController');
     

@@ -39,6 +39,8 @@
 
 </div>
 
+<div class="row">
+
 <div class="col-md-12 col-sm-12 col-xs-12">
  <div class="form-group">
     <label class="col-md-6 col-sm-6 col-xs-12" for="@lang('app.allow_remember_me')">@lang('app.allow_remember_me')</label>
@@ -81,7 +83,10 @@
     </div>
   </div>
 
+
 <div class="col-md-12 col-sm-12 col-xs-12">
-  <button type="submit" class="btn btn-fill btn-danger">@lang('app.update')</button>
+  <button type="submit" class="btn btn-fill btn-danger pull-right">@lang('app.update')</button>
 </div> 
+
+</div>
 {!! Form::close() !!}
