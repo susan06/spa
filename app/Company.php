@@ -47,4 +47,9 @@ class Company extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
+    public function branchs()
+    {
+        return $this->hasMany('App\BranchOffice', 'company_id'); 
+    }
 }

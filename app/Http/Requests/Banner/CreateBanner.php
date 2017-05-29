@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Faq;
+namespace App\Http\Requests\Banner;
 
-use App\Http\Requests\RequestForm;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CreateFaq extends RequestForm
+class CreateBanner extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CreateFaq extends RequestForm
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,9 +24,7 @@ class CreateFaq extends RequestForm
     public function rules()
     {
         return [
-            'question' => 'required',
-            'answer' => 'required',
-            'status' => 'required',
+            //
         ];
     }
 }

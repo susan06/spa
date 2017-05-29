@@ -13,6 +13,16 @@ use DB;
 
 class EloquentBranchOffice extends Repository implements BranchOfficeRepository
 {
+     /**
+     * Fields attributes
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'name',
+        'address'
+    ];
+
     /**
      * EloquentBrachOffice constructor
      *

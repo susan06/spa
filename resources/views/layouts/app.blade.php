@@ -25,6 +25,7 @@
 
     <!-- all vendors -->
     {!! HTML::style("assets/css/all_styles.css") !!}
+
     <!-- Custom Theme Style -->
     {!! HTML::style("assets/css/custom.css") !!}
 

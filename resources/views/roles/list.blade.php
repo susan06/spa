@@ -1,5 +1,5 @@
 <div class="content table-responsive table-full-width">
-  <table id="datatable-responsive" class="table table-hover table-striped" cellspacing="0" width="100%">
+  <table class="table table-hover table-striped">
     <thead>
         <th class="hide-front">@lang('app.name')</th>
         <th>@lang('app.display_name')</th>
@@ -13,7 +13,7 @@
                 <td>{{ $role->display_name }}</td>
                 <td class="hide-front">{{ $role->description }}</td>
                 <td class="text-center">
-                    <a type="button" data-href="{{ route('role.edit', $role->id) }}" class="btn btn-fill btn-primary create-edit-show" data-model="modal"
+                    <a type="button" data-href="{{ route('role.edit', $role->id) }}" class="btn btn-fill btn-info create-edit-show" data-model="modal" data-title="@lang('app.edit_role')"
                        title="@lang('app.edit_role')" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-pencil"></i>
                     </a>
@@ -21,7 +21,7 @@
                       class="btn btn-fill btn-danger btn-delete" 
                       data-confirm-text="@lang('app.are_you_sure_delete_role')"
                       data-confirm-delete="@lang('app.yes_delete_him')"
-                      title="@lang('app.delete_user')" data-toggle="tooltip" data-placement="top">
+                      title="@lang('app.delete_role')" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-trash-o"></i>
                     </a>
                 </td>

@@ -1,5 +1,5 @@
 <div class="content table-responsive table-full-width">
-  <table id="datatable-responsive" class="table table-hover table-striped" cellspacing="0" width="100%">
+  <table class="table table-hover table-striped">
       <thead>
         <th>@lang('app.profile')</th>
         <th>@lang('app.full_name')</th>
@@ -24,7 +24,7 @@
               <td>{!! $user->labelStatus() !!}</td>
               <td class="text-center">
                 @if (config('session.driver') == 'database')
-                  <a type="button" data-href="{{ route('user.sessions', $user->id) }}" class="btn btn-info btn-fill create-edit-show" data-model="modal"
+                  <a type="button" data-href="{{ route('user.sessions', $user->id) }}" class="btn btn-info btn-fill create-edit-show" data-model="modal" data-title="@lang('app.user_sessions')"
                      title="@lang('app.user_sessions')" data-toggle="tooltip" data-placement="top">
                       <i class="fa fa-list"></i>
                   </a>
@@ -32,7 +32,7 @@
                   <a href="{{ route('user.show', $user->id) }}" class="btn btn-info btn-fill" title="@lang('app.show_user')" data-toggle="tooltip" data-placement="top">
                       <i class="fa fa-eye"></i>
                   </a>
-                  <a type="button" data-href="{{ route('user.edit', $user->id) }}" class="btn btn-info btn-fill create-edit-show" data-model="modal"
+                  <a type="button" data-href="{{ route('user.edit', $user->id) }}" class="btn btn-info btn-fill create-edit-show" data-model="modal" data-title="@lang('app.edit_user')"
                      title="@lang('app.edit_user')" data-toggle="tooltip" data-placement="top">
                       <i class="fa fa-pencil"></i>
                   </a>

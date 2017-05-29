@@ -178,6 +178,29 @@ class BranchOffice extends Model
     }
 
     /**
+     * evalue if discount in reservation
+     */
+    public function isDescount()
+    {
+        $result = '';
+
+        if($this->reservation_web) {
+            switch($this->reservation_discount) {
+                case true:
+                    $result = '<span class="label label-success">Descuento en reserva</span>';
+                    break;
+
+                case false:
+                    $result = '';
+                    break;
+
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Relationships
      *
      */
@@ -215,6 +238,16 @@ class BranchOffice extends Model
      public function recommendations()
     {
         return $this->hasMany(Recommendation::class, 'branch_office_id');
+    }
+
+    public function visites()
+    {
+        return $this->hasMany(Visit::class, 'branch_office_id');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'branch_office_id');
     }
 
 }

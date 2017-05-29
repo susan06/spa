@@ -98,6 +98,7 @@
     		<div class="box-reservation">
     			<div class="title">Reserva Online Gratis</div>
     			<div class="content">
+    			<div class="clear bg-nav">{!! $local->isDescount() !!}</div>
     			{!! Form::open(['route' => ['local.reservation.store', $local->id], 'id' => 'form-generic']) !!}
     				<div class="row">
 			            <div class="col-md-7 col-xs-12">

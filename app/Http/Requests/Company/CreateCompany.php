@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Faq;
+namespace App\Http\Requests\Company;
 
 use App\Http\Requests\RequestForm;
 
-class CreateFaq extends RequestForm
+class CreateCompany extends RequestForm
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class CreateFaq extends RequestForm
     public function rules()
     {
         return [
-            'question' => 'required',
-            'answer' => 'required',
-            'status' => 'required',
+            'name' => 'required',
+            'owner_id' => 'required',
         ];
     }
 }

@@ -1,5 +1,5 @@
 <div class="content table-responsive table-full-width">
-  <table id="datatable-responsive" class="table table-hover table-striped" cellspacing="0" width="100%">
+  <table class="table table-hover table-striped">
       <thead>
       <th>#</th>
       <th>@lang('app.question')</th>
@@ -26,13 +26,13 @@
                       <i class="fa fa-edit"></i>
                   </button>
                 @if($faq->status == 'No Published')
-                    <button type="button" data-href="{{ route('faq.destroy', $faq->id) }}" 
+                    <a type="button" data-href="{{ route('faq.destroy', $faq->id) }}" 
                       class="btn btn-fill btn-danger btn-delete" 
                       data-confirm-text="@lang('app.are_you_sure_delete_faq')"
                       data-confirm-delete="@lang('app.yes_delete_him')"
                       title="@lang('app.delete_faq')" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-trash"></i>
-                    </button>
+                    </a>
                  @endif
                 </td>
             </tr>

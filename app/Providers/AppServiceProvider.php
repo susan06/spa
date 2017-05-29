@@ -44,6 +44,9 @@ use App\Repositories\Reservation\ReservationRepository;
 use App\Repositories\Message\EloquentMessage;
 use App\Repositories\Message\MessageRepository;
 
+use App\Repositories\Company\EloquentCompany;
+use App\Repositories\Company\CompanyRepository;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -76,5 +79,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ProvinceRepository::class, EloquentProvince::class);
         $this->app->singleton(ReservationRepository::class, EloquentReservation::class);
         $this->app->singleton(MessageRepository::class, EloquentMessage::class);
+        $this->app->singleton(CompanyRepository::class, EloquentCompany::class);
     }
 }

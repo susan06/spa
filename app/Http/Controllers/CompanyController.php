@@ -2,47 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use App\Faq;
 use Illuminate\Http\Request;
-use App\Repositories\Faq\FaqRepository;
-use App\Support\Faq\FaqStatus;
-use App\Http\Requests\Faq\CreateFaq;
+use App\Repositories\Company\CompanyRepository;
+use App\Http\Requests\Company\CreateCompany;
+use App\Repositories\User\UserRepository;
 
-
-class FaqController extends Controller
-{   
-     /**
-     * @var FaqRepository
+class CompanyController extends Controller
+{
+    /**
+     * @var CompanyRepository
      */
-    private $faqs;
+    private $companies;
 
     /**
-     * FaqController constructor.
-     * @param FaqRepository $faqs
+     * CompanyController constructor.
+     * @param CompanyRepository $companies
      */
-    public function __construct(FaqRepository $faqs)
+    public function __construct(CompanyRepository $companies)
     {
         $this->middleware('auth');
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
+        $this->companies = $companies;
         $this->middleware(['panel:admin']);
-        $this->faqs = $faqs;
     }
 
-    /**
+   /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-       $faqs = $this->faqs->paginate_search(10, $request->search);
+        $companies = $this->companies->paginate(10, $request->search);
         if ( $request->ajax() ) {
-            if (count($faqs)) {
+
+            if (count($companies)) {
                 return response()->json([
                     'success' => true,
-                    'view' => view('faqs.list', compact('faqs'))->render(),
+                    'view' => view('companies.list', compact('companies'))->render(),
                 ]);
             } else {
                 return response()->json([
@@ -52,7 +50,7 @@ class FaqController extends Controller
             }
         }
 
-        return view('faqs.index', compact('faqs'));
+        return view('companies.index', compact('companies'));
     }
 
     /**
@@ -60,15 +58,19 @@ class FaqController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, UserRepository $userRepository)
     {
         $edit = false;
-        $status = ['' => trans('app.selected_item')] + FaqStatus::lists();
+        $owners = $userRepository->list_owner();
 
-        return response()->json([
-            'success' => true,
-            'view' => view('faqs.create-edit', compact('status','edit'))->render()
-        ]);
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => true,
+                'view' => view('companies.create-edit', compact('edit', 'owners'))->render()
+            ]);
+        } 
+
+        return view('companies.create-edit', compact('edit', 'owners'));
     }
 
     /**
@@ -77,20 +79,14 @@ class FaqController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateFaq $request)
+    public function store(CreateCompany $request)
     {
-        $data = [
-            'question' => $request->question,
-            'answer' => $request->answer,
-            'status' => $request->status
-        ];
-
-        $faq = $this->faqs->create($data);
-        if ( $faq ) {
-
+        $company = $this->companies->create($request->all());
+        if ( $company ) {
+            
             return response()->json([
                 'success' => true,
-                'message' => trans('app.faq_created')
+                'message' => trans('app.company_created')
             ]);
         } else {
             
@@ -99,7 +95,6 @@ class FaqController extends Controller
                 'message' => trans('app.error_again')
             ]);
         }
-       
     }
 
     /**
@@ -110,17 +105,7 @@ class FaqController extends Controller
      */
     public function show($id)
     {
-        if ( $faq = $this->faqs->find($id) ) {
-            return response()->json([
-                'success' => true,
-                'view' => view('faqs.show', compact('faq'))->render()
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => trans('app.no_record_found')
-            ]);
-        }
+        //
     }
 
     /**
@@ -129,14 +114,15 @@ class FaqController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, UserRepository $userRepository)
     {
         $edit = true;
-        $status = FaqStatus::lists();
-        if ( $faq = $this->faqs->find($id) ) {
+        $owners = $userRepository->list_owner();
+
+        if ( $company = $this->companies->find($id) ) {
             return response()->json([
                 'success' => true,
-                'view' => view('faqs.create-edit', compact('faq','edit','status'))->render()
+                'view' => view('companies.create-edit', compact('company', 'edit', 'owners'))->render()
             ]);
         } else {
             return response()->json([
@@ -153,17 +139,17 @@ class FaqController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateFaq $request, $id)
+    public function update(CreateCompany $request, $id)
     {
-        $faq = $this->faqs->update(
+        $company = $this->companies->update(
             $id, 
-            $request->only('question', 'answer', 'status')
+            $request->only('name','owner_id')
         );
-        if ( $faq ) {
-
+        if ( $company ) {
+            
             return response()->json([
                 'success' => true,
-                'message' => trans('app.faq_updated')
+                'message' => trans('app.company_updated')
             ]);
         } else {
             
@@ -171,7 +157,7 @@ class FaqController extends Controller
                 'success' => false,
                 'message' => trans('app.error_again')
             ]);
-        }   
+        }
     }
 
     /**
@@ -182,10 +168,12 @@ class FaqController extends Controller
      */
     public function destroy($id)
     {
-        if ( $this->faqs->delete($id) ) {
+        $company = $this->companies->find($id);
+        if ( $this->companies->delete($id) ) {
+            
             return response()->json([
                 'success' => true,
-                'message' => trans('app.faq_deleted')
+                'message' => trans('app.company_deleted')
             ]);
         } else {
             return response()->json([

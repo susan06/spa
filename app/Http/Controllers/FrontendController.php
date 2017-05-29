@@ -89,7 +89,7 @@ class FrontendController extends Controller
      */
     public function index(Request $request)
     {
-        $banners = $this->banners->where('status', true)->get();
+        $banners = $this->banners->where('status', true)->orderBy('priority', 'asc')->get();
         $score = isset($request->score) ? $request->score : 'service';
         $locales = $this->getlocalByScore(6, $score);
 

@@ -135,3 +135,18 @@
    */    
   Route::resource('faq', 'FaqController');
     
+  /**
+   * Company
+   */    
+  Route::resource('company', 'CompanyController');
+
+  /**
+   * Branchs offices
+   */    
+  Route::resource('branch', 'BranchController');
+
+  /**
+   * Banner
+   */    
+  Route::resource('banner', 'BannerController');
+

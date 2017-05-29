@@ -244,5 +244,20 @@ class EloquentUser extends Repository implements UserRepository
         return $total;
     } 
 
+    /**
+     * get list of user with role owner
+     *
+     */
+    public function list_owner()
+    {
+        $query = User::select(DB::raw("CONCAT(name,' ',lastname) AS owner"), 'id')->whereHas(
+            'roles', function($q){
+                $q->where('name','=', 'owner');
+            }
+        )->pluck('owner', 'id')->all();
+
+        return ['' => trans('app.select_owner')] +  $query;
+    }
+
 
 }

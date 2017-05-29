@@ -85,4 +85,17 @@ interface UserRepository extends RepositoryInterface
      *
      */
     public function paginate_search_client($take = 10, $search = null);
+
+    /**
+     * count clientes
+     *
+     *
+     */
+    public function totalClients();
+
+    /**
+     * get list of user with role owner
+     *
+     */
+    public function list_owner();
 }

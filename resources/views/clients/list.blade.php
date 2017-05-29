@@ -1,5 +1,5 @@
 <div class="content table-responsive table-full-width">
-  <table id="datatable-responsive" class="table table-hover table-striped" cellspacing="0" width="100%">
+  <table class="table table-hover table-striped">
       <thead>
         <th>@lang('app.full_name')</th>
         <th>@lang('app.email')</th>

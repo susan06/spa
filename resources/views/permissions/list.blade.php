@@ -1,5 +1,5 @@
 <div class="content table-responsive table-full-width">
-  <table id="datatable-responsive" class="table table-hover table-striped" cellspacing="0" width="100%">
+  <table class="table table-hover table-striped">
     <thead>
         <th>@lang('app.display_name')</th>
         @foreach ($roles as $role)
@@ -17,7 +17,7 @@
                     </td>
                 @endforeach
                 <td class="text-center">
-                    <a type="button" data-href="{{ route('permission.edit', $permission->id) }}" class="btn btn-fill btn-info create-edit-show" data-model="modal"
+                    <a type="button" data-href="{{ route('permission.edit', $permission->id) }}" class="btn btn-fill btn-info create-edit-show" data-model="modal" data-title="@lang('app.edit_permission')"
                        title="@lang('app.edit_permission')" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-pencil"></i>
                     </a>
@@ -26,7 +26,7 @@
                       class="btn btn-fill btn-danger btn-delete" 
                       data-confirm-text="@lang('app.are_you_sure_delete_permission')"
                       data-confirm-delete="@lang('app.yes_delete_him')"
-                      title="@lang('app.delete_user')" data-toggle="tooltip" data-placement="top">
+                      title="@lang('app.delete_permission')" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-trash-o"></i>
                     </a>
                     @endif

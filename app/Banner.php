@@ -25,6 +25,28 @@ class Banner extends Model
         'status'
     ];
 
+
+    /**
+     * get span label status
+     */
+    public function getStatus()
+    {
+        switch($this->status) {
+            case true:
+                $class = '<span class="label label-success">'.trans("app.Published").'</span>';
+                break;
+
+            case false:
+                $class = '<span class="label label-danger">'.trans("app.No Published").'</span>';
+                break;
+
+            default:
+                $class = '';
+        }
+
+        return $class;
+    }
+
     /**
      * Functions
      *
