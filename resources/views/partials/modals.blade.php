@@ -1,5 +1,5 @@
 <!--edit or create Modal-->
-<div class="modal" id="general-modal" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 9999">
+<div class="modal" id="general-modal" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 1025;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">

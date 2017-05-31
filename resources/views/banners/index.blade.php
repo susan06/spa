@@ -14,7 +14,7 @@
             <div class="content">
                 <div class="row">
                     <div class="col-md-3 col-sm-3 col-xs-12 mg-botom-15-movil">
-                       <a href="#" data-href="{{route('banner.create') }}" class="btn btn-danger btn-fill" data-model="modal" title="@lang('app.add_banner')">
+                       <a href="javascript:void(0)" data-href="{{route('banner.create') }}" class="btn btn-danger btn-fill create-edit-show" data-model="modal" title="@lang('app.add_banner')">
                           @lang('app.add_banner')
                       </a>
                     </div>

@@ -29,7 +29,7 @@ class ClientController extends Controller
         $this->middleware('auth');
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
-        $this->middleware('permission:users.manage');
+        $this->middleware('permission:clients.manage');
         $this->users = $users;
         $this->branchs = $branchs;
     }

@@ -25,9 +25,10 @@ class NotificationMailer extends AbstractMailer
     	$client = $reservation->client;
         $view = 'emails.notifications.new_reservation_owner';
         $data = ['client' => $client, 'local' => $local, 'reservation' => $reservation];
-        $subject = 'Tienes una nueva reservación para el local '.$local->name;
+        $subject = 'Reservación para el local '.$local->name;
+        $email_to = [$owner->email, $local->email];
 
-        $this->sendTo($owner->email, $subject, $view, $data);
+        $this->sendTo($email_to, $subject, $view, $data);
     }
 
     public function sendReservationStatusOwner(Reservation $reservation)

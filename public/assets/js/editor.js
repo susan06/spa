@@ -76,6 +76,10 @@ $(document).ready(function() {
     fileUploadError: showErrorAlert
   });
 
+  $('#editor4').wysiwyg({
+    fileUploadError: showErrorAlert
+  });
+
   window.prettyPrint;
   prettyPrint();
 });
@@ -90,4 +94,8 @@ $('#editor2').change(function() {
 
 $('#editor3').change(function() {
     document.getElementById("privacy_policy").value = document.getElementById("editor3").innerHTML;
+}).trigger("change");
+
+$('#editor4').change(function() {
+    document.getElementById("working_hours").value = document.getElementById("editor4").innerHTML;
 }).trigger("change");

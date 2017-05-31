@@ -13,6 +13,10 @@
                 <td class="text-center">{{ $banner->priority }}</td>
                 <td class="text-center">{!! $banner->getStatus() !!}</td>             
                 <td class="text-center">
+                     <a type="button" data-href="{{ route('banner.edit', $banner->id) }}" class="btn btn-fill btn-info create-edit-show" data-model="modal" data-title="@lang('app.edit_banner')"
+                       title="@lang('app.edit_banner')" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-pencil"></i>
+                    </a>
                     <a type="button" data-href="{{ route('banner.destroy', $banner->id) }}" 
                       class="btn btn-fill btn-danger btn-delete" 
                       data-confirm-text="@lang('app.are_you_sure_delete_banner')"

@@ -41,6 +41,18 @@
 
 <div class="row">
 
+<div class="col-md-6 col-sm-6 col-xs-12">
+  <div class="form-group">
+    <label class="" for="@lang('app.timezone')">URL del sitio para DISQUS
+    </label>
+      {!! Form::text('site_disqus', Settings::get('site_disqus'), ['class' => 'form-control']) !!}
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+
 <div class="col-md-12 col-sm-12 col-xs-12">
  <div class="form-group">
     <label class="col-md-6 col-sm-6 col-xs-12" for="@lang('app.allow_remember_me')">@lang('app.allow_remember_me')</label>

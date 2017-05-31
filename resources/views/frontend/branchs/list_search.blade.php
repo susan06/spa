@@ -2,7 +2,7 @@
 @if($locales && $search) 
   <p>Se han encontraron {{ $locales->total() }} resultados</p>
   @foreach($locales as $key => $local)
-    <div class="col-md-4 col-xs-4 box_1">
+    <div class="col-md-5 col-xs-12 box_1">
       <a href="{{ route('local.show', $local->id) }}" class="menu-click"><img src="{{ asset('uploads/photos/'.$local->getFirsthPhoto()) }}" class="img-responsive menu-click" alt="{{ $local->getFirsthPhoto() }}"></a>
         <div class="box_2">
             <div class="special-wrap">

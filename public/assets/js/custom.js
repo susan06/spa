@@ -646,6 +646,69 @@ $(document).on('click', '.btn-submit-modal-2', function (e) {
     });
 })
 
+$(document).on('click', '.btn-submit-modal-file', function (e) {
+    e.preventDefault();
+    showLoading();
+    var $this = $(this);
+    var form = $('#form-generic-modal'); 
+    var type = $('#form-generic-modal input[name="_method"]').val();
+    if(typeof type == "undefined") {
+        type = form.attr('method');
+    }
+
+    var formData = new FormData();
+    formData.append('image', $('input[type=file]')[0].files[0]); 
+    formData.append('priority', $('#priority').val());
+    formData.append('status', $('#status-input').val());
+
+    $.ajax({
+        url: form.attr('action'),
+        type: type,
+        data:  formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        success: function(response) {
+            hideLoading();
+            if(response.success){
+
+                $('#modal-general').modal('hide');
+                $('.modal').modal('hide');
+                
+                if(response.url_return) {
+                    showLoading();
+                    window.location.href = response.url_return;
+                }
+
+                if(response.message) {
+                    notify('success', response.message);
+                }
+
+                getPages(CURRENT_URL);
+
+            } else {
+                if(response.login){
+                    showLoading();
+                    window.location.href = response.login;
+                } 
+                if(response.validator) {
+                  var message = '';
+                  $.each(response.message, function(key, value) {
+                    message += value+' ';
+                  });
+                  notify('error', message);
+                } 
+            }
+           
+        },
+        error: function (status) {
+            hideLoading();
+            notify('error', status.statusText);
+        }
+    });
+});
+
 $(document).on('click', '.btn-submit', function (e) {
     e.preventDefault();
     showLoading();
@@ -758,5 +821,29 @@ $(document).on('click', '.btn-cancel-status', function () {
                     }
                 });     
         } 
+    });
+});
+
+$(document).on('change', '#change_province', function () {
+    showLoading();
+    var $this = $(this);
+    var url = $this.attr("data-url");
+    $.ajax({
+        url: url,
+        type:"GET",
+        data:{ province_id: $this.val() },
+        dataType: 'json',
+        success: function(response) {
+            hideLoading();
+            if(response.success){
+                $('#tab-content').html(response.view);
+            } else {
+                notify('error', response.message);
+            }
+        },
+        error: function (status) {
+            hideLoading();
+            notify('error', status.statusText);
+        }
     });
 });

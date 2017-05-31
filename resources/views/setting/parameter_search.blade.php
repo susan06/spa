@@ -64,7 +64,16 @@
                            <input type="hidden" name="price" value="0">
                            {!! Form::checkbox('price', 1, Settings::get('price'), ['class' => 'js-switch']) !!}
                         </div>
-                    </div>                                        
+                    </div>     
+
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                     <div class="form-group">
+                        <label class="col-md-6 col-sm-6 col-xs-12" for="">Provincias</label>
+                           <input type="hidden" name="province_id" value="0">
+                           {!! Form::checkbox('province_id', 1, Settings::get('province_id'), ['class' => 'js-switch']) !!}
+                        </div>
+                    </div>                                           
 
                     <div class="col-md-12 col-sm-12 col-xs-12">
                       <button type="submit" class="btn btn-fill btn-danger pull-right">@lang('app.update')</button>

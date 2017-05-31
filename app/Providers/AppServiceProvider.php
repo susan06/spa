@@ -47,6 +47,10 @@ use App\Repositories\Message\MessageRepository;
 use App\Repositories\Company\EloquentCompany;
 use App\Repositories\Company\CompanyRepository;
 
+use App\Repositories\MethodPayment\EloquentMethodPayment;
+use App\Repositories\MethodPayment\MethodPaymentRepository;
+
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -80,5 +84,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ReservationRepository::class, EloquentReservation::class);
         $this->app->singleton(MessageRepository::class, EloquentMessage::class);
         $this->app->singleton(CompanyRepository::class, EloquentCompany::class);
+        $this->app->singleton(MethodPaymentRepository::class, EloquentMethodPayment::class);
     }
 }

@@ -28,6 +28,7 @@ class FaqController extends Controller
         $this->middleware('timezone'); 
         $this->middleware(['panel:admin']);
         $this->faqs = $faqs;
+        $this->middleware('permission:faq.manage');
     }
 
     /**

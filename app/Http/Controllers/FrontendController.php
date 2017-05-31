@@ -16,6 +16,7 @@ use App\Repositories\Message\MessageRepository;
 use App\Repositories\BranchOffice\BranchOfficeRepository;
 use App\Repositories\Reservation\ReservationRepository;
 use App\Http\Requests\Reservation\CreateReservation;
+use App\Repositories\Province\ProvinceRepository;
 
 class FrontendController extends Controller
 {
@@ -56,6 +57,11 @@ class FrontendController extends Controller
     private $users;
 
     /**
+     * @var ProvinceRepository
+     */
+    private $provinces;
+
+    /**
      * FrontendController constructor.
      * @param 
      */
@@ -66,7 +72,9 @@ class FrontendController extends Controller
         CommentRepository $comments,
         ReservationRepository $reservations,
         MessageRepository $messages,
-        UserRepository $users
+        UserRepository $users,
+        ProvinceRepository $provinces
+
     ){
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
@@ -80,6 +88,7 @@ class FrontendController extends Controller
         $this->reservations = $reservations;
         $this->messages = $messages;
         $this->users = $users;
+        $this->provinces = $provinces;
     }
 
     /**
@@ -112,19 +121,21 @@ class FrontendController extends Controller
     {
         $locales = $this->branchs->search(10, $request);
         $search = ($request->search) ?  true : false;
-        $view = ($request->reservation_web) ? 'frontend.branchs.list_search' : 'frontend.branchs.list_search_score';
+        $view = ($request->reservation_web || $request->province_id) ? 'frontend.branchs.list_search' : 'frontend.branchs.list_search_score';
         $score = $request->score;
         $recommendation = $request->recommendation;
+        $province = $request->province_id;
+        $provinces = ['' => 'seleccionar provincia'] + $this->provinces->lists('name', 'id');
 
         if ( $request->ajax() ) {
 
             return response()->json([
                 'success' => true,
-                'view' => view($view, compact('locales', 'search', 'score', 'recommendation'))->render(),
+                'view' => view($view, compact('locales', 'search'))->render(),
             ]);
         }
 
-        return view('frontend.branchs.search', compact('locales', 'search'));
+        return view('frontend.branchs.search', compact('locales', 'provinces', 'search'));
     }
 
     /**
@@ -211,7 +222,7 @@ class FrontendController extends Controller
      */
     public function localReservations(Request $request)
     {
-        $locales = $this->branchs->where('reservation_web', true)->paginate(10);
+        $locales = $this->branchs->where('status', true)->where('reservation_web', true)->paginate(10);
         $paginate = true;
 
         if ( $request->ajax() ) {

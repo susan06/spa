@@ -4282,3 +4282,28 @@ img.thumb-img {
   height: 50px;
   border-radius: 30%;
 }
+
+.modal-backdrop.in {
+    opacity: 0; 
+}
+
+.modal-backdrop {
+  z-index: -5;
+}
+
+.mg-right-checkbox label {
+  margin-right: 15px;
+}
+.mg-left-10 {
+  margin-left: 10px;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+img.icon_payment {
+  width: 50px;
+  height: 40px;
+  margin-left: 10px;
+}

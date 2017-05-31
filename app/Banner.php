@@ -25,6 +25,10 @@ class Banner extends Model
         'status'
     ];
 
+    protected $casts = [
+        'status' => 'boolean'
+    ];
+
 
     /**
      * get span label status

@@ -23,6 +23,13 @@ class PermissionsSeeder extends Seeder
         ]);
 
         $permissions[] = Permission::create([
+            'name' => 'clients.manage',
+            'display_name' => 'Gestión de clientes',
+            'description' => '',
+            'removable' => false
+        ]);
+
+        $permissions[] = Permission::create([
             'name' => 'users.activity',
             'display_name' => 'Registro de actividades',
             'description' => 'Ver la actividad de todos los usuarios.',
@@ -46,6 +53,41 @@ class PermissionsSeeder extends Seeder
         $permissions[] = Permission::create([
             'name' => 'settings.general',
             'display_name' => 'Configuración general del sistema',
+            'description' => '',
+            'removable' => false
+        ]);
+
+        $permissions[] = Permission::create([
+            'name' => 'company.manage',
+            'display_name' => 'Gestión de compañias',
+            'description' => '',
+            'removable' => false
+        ]);
+
+        $permissions[] = Permission::create([
+            'name' => 'branch.manage',
+            'display_name' => 'Gestión de locales',
+            'description' => '',
+            'removable' => false
+        ]);
+
+        $permissions[] = Permission::create([
+            'name' => 'banner.manage',
+            'display_name' => 'Gestión de banners',
+            'description' => '',
+            'removable' => false
+        ]);
+
+        $permissions[] = Permission::create([
+            'name' => 'faq.manage',
+            'display_name' => 'Gestión de FAQs',
+            'description' => '',
+            'removable' => false
+        ]);
+
+        $permissions[] = Permission::create([
+            'name' => 'term.manage',
+            'display_name' => 'Gestión de términos y condiciones',
             'description' => '',
             'removable' => false
         ]);

@@ -16,7 +16,7 @@
                     @include('partials.search') 
 
                     <div class="col-md-3 col-sm-3 col-xs-12 mg-botom-15-movil">
-                       <a href="javascript:void(0)" data-href="{{route('branch.create') }}" class="btn btn-danger btn-fill  create-edit-show" data-model="modal" title="@lang('app.create_branch')">
+                       <a href="{{route('branch.create') }}" class="btn btn-danger btn-fill menu-click" title="@lang('app.create_branch')">
                           @lang('app.add_branch')
                       </a>
                     </div>

@@ -771,5 +771,12 @@ return [
     'banner_deleted' => 'Banner Eliminado',
 
     'order' => 'Órden',
+    'address_description' => 'Descripción dirección',
+    'provincia' => 'Provincia',
+    'company' => 'Compañia',
+    'add_services' => 'Agregar servicios',
+    'address_add_autocomplete' => 'Buscar dirección',
+
+    'show_branch' => 'Ver local',
 
 ];

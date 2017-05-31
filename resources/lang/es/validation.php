@@ -197,6 +197,18 @@ return [
         'contact_phone'         => 'Télefono de contacto',
         'card_method'           => 'Pago con tarjeta',
         'type_dni'              => 'Tipo de documento',
+        'image'                 => 'Imagen',
+        'priority'              => 'órden de prioridad',
+
+        'company_id' => 'compañia',
+        'province_id' => 'provincia', 
+        'lat' => 'latitud',
+        'lng' => 'longitud',
+        'phone_one' => 'Télefono 1',            
+        'working_hours' => 'horario de trabajo',
+        'week' => 'días de semana',
+        'min_time' => 'hora inicial',
+        'max_time' => 'hora final',
     ],
 
 ];

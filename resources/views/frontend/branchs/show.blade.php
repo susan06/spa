@@ -78,6 +78,7 @@
     		{{ $local->email }}
     		</p>
     		<h4 class="mg-top-10"><strong>N° veces recomendado: {{ $local->recommendations->count() }}</strong></h4>
+    		<h4 class="mg-top-10"><strong>N° veces visitado: {{ $local->visites->count() }}</strong></h4>
     		@if((Auth::check()))
     			<a href="{{ route('message.create') }}" class="btn btn-fill btn-warning menu-click">Queja o sugerencia</a>
     		@endif
@@ -174,12 +175,17 @@
 				    <div class="content">	    
 						<div class="row">
 						  <div class="col-md-12 col-xs-12">
+						  @if($local->services_description)
+						  <p>{{ $local->services_description }}</p>
+						  @endif
 						  	<table class="table table-hover table-striped">
 							    @foreach($local->services as $key => $services)
-							    <tr>
-							    	<td>{{ $services->name }}</td>
-							    	<td>{{ Settings::get('coin').' '.$services->price }}</td>
-							    </tr>
+								    @if($services->status)
+									    <tr>
+									    	<td>{{ $services->name }}</td>
+									    	<td>{{ Settings::get('coin').' '.$services->price }}</td>
+									    </tr>
+								    @endif
 							    @endforeach
 							</table>
 						  </div>
@@ -236,7 +242,7 @@
 			
 			(function() { // DON'T EDIT BELOW THIS LINE
 			var d = document, s = d.createElement('script');
-			s.src = 'https://kels-2.disqus.com/embed.js';
+			s.src = "{{ Settings::get('site_disqus') }}"; //https://kels-2.disqus.com/embed.js
 			s.setAttribute('data-timestamp', +new Date());
 			(d.head || d.body).appendChild(s);
 			})();
@@ -397,7 +403,7 @@
 	    infowindow = new google.maps.InfoWindow({map: map});
 
 	    marker = new google.maps.Marker({
-	      position: new google.maps.LatLng('{{$local->lat}}', '{{$local->lng}}'),
+	      position: new google.maps.LatLng({{$local->lat}}, {{$local->lng}}),
 	      map: map,
 	      customInfo: '{{ $local->address }}',
 	      title: '{{ $local->name }}',
@@ -406,7 +412,8 @@
 
 	    infowindow.close();
 
-	    map.setCenter(marker.getPosition());
+	    map.setCenter({{$local->lat}}, {{$local->lng}});
+      	map.setZoom(16); 
 
 	}
 

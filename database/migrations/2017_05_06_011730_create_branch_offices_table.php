@@ -19,6 +19,7 @@ class CreateBranchOfficesTable extends Migration
             $table->string('name', 60);
             $table->text('address');
             $table->text('address_description');
+            $table->text('services_description')->nullable();
             $table->string('lat');
             $table->string('lng');
             $table->string('phone_one', 60);

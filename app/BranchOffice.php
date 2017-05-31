@@ -26,6 +26,7 @@ class BranchOffice extends Model
         'name',
         'address',
         'address_description',
+        'services_description',
         'lat',
         'lng',
         'phone_one',
@@ -118,6 +119,20 @@ class BranchOffice extends Model
         return $result;
     }
 
+
+    public function checkPayment($payment_id) 
+    {
+        $result = '';
+
+        foreach ($this->payment as $key => $value) {
+           if($value->method_payment_id == $payment_id) {
+                $result = 'checked="checked"';
+           }
+        }
+
+        return $result;
+    }
+
     public function scoreByClient() {
 
         $score_html = '';
@@ -187,7 +202,7 @@ class BranchOffice extends Model
         if($this->reservation_web) {
             switch($this->reservation_discount) {
                 case true:
-                    $result = '<span class="label label-success">Descuento en reserva</span>';
+                    $result = '<span class="label label-success">Descuento en reserva ('.$this->percent_discount.'%)</span>';
                     break;
 
                 case false:

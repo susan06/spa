@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use Storage;
 use Illuminate\Http\Request;
 use App\Repositories\Banner\BannerRepository;
+use App\Http\Requests\Banner\CreateBanner;
+use App\Http\Requests\Banner\UpdateBanner;
 
 class BannerController extends Controller
 {
@@ -21,6 +25,8 @@ class BannerController extends Controller
         $this->middleware('timezone'); 
         $this->middleware(['panel:admin']);
         $this->banners = $banners;
+        $this->middleware('permission:banner.manage');
+
     }
 
     /**
@@ -31,6 +37,7 @@ class BannerController extends Controller
     public function index(Request $request)
     {
         $banners = $this->banners->orderBy('priority', 'asc')->paginate(10);
+
         if ( $request->ajax() ) {
 
             if (count($banners)) {
@@ -55,9 +62,34 @@ class BannerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $edit = false;
+        $status = [
+            true => trans("app.Published"),
+            false => trans("app.No Published")
+        ];
+        $order = [
+            1  => '1',
+            2  => '2',
+            3  => '3',
+            4  => '4',
+            5  => '5',
+            6  => '6',
+            7  => '7',
+            8  => '8',
+            9  => '9',
+            10  => '10'
+        ];
+
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => true,
+                'view' => view('banners.create-edit', compact('edit', 'status', 'order'))->render()
+            ]);
+        } 
+
+        return view('banners.create-edit', compact('edit', 'status', 'order'));
     }
 
     /**
@@ -66,9 +98,45 @@ class BannerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBanner $request)
     {
-        //
+        $file = $request->image;
+        $date = new DateTime();
+        $file_name = $date->getTimestamp().'.'.$file->extension();
+        
+        if($file){
+            if ($file->isValid()) {
+                \File::delete(public_path('uploads/banners').'/'.$file_name);
+                $path = $file->storeAs('uploads/banners', $file_name, 'banner');
+            }else{
+
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('app.error_upload_file')
+                ]);
+   
+            }
+        }
+        $data = [
+            'name' => $file_name,
+            'priority' => (int)$request->priority,
+            'status' => ($request->status == '1') ? true : false
+        ];
+
+        $banner = $this->banners->create($data);
+        if ( $banner ) {
+            
+            return response()->json([
+                'success' => true,
+                'message' => trans('app.banner_created')
+            ]);
+        } else {
+            
+            return response()->json([
+                'success' => false,
+                'message' => trans('app.error_again')
+            ]);
+        }
     }
 
     /**
@@ -88,9 +156,37 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $edit = true;
+        $status = [
+            '' => trans('app.selected_item'),
+            true => trans("app.Published"),
+            false => trans("app.No Published")
+        ];
+        $order = [
+            1  => '1',
+            2  => '2',
+            3  => '3',
+            4  => '4',
+            5  => '5',
+            6  => '6',
+            7  => '7',
+            8  => '8',
+            9  => '9',
+            10  => '10'
+        ];
+        if ( $banner = $this->banners->find($id) ) {
+            return response()->json([
+                'success' => true,
+                'view' => view('banners.create-edit', compact('banner', 'edit', 'status', 'order'))->render()
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => trans('app.no_record_found')
+            ]);
+        }
     }
 
     /**
@@ -100,9 +196,29 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, UpdateBanner $request)
     {
-        //
+        $data = [
+            'priority' => (int)$request->priority,
+            'status' => ($request->status == '1') ? true : false
+        ];
+        $banner = $this->banners->update(
+            $id, 
+            $data
+        );
+        if ( $banner ) {
+            
+            return response()->json([
+                'success' => true,
+                'message' => trans('app.banner_updated')
+            ]);
+        } else {
+            
+            return response()->json([
+                'success' => false,
+                'message' => trans('app.error_again')
+            ]);
+        }
     }
 
     /**
@@ -111,8 +227,22 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $banner = $this->banners->find($id);
+        \File::delete(public_path('uploads/banners').'/'.$banner->name);
+        if ( $this->banners->delete($id) ) {
+            
+            return response()->json([
+                'success' => true,
+                'message' => trans('app.banner_deleted')
+            ]);
+        } else {
+            return response()->json([
+                'success'=> false,
+                'message' => trans('app.error_again')
+            ]);
+        }
+        
     }
 }

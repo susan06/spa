@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Banner;
 
-use App\Http\Requests\RequestForm;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CreateBanner extends RequestForm
+class UpdateBanner extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,9 @@ class CreateBanner extends RequestForm
      */
     public function rules()
     {
+        $id = $this->route('banner');
         return [
-            'image' => 'required|image|dimensions:min_width=800,min_height=400',
-            'priority' => 'required||unique:banners,priority',
+            'priority' => 'required||unique:banners,priority,'.$id,
             'status' => 'required',
         ];
     }

@@ -82,4 +82,11 @@ interface BranchOfficeRepository extends RepositoryInterface
      */
     public function searchLocalVisitByCLient($take = 10, $client);
 
+    public function create_service(array $data); 
+
+    public function create_payment(array $data);
+
+    public function create_photo(array $data);
+
+
 }

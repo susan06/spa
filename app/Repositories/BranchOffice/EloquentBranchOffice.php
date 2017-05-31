@@ -8,6 +8,9 @@ use App\Favorite;
 use App\Visit;
 use App\Recommendation;
 use App\Company;
+use App\Payment;
+use App\Photo;
+use App\Service;
 use App\Repositories\Repository;
 use DB;
 
@@ -46,8 +49,14 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
 
             if ($request->get('reservation_web')) {
                 
-                $result = $this->model->where('reservation_web', true)->paginate(10);
+                $result = $this->model->where('status', true)->where('reservation_web', true)->paginate(10);
                 $result->appends(['reservation_web' => true]);
+            }
+
+            if ($request->get('province_id')) {
+                
+                $result = $this->model->where('status', true)->where('province_id', $request->get('province_id'))->paginate(10);
+                $result->appends(['province_id' => true]);
             }
 
             if ($request->get('recommendation')) {
@@ -74,13 +83,16 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
     private function searchByRecommendation($take = 10)
     {
         $query = Recommendation::groupBy('branch_office_id');
-        $query->selectRaw('*, count(branch_office_id) as count_branch');
+        $query->join('branch_offices', 'recommendations.branch_office_id', '=', 'branch_offices.id');
+        $query->selectRaw('recommendations.*, count(recommendations.branch_office_id) as count_branch');
 
+        $query->where('branch_offices.status', true);
         $query->orderBy('count_branch', 'DESC');
 
         $result = $query->paginate($take);
 
         return $result;
+
     }
 
 
@@ -96,9 +108,11 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
      */
     public function searchByScore($take = 10, $search = null)
     {
-        $query = Score::groupBy('branch_office_id');
-        $query->selectRaw('*, avg(service) as avg_service, avg(service) as avg_service, avg(environment) as avg_environment, avg(attention) as avg_attention, avg(price) as avg_price, count(branch_office_id) as count_branch');
+        $query = Score::groupBy('scores.branch_office_id');
+        $query->join('branch_offices', 'scores.branch_office_id', '=', 'branch_offices.id');
+        $query->selectRaw('scores.*, avg(scores.service) as avg_service, avg(scores.service) as avg_service, avg(scores.environment) as avg_environment, avg(scores.attention) as avg_attention, avg(scores.price) as avg_price, count(scores.branch_office_id) as count_branch');
 
+        $query->where('branch_offices.status', true);
         $query->orderBy('avg_'.$search, 'DESC');
 
         $result = $query->paginate($take);
@@ -214,6 +228,22 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
         $result = $query->paginate($take);
 
         return $result;
+    }
+
+
+    public function create_service(array $data) 
+    {
+        return Service::create($data);
+    }
+
+    public function create_payment(array $data) 
+    {
+        return Payment::create($data);
+    }
+
+    public function create_photo(array $data) 
+    {
+        return Photo::create($data);
     }
 
 }

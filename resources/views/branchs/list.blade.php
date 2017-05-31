@@ -15,10 +15,15 @@
                 <td class="text-center">{{ $local->visites->count() }}</td>
                 <td class="text-center">{{ $local->recommendations->count() }}</td>                
                 <td class="text-center">
-                     <a href="#" class="btn btn-fill btn-info">
-                       @lang('app.reservations')
+                    <a href="{{ route('branch.reservations', $local->id) }}" class="btn btn-fill btn-info"
+                    title="@lang('app.reservations')" data-toggle="tooltip" data-placement="top">
+                      <i class="fa fa-calendar"></i>
                     </a>
-                    <a href="{{ route('branch.show', $local->id) }}" class="btn btn-fill btn-info" 
+                    <a href="{{ route('branch.comments', $local->id) }}" class="btn btn-fill btn-info"
+                       title="Commentarios" data-toggle="tooltip" data-placement="top">
+                       <i class="fa fa-bullhorn"></i>
+                    </a>
+                    <a href="{{ route('local.show', $local->id) }}" target="_blank" class="btn btn-fill btn-info" 
                        title="@lang('app.show_branch')" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-eye"></i>
                     </a>
