@@ -51,6 +51,12 @@
   }
 }
 /*           Font Smoothing      */
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
 body,
 h1, .h1,
 h2, .h2,
@@ -159,7 +165,7 @@ h1 .subtitle {
 body,
 .wrapper {
   min-height: 100vh;
-  position: relative;
+  /*position: relative;*/
 }
 
 a {
