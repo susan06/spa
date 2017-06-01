@@ -524,6 +524,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   position: fixed;
   z-index: 2;
   margin-bottom: 0px;
+  height: 75px;
 
 }
 
