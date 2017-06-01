@@ -52,8 +52,6 @@
 }
 /*           Font Smoothing      */
 body {
-  overflow-x: hidden;
-  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
 
