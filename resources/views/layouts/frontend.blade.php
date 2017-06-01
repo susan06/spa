@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viwport" content="width=divce-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="viwport" content="width=divce-width, user-scalable=0, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <!--
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
      CSRF Token -->
