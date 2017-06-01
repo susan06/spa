@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand site-name" href="{{ url('/') }}">
+            <a class="navbar-brand site-name menu-click" href="{{ url('/') }}">
              <img src="{{ asset('images/logo.png') }}">
             </a>
         </div>     
@@ -63,13 +63,13 @@
         </li>
         @endif
         <li>
-            <a href="{{ route('faqs') }}" class="-menu-click">
+            <a href="{{ route('faqs') }}" class="menu-click">
                 <i class="pe-7s-bookmarks"></i>
                 FAQs
             </a>
         </li>
         <li>
-            <a href="{{ route('conditions') }}" class="-menu-click">
+            <a href="{{ route('conditions') }}" class="menu-click">
                 <i class="pe-7s-notebook"></i>
                 Térm. & Cond.
             </a>

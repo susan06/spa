@@ -111,7 +111,7 @@
 
                       <div id="map-form" style="min-height: 300px;"></div>
 
-                      <div class="row">
+                      <div class="row mg-top-10">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                          <div class="form-group">
                           <label>@lang('app.phone') 1 <span class="required">*</span></label>
@@ -197,14 +197,14 @@
                             <input type="hidden" name="reservation_discount" value="0">
                             {!! Form::checkbox('reservation_discount', 1, old('reservation_discount'), ['class' => 'js-switch']) !!}
                             </div>
-                            <div class="col-md-2 col-sm-2 col-xs-4">
+                            <div class="col-md-2 col-sm-2 col-xs-4 mg-top-10">
                             {!! Form::text('percent_discount', old('percent_discount'), ['class' => 'form-control percent', 'data-inputmask' => "'mask' : '99%'"]) !!}
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      <div class="row">
+                      <div class="row mg-top-10">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                           <div class="form-group">
                             <label>Servicios de valor agregado</label>
@@ -223,7 +223,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                           <div id="content-table">
                             <div id="load_services"> 
-                              <table class="table-responsive table table-striped table-bordered dt-responsive nowrap form-horizontal" id="services_table" {{ ($edit) ? 'style="display: none;"' : '' }}>
+                              <table class="table-responsive table table-striped table-bordered dt-responsive nowrap form-horizontal" id="services_table" style="display: none;">
                               <thead>
                               <tr>
                                 <th>@lang('app.name')</th>
@@ -270,7 +270,7 @@
                       </div>
                       -->
 
-                       <div class="row">
+                       <div class="row mg-top-10">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                           <label>Métodos de pago</label>
                         </div>
@@ -298,7 +298,7 @@
                         </div>
                       </div>
 
-                      <div class="row">
+                      <div class="row mg-top-10">
                         <h4 class="title">Fotos</h4>
                         <div class="col-md-5 col-sm-5 col-xs-12">
                          <div class="form-group">
@@ -368,6 +368,7 @@
   var infowindow = null;
   var marker = null;
   @if($edit)
+  $('#services_table').show();
   var edit = true;
   var local_lat = {{ $branch->lat }};
   var local_lng = {{ $branch->lng }};

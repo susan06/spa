@@ -1,6 +1,6 @@
 
 @if(isset ($errors) && count($errors) > 0)
-      
+    <?php $data = Session::get('errors'); ?>      
     @foreach($errors->all() as $error)
         <script> notify('error', '{{ $error }}'); </script>
     @endforeach

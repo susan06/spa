@@ -30,7 +30,7 @@
                        @if (count($permissions))
                          
                           <div class="col-md-12 col-sm-12 col-xs-12">
-                             <button type="submit" class="btn btn-danger pull-right">@lang('app.save_permissions')
+                             <button type="submit" class="btn btn-danger btn-fill pull-right">@lang('app.save_permissions')
                             </button>
                           </div>
                        

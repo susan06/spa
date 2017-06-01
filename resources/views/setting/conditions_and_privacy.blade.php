@@ -5,21 +5,17 @@
 @section('content')
 
 <div class="container-fluid">
-  <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-            <div class="header">
-                <h4 class="title">{{ trans('app.terms_service') }}</h4>
+    <div class="card">
+        <div class="header">
+            <h4 class="title">{{ trans('app.terms_service') }}</h4>
+        </div>
+        <div class="content">
+            <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+            @include('setting.conditions_privacy_field')
             </div>
-            <div class="content">
-                <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                @include('setting.conditions_privacy_field')
-                </div>
-                </div>
             </div>
         </div>
-      </div>
   </div>
 </div>
 

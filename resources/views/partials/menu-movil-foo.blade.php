@@ -12,7 +12,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ route('faqs') }}" class="-menu-click">
+        <a href="{{ route('faqs') }}" class="menu-click">
             <i class="pe-7s-bookmarks"></i>
             FAQs
         </a>

@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ route('home') }}">{{ settings::get('app_name') }}</a>
+            <a class="navbar-brand menu-click" href="{{ route('home') }}">{{ settings::get('app_name') }}</a>
         </div>
         @if(Auth::check())
          <div class="collapse navbar-collapse">
@@ -18,9 +18,9 @@
                             <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a href="{{ route('profile.index')}}">@lang('app.profile')</a></li>
-                        <li><a href="{{ route('user.setting') }}">@lang('app.setting')</a></li>
-                        <li><a href="{{ route('user.password') }}">@lang('app.auth_and_registration')</a></li>
+                        <li><a href="{{ route('profile.index')}}" class="menu-click">@lang('app.profile')</a></li>
+                        <li><a href="{{ route('user.setting') }}" class="menu-click">@lang('app.setting')</a></li>
+                        <li><a href="{{ route('user.password') }}" class="menu-click">@lang('app.auth_and_registration')</a></li>
                       </ul>
                 </li>
                 <li>

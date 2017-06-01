@@ -14,7 +14,7 @@
             <div class="content">
                 <div class="row">
                     
-                    <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="col-md-3 col-sm-3 col-xs-12 mg-botom-15-movil">
                         <button type="button" data-href="{{ route('faq.create') }}" class="btn btn-danger btn-fill  create-edit-show" data-model="modal" title="@lang('app.create_faq')">@lang('app.create_faq')</button>
                     </div>
 

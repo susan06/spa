@@ -4,7 +4,6 @@
 
 @section('content')
 
-<div class="row">
   <div class="col-md-12 col-xs-12">
     <div class="card">
       <div class="header">
@@ -51,7 +50,7 @@
                   <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                         <label>@lang('app.email') </label>
-                        {!! Form::text('email', old('email'), ['class' => 'form-control col-md-7 col-xs-12', 'id' => 'email', 'readOnly' => 'readOnly']) !!}
+                        {!! Form::text('email', old('email'), ['class' => 'form-control', 'id' => 'email', 'readOnly' => 'readOnly']) !!}
                     </div>
                   </div>
 
@@ -93,7 +92,7 @@
 
                 </div> 
 
-                <div class="row">   
+                <div class="col-md-12 col-xs-12">   
                   <button type="submit" class="btn btn-danger btn-fill menu-click pull-right">@lang('app.update')</button>
                 </div>
 
@@ -105,7 +104,6 @@
       </div>
     </div>
   </div>
-</div>
 
 @endsection
 

@@ -513,12 +513,13 @@ body > .navbar-collapse[data-color="purple"]:after {
 
 .main-panel > .footer {
   border-top: 1px solid #e7e7e7;
-  /*
-  position: fixed;
-  bottom: 0;
-  z-index: 10;
-  left: 0;*/
   width: 100%;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 2;
+  margin-bottom: 0px;
+
 }
 
 .main-panel .navbar {

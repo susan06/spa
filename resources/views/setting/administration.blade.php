@@ -5,19 +5,15 @@
 @section('content')
 
 <div class="container-fluid">
-  <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-            <div class="header">
-                <h4 class="title">{{ trans('app.setting') }}</h4>
-                <p class="category">{{trans('app.manage_general_system_settings')}}</p>
-            </div>
-            <div class="content">
-                @include('setting.administration_field')
-            </div>
-        </div>
+      <div class="card">
+          <div class="header">
+              <h4 class="title">{{ trans('app.setting') }}</h4>
+              <p class="category">{{trans('app.manage_general_system_settings')}}</p>
+          </div>
+          <div class="content">
+              @include('setting.administration_field')
+          </div>
       </div>
-  </div>
 </div>
 
 @endsection
