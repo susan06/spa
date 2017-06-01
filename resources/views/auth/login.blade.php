@@ -93,7 +93,7 @@
                       </div>
                       <div class="col-md-6 col-xs-6 login-row-right">
                         <div class="form-group">
-                          <input type="text" name="phone" placeholder="@lang('app.phone')" value="{{ old('phone') }}" class="form-control phones" data-inputmask="'mask' : '9999999999'"/>
+                          <input type="text" name="phone" placeholder="@lang('app.phone')" value="{{ old('phone') }}" class="form-control phones" data-inputmask="'mask' : '99999999'"/>
                         </div>
                       </div>
                     </div>

@@ -84,9 +84,16 @@ interface BranchOfficeRepository extends RepositoryInterface
 
     public function create_service(array $data); 
 
+    public function update_service($id, array $data);
+
+    public function delete_service($id);
+
     public function create_payment(array $data);
+
+    public function delete_payment($id);
 
     public function create_photo(array $data);
 
+    public function delete_photo($id);
 
 }

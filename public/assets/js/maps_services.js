@@ -214,6 +214,11 @@ $(document).on('click', '.delete-service', function () {
     row.remove();
 });
 
+$(document).on('click', '.delete-photo-upload', function () {
+    var row = $(this).closest('tr');
+    row.remove();
+});
+
 $(document).on('click', '.delete-photo', function () {
     var row = $(this).closest('div');
     row.remove();
@@ -227,7 +232,6 @@ function add_photos() {
     input.name  = 'photos[]';
     input.className = 'form-control'; 
 
-    var input1 = document.createElement("input");
     var div1    = document.createElement("div");
     var div2    = document.createElement("div");
     var div3    = document.createElement("div");

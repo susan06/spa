@@ -68,7 +68,7 @@
                  <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                         <label>@lang('app.phone_mobile') </label>
-                        {!! Form::text('phone', old('phone'), ['class' => 'form-control phones', 'id' => 'mobile', 'data-inputmask' => "'mask' : '9999999999'"]) !!}
+                        {!! Form::text('phone', old('phone'), ['class' => 'form-control phones', 'id' => 'mobile', 'data-inputmask' => "'mask' : '99999999'"]) !!}
                     </div>
                  </div>
 

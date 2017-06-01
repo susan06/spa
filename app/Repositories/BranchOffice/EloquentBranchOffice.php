@@ -230,20 +230,39 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
         return $result;
     }
 
-
     public function create_service(array $data) 
     {
         return Service::create($data);
     }
 
+    public function update_service($id, array $data) 
+    {
+        return Service::where('id', $id)->update($data);
+    }
+
+    public function delete_service($id)
+    {
+        Service::destroy($id);
+    }
+
     public function create_payment(array $data) 
     {
-        return Payment::create($data);
+        return Payment::firstOrCreate($data);
+    }
+
+    public function delete_payment($id)
+    {
+        Payment::destroy($id);
     }
 
     public function create_photo(array $data) 
     {
         return Photo::create($data);
+    }
+
+    public function delete_photo($id)
+    {
+        Photo::destroy($id);
     }
 
 }

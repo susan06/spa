@@ -115,14 +115,14 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                          <div class="form-group">
                           <label>@lang('app.phone') 1 <span class="required">*</span></label>
-                             {!! Form::text('phone_one', old('phone_one'), ['class' => 'form-control phones', 'data-inputmask' => "'mask' : '9999999999'"]) !!}
+                             {!! Form::text('phone_one', old('phone_one'), ['class' => 'form-control phones', 'data-inputmask' => "'mask' : '99999999'"]) !!}
                           </div>
                         </div>
                       
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <div class="form-group">
                           <label>@lang('app.phone') 2 </label>
-                          {!! Form::text('phone_second', old('phone_second'), ['class' => 'form-control phones', 'data-inputmask' => "'mask' : '9999999999'"]) !!}
+                          {!! Form::text('phone_second', old('phone_second'), ['class' => 'form-control phones', 'data-inputmask' => "'mask' : '99999999'"]) !!}
                           </div>
                         </div>
                       </div>
@@ -279,8 +279,7 @@
                             @foreach($payments as $payment)
                               <label>
                                 <input type="checkbox" name="payments[]" value="{{ $payment->id }}"
-                                {{ ($edit) ? $branch->checkPayment($payment->id) : '' }}
-                                >
+                                {{ ($edit) ? $branch->checkPayment($payment->id) : '' }}>
                                 <img class="icon_payment" src="{{ asset('uploads/methodPayments/'.$payment->icon) }}"> 
                               </label>
                             @endforeach
@@ -316,6 +315,34 @@
                           <button type="button" onClick="add_photos()" class="btn btn-default col-xs-12">Agregar más fotos</button>
                         </div>
                       </div>
+
+                      @if($edit)
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <table class="table table-striped table-bordered dt-responsive nowrap">
+                              <thead>
+                              <tr>
+                                <th class="text-center">@lang('app.image')</th>
+                                <th>@lang('app.actions')</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach($branch->photos as $key => $photo)
+                                    <tr>
+                                      <td class="text-center"><img class="thumb-img" src="{{ asset('uploads/photos/'.$photo->name) }}" alt="{{ $photo->name }}"></td>
+                                      <input type="hidden" name="photos_id[]" value="{{ $photo->id }}">
+                                      <td>
+                                        <button type="button" class="btn btn-round btn-danger delete-photo-upload"> 
+                                          <i class="fa fa-trash"></i>
+                                        </button>
+                                      </td>
+                                    </tr>
+                                    @endforeach
+                              </tbody>
+                              </table>
+                        </div>
+                      </div>
+                      @endif
 
                       <div class="col-md-12 col-sm-12 col-xs-12">
                       @if($edit)

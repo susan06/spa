@@ -119,7 +119,6 @@ class BranchOffice extends Model
         return $result;
     }
 
-
     public function checkPayment($payment_id) 
     {
         $result = '';
@@ -127,6 +126,19 @@ class BranchOffice extends Model
         foreach ($this->payment as $key => $value) {
            if($value->method_payment_id == $payment_id) {
                 $result = 'checked="checked"';
+           }
+        }
+
+        return $result;
+    }
+
+    public function isPayment($payment_id) 
+    {
+        $result = false;
+
+        foreach ($this->payment as $key => $value) {
+           if($value->method_payment_id == $payment_id) {
+                $result = true;
            }
         }
 
