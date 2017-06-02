@@ -79,7 +79,7 @@ class FrontendController extends Controller
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
         $this->middleware('auth.front', ['except' => [
-            'index', 'localShow', 'localSearch', 'getlocalByScore', 'localNews', 'localReservations', 'conditions', 'faqs'
+            'index', 'localShow', 'localScore', 'localSearch', 'getlocalByScore', 'localNews', 'localReservations', 'conditions', 'faqs'
         ]]);
         $this->banners = $banners;
         $this->branchs = $branchs;
