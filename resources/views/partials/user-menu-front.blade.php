@@ -1,4 +1,4 @@
- <nav class="navbar navbar-fixed navbar-menu">
+ <nav class="navbar navbar-fixed navbar-menu visible-pc">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" id="nav-bar-button" class="navbar-toggle" data-toggle="collapse">
