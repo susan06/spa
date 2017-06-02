@@ -194,7 +194,7 @@ class BranchController extends Controller
                 foreach( $photos as $key => $file ) {
                     $date = new DateTime();
                     $ext = $file->extension();
-                    $file_name = $date->getTimestamp().'.'.$ext;
+                    $file_name = $date->getTimestamp().$key.'.'.$ext;
                     
                     if($file){
                  
@@ -319,7 +319,7 @@ class BranchController extends Controller
     public function update(CreateBranch $request, $id, MethodPaymentRepository $methodPaymentRepository)
     {
         $services = $request->services_name;
-        $payments = sisset($request->payment) ? $request->payment : [];
+        $payments = isset($request->payments) ? $request->payments : [];
         $photos = $request->photos;
         $photos_up = isset($request->photos_id) ? $request->photos_id : [];
 
@@ -392,18 +392,21 @@ class BranchController extends Controller
                 }
             }
 
-            $payment_old = $branch->payment->toArray();
-            foreach ($payments as $key => $value) {
-                if (! in_array($value, $payment_old)  ) {
-                    $this->branchs->delete_payment($value['id']);
-                } else {
-                    $this->branchs->create_payment([ 
-                        'branch_office_id' => $id,
+            $payment_old = $branch->payment;
+
+            foreach ($payment_old as $key => $value) {
+                $value->delete();
+            }
+
+            if ( $payments ) {
+                foreach( $payments as $key => $value ) {
+                   $this->branchs->create_payment([ 
+                        'branch_office_id' => $branch->id,
                         'method_payment_id' => $value,           
                         ]
                     );
                 }
-            }                     
+            }                  
             
             $photos_old = $branch->photos->toArray();
             foreach( $photos_old as $photo_old ) {
@@ -417,12 +420,9 @@ class BranchController extends Controller
                 foreach( $photos as $key => $file ) {
                     $date = new DateTime();
                     $ext = $file->extension();
-                    $file_name = $date->getTimestamp().'.'.$ext;
-                    
-                    if($file){
-                 
+                    $file_name = $date->getTimestamp().$key.'.'.$ext;              
+                    if($file){                 
                         if($ext == 'png' ||$ext == 'jpg' || $ext == 'jpeg'){
-
                             if ($file->isValid()) {
                                 \File::delete(public_path('uploads/photos').'/'.$file_name);
                                 $path = $file->storeAs('uploads/photos', $file_name, 'locales');
