@@ -778,5 +778,6 @@ return [
     'address_add_autocomplete' => 'Buscar dirección',
 
     'show_branch' => 'Ver local',
+    'branch_deleted' => 'Local eliminado',
 
 ];

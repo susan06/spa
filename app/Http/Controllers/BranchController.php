@@ -451,9 +451,23 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $branch = $this->branchs->find($id);
+        foreach($branch->photos as $key => $photo){
+            \File::delete(public_path('uploads/photos').'/'.$photo->name);
+        }   
+        if ( $this->branchs->delete($id) ) {        
+            return response()->json([
+                'success' => true,
+                'message' => trans('app.branch_deleted')
+            ]);
+        } else {
+            return response()->json([
+                'success'=> false,
+                'message' => trans('app.error_again')
+            ]);
+        }
     }
 
     /**
