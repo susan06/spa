@@ -71,8 +71,8 @@
     	<div class="row title-local-bottom">
     		<h4><strong>{{ $local->name }}</strong></h4>
     		<p><i class="pe-7s-call"></i>
-    		{{ $local->phone_one }}
-    		{{ ($local->phone_second) ?  ' / '.$local->phone_second: '' }}
+    		{{ str_replace('_','',$local->phone_one) }}
+    		{{ ($local->phone_second) ?  ' / '.str_replace('_','',$local->phone_second) : '' }}
     		</p>
     		<p><i class="pe-7s-mail"></i>
     		{{ $local->email }}
