@@ -128,9 +128,6 @@ class SocialAuthController extends Controller
             ]);
         }
 
-        // Associate social account with user account inside our application
-        $this->users->associateSocialAccountForUser($user->id, $provider, $socialUser);
-
         return $user;
     }
 
