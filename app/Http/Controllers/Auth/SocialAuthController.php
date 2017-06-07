@@ -57,7 +57,7 @@ class SocialAuthController extends Controller
     {
         $socialUser = $this->getUserFromProvider($provider);
 
-        $user = $this->users->findBySocialId($provider, $socialUser->getId());
+        $user = $this->users->where('facebook', 'https://www.facebook.com/'.$socialUser->getId() )->first();
 
         if (! $user) {
             $user = $this->createOrAssociateAccountForUser($socialUser, $provider);
