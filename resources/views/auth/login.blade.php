@@ -22,7 +22,7 @@
             <div id="login" class="form-action show">
 
               <div class="col-md-12 col-xs-12 btn-social">
-                <button type="button" class="btn-face btn-lg btn-block omb_btn-facebook">
+                <a href="{{ url('auth/facebook/login') }}" class="btn-face btn-lg btn-block omb_btn-facebook">
                   <span class="">Entrar con Facebook</span>
                 </button>
               </div>

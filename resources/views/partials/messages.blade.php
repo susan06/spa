@@ -1,22 +1,28 @@
 
 @if(isset ($errors) && count($errors) > 0)
-    <?php $data = Session::get('errors'); ?>      
+    <?php 
+    $data = Session::get('errors'); 
+    $message = '';
+    ?>  
     @foreach($errors->all() as $error)
-        <script> notify('error', '{{ $error }}'); </script>
+        <?php $message .= $error.' '; ?> 
     @endforeach
-    
+    <script> notify('error', '{{ $message }}'); </script>
 @endif
 
 @if(Session::get('success', false))
-    <?php $data = Session::get('success'); ?>
+    <?php 
+    $data = Session::get('success'); 
+    $message = '';
+    ?>
     @if (is_array($data))
         @foreach ($data as $msg)
-            <script> notify('success', '{{ $msg }}'); </script>
+            <?php $message .= $msg.' '; ?> 
         @endforeach
+        <script> notify('success', '{{ $message }}'); </script>
     @else
         <script> notify('success', '{{ $data }}'); </script>
     @endif
 @endif
 
 <!-- /Custom Notification -->
-

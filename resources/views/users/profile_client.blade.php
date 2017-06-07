@@ -49,8 +49,12 @@
 
                   <div class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        <label>@lang('app.email') </label>
+                      <label>@lang('app.email') </label>
+                      @if(isset($user) && !$user->email)
+                        {!! Form::text('email', old('email'), ['class' => 'form-control', 'id' => 'email', 'required' => 'required']) !!}
+                      @else
                         {!! Form::text('email', old('email'), ['class' => 'form-control', 'id' => 'email', 'readOnly' => 'readOnly']) !!}
+                      @endif
                     </div>
                   </div>
 

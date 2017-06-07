@@ -43,7 +43,7 @@
 
 <div class="col-md-6 col-sm-6 col-xs-12">
   <div class="form-group">
-    <label class="" for="@lang('app.timezone')">URL del sitio para DISQUS
+    <label class="">URL del sitio para DISQUS
     </label>
       {!! Form::text('site_disqus', Settings::get('site_disqus'), ['class' => 'form-control']) !!}
     </div>
@@ -52,6 +52,15 @@
 </div>
 
 <div class="row">
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+ <div class="form-group">
+    <label class="col-md-6 col-sm-6 col-xs-12">Activar búsqueda por localización</label>
+       <input type="hidden" name="location" value="0">
+       {!! Form::checkbox('location', 1, Settings::get('location'), ['class' => 'js-switch']) !!}
+    </div>
+  </div>
+
 
 <div class="col-md-12 col-sm-12 col-xs-12">
  <div class="form-group">

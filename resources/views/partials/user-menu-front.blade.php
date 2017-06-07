@@ -36,12 +36,14 @@
                 Nuevos
             </a>
         </li>
+        @if(Settings::get('location'))
          <li>
             <a href="#" class="-menu-click">
                 <i class="pe-7s-map-2"></i>
                 Locales cerca
             </a>
         </li>
+        @endif
         <li>
             <a href="{{ route('local.reservations') }}" class="menu-click">
                 <i class="pe-7s-alarm"></i>

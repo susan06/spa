@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->integer('province_id')->unsigned()->index();
             $table->string('address')->nullable();
             $table->string('address2')->nullable();
+            $table->string('facebook')->nullable();
             $table->string('password');
             $table->boolean('online')->default(false);
             $table->timestamp('last_login')->nullable();

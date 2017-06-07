@@ -41,6 +41,7 @@ class User extends Authenticatable
         'province_id',
         'address',
         'address2',
+        'facebook',
         'online',
         'confirmation_token',
         'remember_token',

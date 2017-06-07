@@ -39,3 +39,14 @@ Route::get('/message/show/{id}', 'FrontendController@messageShow')->name('messag
 Route::get('/message/create', 'FrontendController@messageCreate')->name('message.create');
 Route::post('/message/store', 'FrontendController@messageCreateStore')->name('message.store');
 Route::get('/messages', 'FrontendController@messages')->name('messages');
+
+/**
+ * Social Facebook Login
+ */
+Route::get('auth/{provider}/login', [
+    'as' => 'social.login',
+    'uses' => 'Auth\SocialAuthController@redirectToProvider',
+    'middleware' => 'social.login'
+]);
+
+Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
