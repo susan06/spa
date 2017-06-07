@@ -112,7 +112,8 @@ class SocialAuthController extends Controller
                 'phone' => null,
                 'status' => UserStatus::ACTIVE,
                 'avatar' => $socialUser->getAvatar(),
-                'facebook' => 'https://www.facebook.com/'.$socialUser->getId()
+                'facebook' => 'https://www.facebook.com/'.$socialUser->getId(),
+                'online' => true
             ]);
 
             $role = $this->roles->where('name', 'client')->first();
@@ -124,7 +125,8 @@ class SocialAuthController extends Controller
                 'first_name' => isset($firstName) ? $firstName : null,
                 'last_name' => isset($lastName) ? $lastName : null,
                 'phone' => null,
-                'avatar' => $socialUser->getAvatar()
+                'avatar' => $socialUser->getAvatar(),
+                'online' => true
             ]);
         }
 
