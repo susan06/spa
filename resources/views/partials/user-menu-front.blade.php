@@ -80,7 +80,7 @@
         <li class="dropdown">
             <a href="{{ route('profile.index')}}" class="menu-click">
             <i class="pe-7s-user"></i>
-                {{ Auth::user()->full_name() }}
+                {{ Auth::user()->name() }}
             </a>
         </li>
         <li>
