@@ -6143,7 +6143,7 @@ button.btn-login:hover {
     background-color: #ca2f10;
 }
 
-button.btn-face {
+button.btn-face, a.btn-face {
     display: inline-block;
     margin-bottom: 0;
     font-weight: 400;
@@ -6165,7 +6165,7 @@ button.btn-face {
     color: #fff !important;
 }
 
-button.btn-face:hover {
+button.btn-face:hover, a.btn-face:hover {
     font-size: 16px;
     background-color: #203f81;
 }
