@@ -45,13 +45,18 @@
                           </div>
                         </div>
                         
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <div class="form-group">
-                          <label>@lang('app.status') <span class="required">*</span>
-                          </label>
-                          {!! Form::select('status', $status, old('status'), ['class' => 'form-control']) !!}
+                        @if (Auth::user()->hasRole('admin'))
+                          <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                            <label>@lang('app.status') <span class="required">*</span>
+                            </label>
+                            {!! Form::select('status', $status, old('status'), ['class' => 'form-control']) !!}
+                            </div>
                           </div>
-                        </div>
+                        @else
+                        {!! Form::hidden('status', old('status')) !!}
+                        @endif
+
                       </div>
 
                       <div class="row">
@@ -83,6 +88,7 @@
                         </div>
                       </div>
 
+                      @if (Auth::user()->hasRole('admin'))
                       <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                           <div class="form-group">
@@ -91,6 +97,7 @@
                           </div>
                         </div>
                       </div>
+                      @endif
 
                       <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -109,7 +116,9 @@
                         </div>
                       </div>
 
+                      @if (Auth::user()->hasRole('admin'))
                       <div id="map-form" style="min-height: 300px;"></div>
+                      @endif
 
                       <div class="row mg-top-10">
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -228,6 +237,8 @@
                               <tr>
                                 <th>@lang('app.name')</th>
                                 <th>@lang('app.price')</th>
+                                <th>Oferta</th>
+                                <th>Porcentaje</th>
                                 <th>@lang('app.status')</th>
                                 <th width="10%">@lang('app.actions')</th>
                               </tr>
@@ -239,11 +250,17 @@
                                       <td><input type="text" name="services_name[]" class="form-control" value="{{ $service->name }}" required="required"><input type="hidden" name="service_id[]" value="{{ $service->id }}"></td>
                                       <td><input type="text" name="services_prices[]" class="form-control" value="{{ $service->price }}"></td>
                                       <td>
+                                        {!! Form::checkbox('services_offer[]', 1, $service->offer) !!}
+                                      </td>
+                                      <td>
+                                        {!! Form::text('services_offer_porcent[]', $service->offer_porcent, ['class' => 'form-control']) !!}
+                                      </td>
+                                      <td>
                                       {!! Form::select('services_status[]', $status_services, $service->status, ['class' => 'form-control']) !!}
                                       </td>
                                       <td>
                                       @if($key != 0)
-                                        <button type="button" class="btn btn-round btn-danger delete-service"> 
+                                        <button type="button" class="btn btn-fill btn-danger delete-service"> 
                                           <i class="fa fa-trash"></i>
                                         </button>
                                       @endif
@@ -366,7 +383,9 @@
 
 @section('scripts_head')
 @parent
+@if (Auth::user()->hasRole('admin'))
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?&key={{ env('API_KEY_GOOGLE')}}&libraries=places&language=ES"></script>
+@endif
 @endsection
 
 @section('styles')
@@ -411,6 +430,12 @@
   @endif
 </script>
 
-{!! HTML::script('assets/js/maps_services.js') !!}
+@if (Auth::user()->hasRole('admin'))
+
+{!! HTML::script('assets/js/maps.js') !!}
+
+@endif
+
+{!! HTML::script('assets/js/services.js') !!}
 
 @endsection

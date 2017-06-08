@@ -147,6 +147,9 @@
   Route::get('/branch/{id}/reservations', 
           'BranchController@reservations')->name('branch.reservations');
 
+  Route::get('/branch/{id}/scores', 
+          'BranchController@scores')->name('branch.scores');
+
   Route::get('/branch/{id}/comments', 
           'BranchController@comments')->name('branch.comments');
 
@@ -157,3 +160,12 @@
    */  
   Route::resource('banner', 'BannerController');
 
+  /**
+   *  Adminitrations of reservations
+  */
+  Route::resource('reservation', 'ReservationController');
+
+  /**
+   *  message
+  */
+  Route::resource('messages-panel', 'MessageController');

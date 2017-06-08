@@ -1,6 +1,13 @@
 <!--Main Menu-->
 <ul class="nav">
 
+    <li class="{{ Request::is('messages-panel*') ? 'active' : ''  }} menu-click">
+        <a  href="{{ route('messages-panel.index') }}" title="Mensajes">
+        <i class="pe-7s-mail"></i>
+        <p> Mensajes</p>
+        </a>
+    </li>
+
     @permission('clients.manage')
     <li class="{{ Request::is('client*') ? 'active' : ''  }} menu-click">
       <a href="{{ route('client.index') }}" title="@lang('app.clients')">
@@ -24,6 +31,15 @@
         <a  href="{{ route('branch.index') }}" title="@lang('app.locales')">
         <i class="pe-7s-map-2"></i>
         <p> @lang('app.locales')</p>
+        </a>
+    </li>
+    @endpermission
+
+    @permission('reservation.manage')
+    <li class="{{ Request::is('reservation*') ? 'active' : ''  }} menu-click">
+        <a  href="{{ route('reservation.index') }}" title="@lang('app.reservations')">
+        <i class="pe-7s-ribbon"></i>
+        <p> @lang('app.reservations')</p>
         </a>
     </li>
     @endpermission

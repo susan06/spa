@@ -41,7 +41,7 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
      *
      *
      */
-    public function search($take = 10, $request = nulll) 
+    public function search($take = 10, $request = null) 
     {
         $result = [];
 
@@ -77,6 +77,52 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
     }
 
     /**
+     * search 
+     *
+     *
+     */
+    public function branchByOwner($take = 10, $owner = null, $branch = null, $search = null) 
+    {
+        if ($branch) {
+            $query = BranchOffice::where('id', $branch);
+        } else {
+           $query = BranchOffice::query(); 
+        }
+
+        if ($owner) {
+            $query->whereHas(
+                'company', function($q) use ($owner) {
+                    $q->where('owner_id', $owner);
+                }
+            );
+        }
+
+        if ($search) {
+            $searchTerms = explode(' ', $search);
+            $query->where( function ($q) use($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    foreach ($this->attributes as $attribute) {
+                        $q->orwhere($attribute, "like", "%{$term}%");
+                    }
+                   
+                }
+            });
+        }
+
+        $result = $query->paginate($take);
+
+        if ($branch) {
+            $result->appends(['branch' => $branch]);
+        }
+
+        if ($search) {
+            $result->appends(['search' => $search]);
+        }
+
+        return $result;
+    }
+
+    /**
      * search by recommendation
      *
      */
@@ -95,6 +141,13 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
 
     }
 
+
+    public function listScore($take = 10, $branch)
+    {
+        $result = Score::where('branch_office_id', $branch)->paginate($take);
+
+        return $result;
+    }
 
     /**
      * Paginate and search
@@ -207,9 +260,32 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
      *
      *
      */
-    public function countCompany()
+    public function countCompany($owner_id = null)
     {
-        return Company::count();
+        if($owner_id) {
+            $count = Company::where('owner_id', $owner_id)->count();
+        } else {
+            $count = Company::count();
+        }
+
+        return $count;
+    } 
+
+    /**
+     * count branch by owner
+     *
+     *
+     */
+    public function countByOwner($owner_id = null)
+    {
+        $companies = Company::where('owner_id', $owner_id)->with('branchs')->get();
+        $count = 0;
+
+        foreach ($companies as $key => $company) {
+            $count += $company->branchs->count();
+        }
+
+        return $count;
     } 
 
 
@@ -263,6 +339,19 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
     public function delete_photo($id)
     {
         Photo::destroy($id);
+    }
+
+
+    public function branchList($owner = null) 
+    {
+        $query = BranchOffice::select('name', 'id')->whereHas(
+            'company', function($q) use ($owner) {
+                $q->where('owner_id', $owner);
+            }
+        )->pluck('name', 'id')->all();
+        
+
+        return ['' => 'Seleccionar su sucursales'] + $query;
     }
 
 }

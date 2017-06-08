@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use DateTime;
 use Illuminate\Http\Request;
 use App\Repositories\BranchOffice\BranchOfficeRepository;
@@ -30,7 +31,7 @@ class BranchController extends Controller
     public function __construct(BranchOfficeRepository $branchs, ReservationRepository $reservations){
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
-        $this->middleware(['panel:admin']);
+        $this->middleware(['panel:admin|owner']);
         $this->branchs = $branchs;
         $this->reservations = $reservations;
         $this->middleware('permission:branch.manage');
@@ -43,7 +44,16 @@ class BranchController extends Controller
      */
     public function index(Request $request)
     {
-        $locales = $this->branchs->paginate(10, $request->search);
+        $branch_list = null;
+        if (Auth::user()->hasRole('admin')) {
+            $locales = $this->branchs->paginate(10, $request->search);
+        }
+
+        if (Auth::user()->hasRole('owner')) {
+            $branch_list = $this->branchs->branchList(Auth::user()->id);
+            $locales = $this->branchs->branchByOwner(10, Auth::user()->id, $request->branch, $request->search);
+        }
+
         if ( $request->ajax() ) {
 
             if (count($locales)) {
@@ -59,7 +69,7 @@ class BranchController extends Controller
             }
         }
 
-        return view('branchs.index', compact('locales'));
+        return view('branchs.index', compact('locales', 'branch_list'));
     }
 
     /**
@@ -131,6 +141,8 @@ class BranchController extends Controller
     {
         $services = $request->services_name;
         $prices = $request->services_prices;
+        $services_offer = $request->services_offer;
+        $services_offer_porcent = $request->services_offer_porcent;
         $service_status = $request->services_status;
         $payments = $request->payments;
         $photos = $request->photos;
@@ -174,6 +186,8 @@ class BranchController extends Controller
                         'branch_office_id' => $branch->id,
                         'name' => $value,           
                         'price' => $prices[$key],
+                        'offer' => isset($services_offer[$key]) ? $services_offer[$key] : false,
+                        'offer_porcent' => isset($services_offer_porcent[$key]) ? $services_offer_porcent[$key] : null,
                         'status' => $service_status[$key]
                         ]
                     );
@@ -360,6 +374,8 @@ class BranchController extends Controller
             if ( $services ) {
                 $services_old = $branch->services->toArray();
                 $prices = $request->services_prices;
+                $services_offer = $request->services_offer;
+                $services_offer_porcent = $request->services_offer_porcent;
                 $service_status = $request->services_status;
                 $service_id = $request->service_id;
                 $delete_service = array();
@@ -370,6 +386,8 @@ class BranchController extends Controller
                             'branch_office_id' => $id,
                             'name' => $value,           
                             'price' => $prices[$key],
+                            'offer' => isset($services_offer[$key]) ? $services_offer[$key] : false,
+                            'offer_porcent' => isset($services_offer_porcent[$key]) ? $services_offer_porcent[$key] : null,
                             'status' => $service_status[$key]
                             ]
                         );
@@ -381,6 +399,8 @@ class BranchController extends Controller
                                     [ 
                                     'name' => $value,           
                                     'price' => $prices[$key],
+                                    'offer' => isset($services_offer[$key]) ? $services_offer[$key] : false,
+                                    'offer_porcent' => isset($services_offer_porcent[$key]) ? $services_offer_porcent[$key] : null,
                                     'status' => $service_status[$key]
                                     ]
                                 );
@@ -475,10 +495,38 @@ class BranchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function reservationsByOwner(Request $request)
+    {
+        $local = $this->branchs->find($id);
+        $reservations = $this->reservations->where('branch_office_id', $id)->orderBy('created_at')->paginate(10);
+
+        if ( $request->ajax() ) {
+
+            if (count($reservations) > 0) {
+                return response()->json([
+                    'success' => true,
+                    'view' => view('branchs.list_reservations', compact('reservations'))->render(),
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('app.no_records_found')
+                ]);
+            }
+        }
+
+        return view('branchs.reservations', compact('reservations', 'local'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function reservations($id, Request $request)
     {
         $local = $this->branchs->find($id);
-        $reservations = $this->reservations->where('branch_office_id', $id)->paginate(10);
+        $reservations = $this->reservations->where('branch_office_id', $id)->orderBy('created_at')->paginate(10);
 
         if ( $request->ajax() ) {
 
@@ -509,4 +557,33 @@ class BranchController extends Controller
 
         return view('branchs.comments', compact('local'));
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function scores($id, Request $request)
+    {
+        $local = $this->branchs->find($id);
+        $scores = $this->branchs->listScore(10, $id);
+
+        if ( $request->ajax() ) {
+
+            if (count($scores) > 0) {
+                return response()->json([
+                    'success' => true,
+                    'view' => view('branchs.list_scores', compact('scores'))->render(),
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('app.no_records_found')
+                ]);
+            }
+        }
+
+        return view('branchs.scores', compact('scores', 'local'));
+    }
+
 }

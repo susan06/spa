@@ -19,6 +19,8 @@ class CreateServicesTable extends Migration
             $table->string('name');
             $table->text('details')->nullable(); 
             $table->float('price', 10, 2);
+            $table->boolean('offer')->default(false);
+            $table->string('offer_porcent')->nullable(); 
             $table->boolean('status')->default(true);
             $table->timestamps();  
             $table->engine = 'InnoDB'; 

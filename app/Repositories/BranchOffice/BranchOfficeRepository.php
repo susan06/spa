@@ -13,6 +13,8 @@ interface BranchOfficeRepository extends RepositoryInterface
      */
     public function search($take = 10, $request = null);
 
+    public function branchByOwner($take = 10, $owner = null, $branch = null, $search = null); 
+
     /**
      * search by score
      *
@@ -74,7 +76,14 @@ interface BranchOfficeRepository extends RepositoryInterface
      *
      *
      */
-    public function countCompany(); 
+    public function countCompany($owner_id = null); 
+
+    /**
+     * count branch by owner
+     *
+     *
+     */
+    public function countByOwner($owner_id = null);
 
     /**
      * search by recommendation
@@ -95,5 +104,9 @@ interface BranchOfficeRepository extends RepositoryInterface
     public function create_photo(array $data);
 
     public function delete_photo($id);
+
+    public function listScore($take = 10, $branch);
+
+    public function branchList($owner = null); 
 
 }

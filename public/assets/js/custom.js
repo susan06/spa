@@ -284,6 +284,53 @@ $(document).on('change', '#status', function () {
     });
 });
 
+$(document).on('change', '#date_reservation', function () {
+    showLoading();
+    var $this = $(this);
+    $.ajax({
+        url: CURRENT_URL,
+        type:"GET",
+        data:{ date: $this.val() },
+        dataType: 'json',
+        success: function(response) {
+            hideLoading();
+            if(response.success){
+                $('#tab-content').html(response.view);
+                //loadResposiveTable();
+            } else {
+                notify('error', response.message);
+            }
+        },
+        error: function (status) {
+            hideLoading();
+            notify('error', status.statusText);
+        }
+    });
+});
+// search by branch
+$(document).on('change', '#branch_list', function () {
+    showLoading();
+    var $this = $(this);
+    $.ajax({
+        url: CURRENT_URL,
+        type:"GET",
+        data:{ branch: $this.val() },
+        dataType: 'json',
+        success: function(response) {
+            hideLoading();
+            if(response.success){
+                $('#tab-content').html(response.view);
+                //loadResposiveTable();
+            } else {
+                notify('error', response.message);
+            }
+        },
+        error: function (status) {
+            hideLoading();
+            notify('error', status.statusText);
+        }
+    });
+});
 // search statusby roles all
 $(document).on('change', '#select_roles', function () {
     showLoading();

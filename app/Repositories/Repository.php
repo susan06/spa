@@ -130,6 +130,22 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
+     * or Where
+     *
+     * Standard mySql where statement.
+     *
+     * @param $needle
+     * @param $hayStack
+     * @param string $option
+     *
+     * @return mixed
+     *
+     */
+    public function orWhere($needle, $hayStack, $option = '=')
+    {
+        return $this->model->orWhere($needle, $option, $hayStack);
+    }
+    /**
      * Paginate
      *
      * return the result paginated for the take value and with the attributes.

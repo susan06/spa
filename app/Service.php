@@ -24,6 +24,8 @@ class Service extends Model
         'name',
         'details',
         'price',
+        'offer',
+        'offer_porcent',
         'status'
     ];
 
@@ -33,12 +35,39 @@ class Service extends Model
      */
     public function getCreatedAtAttribute($date)
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y G:ia');
+        if($date) {
+            return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y G:ia');
+        }
     }
 
     public function getUpdatedAtAttribute($date)
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y G:ia');
+        if($date) {
+            return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y G:ia');
+        }
+    }
+
+    /**
+     * evalue if discount 
+     */
+    public function isDescount()
+    {
+        $result = '';
+
+        if($this->offer) {
+            switch($this->offer_porcent) {
+                case true:
+                    $result = '<span class="label label-success">Descuento ('.$this->offer_porcent.'%)</span>';
+                    break;
+
+                case false:
+                    $result = '';
+                    break;
+
+            }
+        }
+
+        return $result;
     }
 
     /**

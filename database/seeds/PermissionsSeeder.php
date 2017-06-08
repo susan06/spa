@@ -65,13 +65,6 @@ class PermissionsSeeder extends Seeder
         ]);
 
         $permissions[] = Permission::create([
-            'name' => 'branch.manage',
-            'display_name' => 'Gestión de locales',
-            'description' => '',
-            'removable' => false
-        ]);
-
-        $permissions[] = Permission::create([
             'name' => 'banner.manage',
             'display_name' => 'Gestión de banners',
             'description' => '',
@@ -92,8 +85,28 @@ class PermissionsSeeder extends Seeder
             'removable' => false
         ]);
 
+        $permissions_branch[] = Permission::create([
+            'name' => 'branch.manage',
+            'display_name' => 'Gestión de locales',
+            'description' => '',
+            'removable' => false
+        ]);
+
         $adminRole = Role::where('name', 'admin')->first();
         $adminRole->attachPermissions($permissions);
+        $adminRole->attachPermissions($permissions_branch);
+
+        $permissions_owner[] = Permission::create([
+            'name' => 'reservation.manage',
+            'display_name' => 'Gestión de reservas',
+            'description' => '',
+            'removable' => false
+        ]);
+
+        $ownerRole = Role::where('name', 'owner')->first();
+        $ownerRole->attachPermissions($permissions_owner);
+        $ownerRole->attachPermissions($permissions_branch);
+
     }
     
 }

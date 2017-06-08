@@ -89,6 +89,20 @@ interface RepositoryInterface
     public function where($needle, $hayStack, $option = '=');
 
     /**
+     * or Where
+     *
+     * Standard mySql where statement.
+     *
+     * @param $needle
+     * @param $hayStack
+     * @param string $option
+     *
+     * @return mixed
+     *
+     */
+    public function orWhere($needle, $hayStack, $option = '=');
+
+    /**
      * Paginate
      *
      * return the result paginated for the take value and with the attributes.

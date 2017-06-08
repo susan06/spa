@@ -16,7 +16,7 @@
               <td class="hide-front">{{ $reservation->created_at }}</td>
               <td>{!! $reservation->getStatus() !!}
                  @if($reservation->status == 'pendient')
-                   <a type="button" data-href="{{ route('reservation.cancel', $reservation->id) }}" 
+                   <a type="button" data-href="{{ route('reservation.cancel', $reservation->id) }}?rejected_by=client" 
                       class="btn btn-danger margin-btn-delete btn-cancel-status" 
                       data-confirm-text="Seguro que desea cancelar la reserva"
                       data-confirm-delete="Si"

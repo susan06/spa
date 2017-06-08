@@ -53,7 +53,7 @@ class HomeController extends Controller
             return $this->adminDashboard();
         }
 
-        return $this->defaultDashboard();
+        return $this->ownerDashboard();
     }
 
     /**
@@ -84,15 +84,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function defaultDashboard()
+    private function ownerDashboard()
     {
-        $activities = $this->activities->userActivityForPeriod(
-            Auth::user()->id,
-            Carbon::now()->subWeeks(2),
-            Carbon::now()
-        )->toArray();
+        $stats = [
+            'company' => $this->branchs->countCompany(Auth::user()->id),
+            'branchs' => $this->branchs->countByOwner(Auth::user()->id)
+        ];
 
-        return view('dashboard.default', compact('activities'));
+        return view('dashboard.owner', compact('stats'));
     }
 
     /**

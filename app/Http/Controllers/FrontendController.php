@@ -546,7 +546,7 @@ class FrontendController extends Controller
      */
     public function reservationCancel($id, Request $request, NotificationMailer $mailer)
     {
-        $reservation = $this->reservations->update($id, ['status' => 'rejected']);
+        $reservation = $this->reservations->update($id, ['rejected_by' => $request->rejected_by, 'status' => 'rejected']);
 
         if($reservation) {
             $mailer->sendReservationStatusOwner($reservation);
@@ -664,7 +664,7 @@ class FrontendController extends Controller
     {
         $client = Auth::User()->id;
 
-        $messages = $this->messages->where('user_from', $client)->paginate(10);
+        $messages = $this->messages->where('user_from', $client)->orWhere('user_to', $client)->paginate(10);
 
         if ( $request->ajax() ) {
             return response()->json([
@@ -721,6 +721,7 @@ class FrontendController extends Controller
         $data = [
             'user_to' => $this->users->getAdmin()->id,
             'user_from' => $client,
+            'subject' => $request->subject,
             'description' => $request->description,
             'send_from' => $request->send_from,
         ];

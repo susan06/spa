@@ -167,7 +167,7 @@
 				</div>
 			  </div>
 
-			  <div class="col-md-6 col-xs-12">
+			  <div class="col-md-12 col-xs-12">
 			  	<div class="card">
 				  	<div class="header">
 				        <h4 class="title">Servicios</h4>
@@ -182,7 +182,7 @@
 							    @foreach($local->services as $key => $services)
 								    @if($services->status)
 									    <tr>
-									    	<td>{{ $services->name }}</td>
+									    	<td>{!! $services->name.' '.$services->isDescount() !!}</td>
 									    	<td>{{ Settings::get('coin').' '.$services->price }}</td>
 									    </tr>
 								    @endif
@@ -194,7 +194,7 @@
 				</div>
 			  </div>
 
-			  <div class="col-md-6 col-xs-12">
+			  <div class="col-md-12 col-xs-12">
 			  	<div class="card">
 				  	<div class="header">
 				        <h4 class="title">Métodos de pago</h4>

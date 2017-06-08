@@ -49,6 +49,11 @@ class Message extends Model
 
     public function remitente()
     {
+        return $this->belongsTo(User::class, 'user_from');
+    }
+
+    public function destinatario()
+    {
         return $this->belongsTo(User::class, 'user_to');
     }
 }
