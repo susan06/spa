@@ -779,5 +779,8 @@ return [
 
     'show_branch' => 'Ver local',
     'branch_deleted' => 'Local eliminado',
+    'are_you_sure_delete_message' => 'Desea eliminar el mensaje?',
+    'delete_message' => 'Eliminar mensaje',
+    'message_deleted' => 'Mensaje eliminado',
 
 ];

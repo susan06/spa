@@ -98,4 +98,10 @@ interface UserRepository extends RepositoryInterface
      *
      */
     public function list_owner();
+
+    /**
+     * get list of user with role owner and client
+     *
+     */
+    public function list_owner_client();
 }

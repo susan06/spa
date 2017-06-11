@@ -669,7 +669,7 @@ class FrontendController extends Controller
         if ( $request->ajax() ) {
             return response()->json([
                 'success' => true,
-                'view' => view('frontend.messages.list', compact('messages'))->render(),
+                'view' => view('messages.list', compact('messages'))->render(),
             ]);
         }
 
@@ -699,6 +699,7 @@ class FrontendController extends Controller
     public function messageShow($id, Request $request)
     {
         $message = $this->messages->find($id);
+        $this->messages->update($id, ['read_on' => true]); 
 
         if ( $request->ajax() ) {
             return response()->json([
@@ -757,5 +758,17 @@ class FrontendController extends Controller
         }
 
         return back()->withErrors($message);
+    }
+
+    /**
+     * Get count message read off
+     *
+     * @return \Illuminate\Http\Response::JSON     
+     */
+    public function countMessages(Request $request)
+    {
+        return response()->json( 
+            $this->messages->countMessages() 
+        );
     }
 }

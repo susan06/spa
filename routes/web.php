@@ -39,6 +39,7 @@ Route::get('/message/show/{id}', 'FrontendController@messageShow')->name('messag
 Route::get('/message/create', 'FrontendController@messageCreate')->name('message.create');
 Route::post('/message/store', 'FrontendController@messageCreateStore')->name('message.store');
 Route::get('/messages', 'FrontendController@messages')->name('messages');
+Route::get('/messages/count', 'FrontendController@countMessages')->name('message.count');
 
 /**
  * Social Facebook Login

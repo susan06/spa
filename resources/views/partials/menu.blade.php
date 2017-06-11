@@ -4,7 +4,7 @@
     <li class="{{ Request::is('messages-panel*') ? 'active' : ''  }} menu-click">
         <a  href="{{ route('messages-panel.index') }}" title="Mensajes">
         <i class="pe-7s-mail"></i>
-        <p> Mensajes</p>
+        <p> Mensajes <span class="badge bg-green count-messages">0</span></p>
         </a>
     </li>
 

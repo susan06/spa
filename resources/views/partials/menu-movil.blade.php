@@ -43,7 +43,7 @@
     <li>
         <a href="{{ route('messages') }}" class="menu-click">
             <i class="pe-7s-mail"></i>
-            Mensajes
+            Mensajes <span class="badge bg-green count-messages">0</span>
         </a>
     </li>
     @endif

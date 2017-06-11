@@ -4331,3 +4331,12 @@ border: 1px solid #eee;
     background-color: rgba(51, 51, 51, 0.02);
     clear: both;
 }
+
+
+.message-user {
+  color: blue;
+}
+
+.text-gray {
+  color: #999 !important;
+}

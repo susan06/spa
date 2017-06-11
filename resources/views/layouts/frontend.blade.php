@@ -151,6 +151,24 @@
             }, 2000);*/
         });
 
+        function messages() {
+            $.ajax({
+                url: '{{ route("message.count") }}',
+                type : 'get',
+                dataType: 'json',
+                success: function (response) {
+                   $(".count-messages").text(response.count);
+                }
+            });
+        }
+        
+        @if( Auth::check() )
+            $(document).ready(function () {            
+                messages();
+                setInterval(messages,90000);
+            });
+        @endif
+        
     </script>
 
     <!-- Custom Theme Scripts -->

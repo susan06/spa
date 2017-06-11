@@ -6550,3 +6550,10 @@ border: 1px solid #eee;
     margin: 0px 0px 10px 0px;
 }
 
+.message-user {
+  color: blue;
+}
+
+.text-gray {
+  color: #999 !important;
+}

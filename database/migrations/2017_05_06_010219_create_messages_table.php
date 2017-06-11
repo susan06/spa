@@ -20,6 +20,8 @@ class CreateMessagesTable extends Migration
             $table->string('subject')->nullable();
             $table->text('description')->nullable();
             $table->string('send_from')->nullable();
+            $table->boolean('delete_to')->default(false);
+            $table->boolean('delete_from')->default(false);
             $table->boolean('read_on')->default(false);
             $table->timestamps();
             $table->engine = 'InnoDB';

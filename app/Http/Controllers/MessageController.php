@@ -62,14 +62,16 @@ class MessageController extends Controller
      */
     public function create(Request $request)
     {
+        $users_to = $this->users->list_owner_client();
+
         if ( $request->ajax() ) {
             return response()->json([
                 'success' => true,
-                'view' => view('messages.fields')->render(),
+                'view' => view('messages.fields', compact('users_to'))->render(),
             ]);
         }
 
-        return view('messages.create');
+        return view('messages.create', compact('users_to'));
     }
 
     /**
@@ -174,6 +176,25 @@ class MessageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $message = $this->messages->find($id);
+        $user = Auth::User()->id;
+
+        if($message->user_to == $user) {
+            $data = ['delete_to' => true];
+        } else {
+            $data = ['delete_from' => true];
+        }
+
+        if ( $this->messages->update($id, $data) ) {
+            return response()->json([
+                'success' => true,
+                'message' => trans('app.message_deleted')
+            ]);
+        } else {
+            return response()->json([
+                'success'=> false,
+                'message' => trans('app.error_again')
+            ]);
+        }
     }
 }

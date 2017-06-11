@@ -167,6 +167,8 @@ $(document).on('click', '.create-edit-show', function () {
     if(!title) {
         title = $this.data("title");
     }
+    var message = $this.data("message");
+
     current_model = $this.data('model');
     if($this.data('current')){
         CURRENT_URL = $this.data('current');
@@ -198,6 +200,9 @@ $(document).on('click', '.create-edit-show', function () {
                     current_title = $('#content-title').text();
                     $('#content-title').text(title);
                     $('#tab-content').html(response.view);
+                }
+                if(message){
+                    $('#title-message-'+message).addClass('text-gray');
                 }
             } else {
                 notify('error', response.message);

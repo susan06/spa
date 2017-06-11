@@ -259,5 +259,26 @@ class EloquentUser extends Repository implements UserRepository
         return ['' => trans('app.select_owner')] +  $query;
     }
 
+    /**
+     * get list of user with role owner and client
+     *
+     */
+    public function list_owner_client()
+    {
+        $query = User::select(
+            DB::raw("CONCAT(users.name,' ',users.lastname,' - ', roles.display_name) AS user"), 'users.id')
+            ->whereHas(
+            'roles', function($q){
+                $q->where('name','=', 'owner');
+                $q->orWhere('name','=', 'client');
+            }
+        )
+        ->join('role_user', 'users.id', '=', 'role_user.user_id')
+        ->join('roles', 'role_user.role_id', '=', 'roles.id')
+        ->pluck('user', 'users.id')->all();
+
+        return ['' => 'Seleccionar Destinatario'] +  $query;
+    }
+
 
 }
