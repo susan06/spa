@@ -899,3 +899,30 @@ $(document).on('change', '#change_province', function () {
         }
     });
 });
+
+$(document).on('click', '.check_gps', function () {
+    var $this = $(this);
+    showLoading();
+    var url_locations = $this.data('href');
+    if (navigator.geolocation) {// Try HTML5 geolocation.
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            url_locations = url_locations+'?lat='+lat+'&lng='+lng;
+            window.location.href = url_locations;
+        }, function() {
+            handleLocationError(true);
+        });
+    } else {     
+        handleLocationError(false); // Browser doesn't support Geolocation
+    }
+});
+
+function handleLocationError(browserHasGeolocations) {
+    hideLoading();
+    if(browserHasGeolocations) {
+        notify('error', 'La geolocalización fallo, active su GPS o recargue su navegador');
+    } else {
+        notify('error', 'Su navegador no soporta la geolocalización');
+    }
+}

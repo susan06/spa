@@ -105,12 +105,6 @@
    * Exports
    */    
   Route::resource('export', 'ExportController');
-  
-  /*
-   *
-   * Notifications
-   */
-  Route::resource('notifications', 'NotificationController');
 
   /*
    *

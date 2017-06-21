@@ -21,7 +21,7 @@
     </li>
     @if(Settings::get('location'))
      <li>
-        <a href="#" class="-menu-click">
+        <a href="{{ route('local.location') }}" onclick="check_gps(this)">
             <i class="pe-7s-map-2"></i>
             Locales cerca
         </a>

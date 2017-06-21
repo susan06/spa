@@ -18,7 +18,7 @@
         </a>
     </li>
      <li>
-        <a href="#" class="-menu-click">
+        <a href="javascript:void(0)" data-href="{{ route('local.location') }}" onclick="check_gps(this)">
             <i class="pe-7s-map-2"></i>
             Cerca
         </a>
@@ -28,5 +28,5 @@
             <i class="pe-7s-alarm"></i>
             Reserva
         </a>
-    </li>
+    </li>gps
 </ul>

@@ -56,7 +56,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => 'web',
             'namespace' => $this->namespace,
-            'domain'    => env('URL_DOMAIN', ''),
+            //'domain'    => env('URL_DOMAIN', ''),
         ], function ($router) {
             require base_path('routes/web.php');
         });
@@ -89,7 +89,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' =>  'web',
             'namespace'  => $this->namespace,
-            'domain'     => env('URL_DOMAIN', ''),
+            //'domain'     => env('URL_DOMAIN', ''),
         ], function ($router) {
             require base_path('routes/auth.php');
         });
@@ -104,7 +104,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' =>  'web',
             'namespace' => $this->namespace,
-            'domain'     => env('URL_DOMAIN', ''),
+            //'domain'     => env('URL_DOMAIN', ''),
         ], function ($router) {
             require base_path('routes/panel.php');
         });

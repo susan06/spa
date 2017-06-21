@@ -25,6 +25,7 @@ Route::get('/local/show/{id}', 'FrontendController@localShow')->name('local.show
 Route::get('/local/favorite', 'FrontendController@localFavorites')->name('local.favorites')->middleware('auth');
 Route::get('/local/store/favorite/{id}', 'FrontendController@localStoreFavorite')->name('local.favorite.store');
 Route::get('/local/delete/favorite/{id}', 'FrontendController@localDeleteFavorite')->name('local.favorite.delete');
+Route::get('/local/by/location', 'FrontendController@localByLocation')->name('local.location');
 
 Route::get('/local/visit', 'FrontendController@localVisites')->name('local.visites');
 Route::get('/local/store/visit/{id}', 'FrontendController@localStoreVisit')->name('local.visit.store');

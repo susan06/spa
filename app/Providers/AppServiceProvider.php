@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\View;
 use App\Repositories\User\EloquentUser;
 use App\Repositories\User\UserRepository;
 
-use App\Repositories\Notification\EloquentNotification;
-use App\Repositories\Notification\NotificationRepository;
-
 use App\Repositories\Role\EloquentRole;
 use App\Repositories\Role\RoleRepository;
 
@@ -71,7 +68,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(UserRepository::class, EloquentUser::class);
-        $this->app->singleton(NotificationRepository::class, EloquentNotification::class);
         $this->app->singleton(RoleRepository::class, EloquentRole::class);
         $this->app->singleton(PermissionRepository::class, EloquentPermission::class);
         $this->app->singleton(ActivityRepository::class, EloquentActivity::class); 

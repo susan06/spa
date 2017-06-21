@@ -79,7 +79,7 @@ class FrontendController extends Controller
         $this->middleware('locale'); 
         $this->middleware('timezone'); 
         $this->middleware('auth.front', ['except' => [
-            'index', 'localShow', 'localScore', 'localSearch', 'getlocalByScore', 'localNews', 'localReservations', 'conditions', 'faqs'
+            'index', 'localShow', 'localScore', 'localSearch', 'getlocalByScore', 'localNews', 'localReservations', 'conditions', 'faqs', 'localByLocation'
         ]]);
         $this->banners = $banners;
         $this->branchs = $branchs;
@@ -770,5 +770,21 @@ class FrontendController extends Controller
         return response()->json( 
             $this->messages->countMessages() 
         );
+    }
+
+    public function localByLocation(Request $request)
+    {
+        $gps = [
+            'lat' => isset($request->lat) ? $request->lat : null,
+            'lng' => isset($request->lng) ? $request->lng : null,
+        ];
+        if ( $request->ajax() ) {
+            return response()->json([
+                'success' => true,
+                'view' => view('frontend.branchs.locations', compact('gps'))->render(),
+            ]);
+        }
+
+        return view('frontend.branchs.locations', compact('gps'));
     }
 }
