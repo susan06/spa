@@ -109,4 +109,6 @@ interface BranchOfficeRepository extends RepositoryInterface
 
     public function branchList($owner = null); 
 
+    public function searchLocalByGps($lat, $lng, $distance); 
+
 }

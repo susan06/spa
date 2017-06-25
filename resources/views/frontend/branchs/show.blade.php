@@ -412,7 +412,7 @@
 
 	    infowindow.close();
 
-	    map.setCenter({{$local->lat}}, {{$local->lng}});
+	    map.setCenter({lat: {{$local->lat}}, lng: {{$local->lng}} });
       	map.setZoom(16); 
 
 	}

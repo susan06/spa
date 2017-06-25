@@ -354,4 +354,62 @@ class EloquentBranchOffice extends Repository implements BranchOfficeRepository
         return ['' => 'Seleccionar su sucursales'] + $query;
     }
 
+    public function searchLocalByGps($lat, $lng, $distance) 
+    {
+        $box = $this->getBoundaries($lat, $lng, $distance);
+        $locales = BranchOffice::selectRaw('*, 
+            (6371 * ACOS( 
+                        COS( RADIANS('.$lat.') ) 
+                        * COS( RADIANS(lat) ) 
+                        * COS( RADIANS(lng) - RADIANS('.$lng.') ) 
+                        + SIN( RADIANS('.$lat.') ) 
+                        * SIN( RADIANS(lat) ) 
+                    )
+            ) as distance'
+        )->whereBetween('lat', [$box['min_lat'], $box['max_lat']])
+        ->whereBetween('lng', [$box['min_lng'], $box['max_lng']])
+        ->having('distance', '<', $distance)
+        ->orderBy('distance', 'ASC')
+        ->take(5)->get();
+
+        return $locales;
+    }
+
+    private function getBoundaries($lat, $lng, $distance = 1, $earthRadius = 6371)
+    {
+        $return = [];
+        $earthRadius = 6371;
+        $cardinalCoords =[
+            'north' => '0',
+            'south' => '180',
+            'east' => '90',
+            'west' => '270'
+        ];
+        $rLat = deg2rad($lat);
+        $rLng = deg2rad($lng);
+        $rAngDist = $distance/$earthRadius;
+
+        $rLat = deg2rad($lat);
+        $rLng = deg2rad($lng);
+        $rAngDist = $distance/$earthRadius;
+        
+        foreach ($cardinalCoords as $name => $angle)
+        {
+            $rAngle = deg2rad($angle);
+            $rLatB = asin(sin($rLat) * cos($rAngDist) + cos($rLat) * sin($rAngDist) * cos($rAngle));
+            $rLonB = $rLng + atan2(sin($rAngle) * sin($rAngDist) * cos($rLat), cos($rAngDist) - sin($rLat) * sin($rLatB));
+            $return[$name] = array('lat' => (float) rad2deg($rLatB), 
+                                    'lng' => (float) rad2deg($rLonB));
+        }
+
+        $bound = [ 
+           'min_lat' => $return['south']['lat'],
+            'max_lat' => $return['north']['lat'],
+            'min_lng' => $return['west']['lng'],
+            'max_lng' => $return['east']['lng']
+        ];
+
+        return $bound;
+    }
+
 }

@@ -908,8 +908,12 @@ $(document).on('click', '.check_gps', function () {
         navigator.geolocation.getCurrentPosition(function(position) {
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
-            url_locations = url_locations+'?lat='+lat+'&lng='+lng;
-            window.location.href = url_locations;
+            if(lat && lng) {
+                url_locations = url_locations+'?lat='+lat+'&lng='+lng;
+                window.location.href = url_locations;
+            } else {
+                notify('error', 'No se logro obtener su localización, intente de nuevo');
+            }
         }, function() {
             handleLocationError(true);
         });

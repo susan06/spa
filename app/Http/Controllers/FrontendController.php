@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Validator;
+use Settings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Mailers\NotificationMailer;
@@ -774,17 +775,20 @@ class FrontendController extends Controller
 
     public function localByLocation(Request $request)
     {
-        $gps = [
-            'lat' => isset($request->lat) ? $request->lat : null,
-            'lng' => isset($request->lng) ? $request->lng : null,
-        ];
+        $distance = Settings::get('distance');
+        $lat = $request->lat;
+        $lng = $request->lng;
+        $locales = $this->branchs->searchLocalByGps($lat, $lng, $distance);
+        
         if ( $request->ajax() ) {
             return response()->json([
                 'success' => true,
-                'view' => view('frontend.branchs.locations', compact('gps'))->render(),
+                'view' => view('frontend.branchs.locations', compact('lat', 'lng', 'locales'))->render(),
             ]);
         }
 
-        return view('frontend.branchs.locations', compact('gps'));
+        return view('frontend.branchs.locations', compact('lat', 'lng', 'locales'));
     }
+
+
 }

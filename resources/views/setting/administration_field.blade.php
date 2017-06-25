@@ -49,6 +49,15 @@
     </div>
   </div>
 
+
+<div class="col-md-6 col-sm-6 col-xs-12">
+  <div class="form-group">
+    <label class="">Radio de búsqueda de locales (Km)
+    </label>
+      {!! Form::text('distance', Settings::get('distance'), ['class' => 'form-control']) !!}
+    </div>
+  </div>
+
 </div>
 
 <div class="row">
