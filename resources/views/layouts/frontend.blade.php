@@ -50,9 +50,20 @@
             @include('partials.user-menu-front')
 
                 <div id="nav-bar-header" class="visible-mobile">
-
+                    @if(!Request::is('/') && !Auth::check())
+                    <div id="header-back" style="display: block;">
+                        <ul class="nav navbar-nav menu-header">
+                            <li>
+                                <a href="{{ URL::previous() }}" class="menu-click" 
+                                style="padding: 0px 0px 0px 10px;float: left;">
+                                    <i class="pe-7s-back"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @endif
                     @if(Auth::check() && Auth::user()->hasRole('client')) 
-                    <div id="menu-auth" style="display: block;">
+                    <div id="{{(!Request::is('/')) ? 'menu-auth' : 'menu-auth-2'}}" style="display: block;">
                         <ul class="nav navbar-nav menu-header">
                             <li>
                                 <a href="{{ route('local.search') }}" class="menu-click">
@@ -74,6 +85,13 @@
                                     <i class="pe-7s-user"></i>
                                 </a>
                             </li>
+                            @if(!Request::is('/'))
+                            <li>
+                                <a href="{{ URL::previous() }}" class="menu-click">
+                                    <i class="pe-7s-back"></i>
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                     @endif
