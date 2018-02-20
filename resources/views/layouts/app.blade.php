@@ -47,13 +47,13 @@
 
     <div class="loader loader-default" id="loading"></div>
 
-        <div class="sidebar" data-color="red" data-image="{{asset('assets/css/sidebar-1.png')}}">
+        <div class="sidebar" data-color="A1D28F" data-image="{{asset('assets/css/sidebar-1.png')}}">
 
             <div class="sidebar-wrapper">
  
                     <div class="logo">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('images/logo.png') }}" alt="{{ settings::get('app_name') }}"> 
+                            <img src="{{ asset('images/logo.jpeg') }}" alt="{{ settings::get('app_name') }}"> 
                         </a>
                     </div>
 

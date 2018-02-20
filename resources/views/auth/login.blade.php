@@ -37,7 +37,7 @@
                       </div>
 
                     <div class="col-md-12 col-xs-12 btn-social">
-                      <button type="submit" class="btn-login btn-danger btn-lg btn-block menu-click" />
+                      <button type="submit" class="btn-login btn-success btn-lg btn-block menu-click" />
                       Login
                       </button>
                     </div>
@@ -123,7 +123,7 @@
                   @endif
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-fill btn-danger menu-click pull-right">Crear cuenta</button>
+                        <button type="submit" class="btn btn-fill btn-success menu-click pull-right">Crear cuenta</button>
                     </div>
                 {!! Form::close() !!}               
             </div>

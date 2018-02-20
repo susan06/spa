@@ -299,7 +299,7 @@ input:focus {
   margin-top: 0px;
 }
 .sidebar .nav li > a {
-  color: #FFFFFF;
+  color: #483002;
   padding: 4.2px 0px;
   margin: 0px 0px 0px 15px;
   opacity: .86;
@@ -310,7 +310,7 @@ input:focus {
   opacity: 1;
 }
 .sidebar .nav li.active > a {
-  color: #FFFFFF;
+  color: #885b05;
   opacity: 1;
   background: rgba(255, 255, 255, 0.23);
 }
@@ -4016,7 +4016,7 @@ ul.list_1{
 .card .title {
   margin-top: 0;
   margin-bottom: 5px;
-  border-bottom: 2px solid rgba(202, 47, 16, 0.3);
+  border-bottom: 2px solid #6BB051;
 }
 .card .card-image {
   height: 60%;
