@@ -6347,7 +6347,15 @@ font-weight: bold;
     margin-right: auto;
 }
 
-.box-reservation > .title {
+.box-reservation-tour {
+    border: 2px solid #eee;
+    border-radius: 5px;
+    margin: 10px;
+    width: 45%;
+    display: inline-block;
+}
+
+.box-reservation > .title, .box-reservation-tour > .title {
     background-color: #ffa534;
     font-size: 16px;
     text-align: center;
@@ -6355,7 +6363,7 @@ font-weight: bold;
     color: #fff;
 }
 
-.box-reservation > .content {
+.box-reservation > .content, .box-reservation-tour > .content {
   padding: 20px;
     background-color: #fff;
 }
@@ -6366,6 +6374,10 @@ font-weight: bold;
 
 @media (max-width: 500px) {
   .box-reservation {
+    width: 90%;
+  }
+
+  .box-reservation-tour {
     width: 90%;
   }
 }

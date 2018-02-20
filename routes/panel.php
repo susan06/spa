@@ -163,3 +163,13 @@
    *  message
   */
   Route::resource('messages-panel', 'MessageController');
+
+  /**
+   *  Adminitrations of tours
+  */
+  Route::get('/tour/{id}/reservations', 
+      'TourController@reservations')->name('tour.reservations');
+
+  Route::get('/tour/reservation/approved/{id}', 'TourController@reservationTourApproved')->name('reservation.tour.approved');
+
+  Route::resource('tour', 'TourController');

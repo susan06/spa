@@ -103,6 +103,13 @@ class PermissionsSeeder extends Seeder
             'removable' => false
         ]);
 
+        $permissions_owner[] = Permission::create([
+            'name' => 'tour.manage',
+            'display_name' => 'Gestión de tours',
+            'description' => '',
+            'removable' => false
+        ]);
+
         $ownerRole = Role::where('name', 'owner')->first();
         $ownerRole->attachPermissions($permissions_owner);
         $ownerRole->attachPermissions($permissions_branch);

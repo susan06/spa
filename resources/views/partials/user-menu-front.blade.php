@@ -58,6 +58,12 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('local.my.tours') }}" class="menu-click">
+                <i class="pe-7s-global"></i>
+                Mis Tours
+            </a>
+        </li>
+        <li>
             <a href="{{ route('messages') }}" class="menu-click">
                 <i class="pe-7s-mail"></i>
                 Mensajes <span class="badge bg-green count-messages">0</span>

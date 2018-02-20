@@ -277,4 +277,8 @@ class BranchOffice extends Model
         return $this->hasMany(Reservation::class, 'branch_office_id');
     }
 
+    public function tours()
+    {
+        return $this->hasMany(Tour::class, 'branch_office_id');
+    }
 }

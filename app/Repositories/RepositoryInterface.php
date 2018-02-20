@@ -28,6 +28,19 @@ interface RepositoryInterface
     public function create(array $attributes);
 
     /**
+     * First.
+     *
+     * First and returns the first record if
+     * exists or creates a new model.
+     *
+     * @param array $attributes
+     *
+     * @return mixed
+     *
+     */
+    public function first();
+
+    /**
      * First or create.
      *
      * First and returns the first record if
@@ -101,6 +114,19 @@ interface RepositoryInterface
      *
      */
     public function orWhere($needle, $hayStack, $option = '=');
+
+    /**
+     * WhereIn
+     *
+     * Standard mySql where statement.
+     *
+     * @param $column
+     * @param $array
+     *
+     * @return mixed
+     *
+     */
+    public function whereIn($column, $array);
 
     /**
      * Paginate

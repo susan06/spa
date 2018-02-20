@@ -5,14 +5,14 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class Reservation extends Model
+class TourReservation extends Model
 {
-    /**
+     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'reservations';
+    protected $table = 'tours_reservations';
 
     /**
      * The attributes that are mass assignable.
@@ -20,10 +20,8 @@ class Reservation extends Model
      * @var array
      */
     protected $fillable = [
-        'branch_office_id',
+        'tour_id',
         'client_id',
-        'date',
-        'hour',
         'details_client',
         'status',
         'rejected_by'
@@ -43,11 +41,6 @@ class Reservation extends Model
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y G:ia');
     }
 
-    public function getDateAttribute($date)
-    {
-        return Carbon::createFromFormat('Y-m-d', $date)->format('d/m/Y');
-    }
-
     public function getStatus()
     {
         switch($this->status) {
@@ -60,8 +53,11 @@ class Reservation extends Model
                 break;
 
             case 'rejected':
-                //$by = ($this->rejected_by == 'owner') ? '<span class="label label-danger">Por el dueño</span>' : '';
-                $status = '<span class="label label-danger">'.trans("app.{$this->status}").'</span>';
+                if($this->rejected_by == 'owner') {
+                    $status = '<span class="label label-danger">Cancelada por Dueño</span>';
+                } else {
+                    $status = '<span class="label label-danger">Cancelada por Dliente</span>';
+                }
         }
 
         return $status;
@@ -72,9 +68,9 @@ class Reservation extends Model
      *
      */
 
-     public function branchOffice()
+     public function tour()
     {
-        return $this->belongsTo(BranchOffice::class, 'branch_office_id');
+        return $this->belongsTo(Tour::class, 'tour_id');
     }
 
     public function client()

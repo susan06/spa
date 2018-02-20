@@ -16,7 +16,7 @@
                     @include('partials.search') 
 
                     <div class="col-md-3 col-sm-3 col-xs-12 mg-botom-15-movil">
-                       <a href="javascript:void(0)" data-href="{{route('company.create') }}" class="btn btn-danger btn-fill  create-edit-show" data-model="modal" title="@lang('app.create_company')">
+                      <a href="javascript:void(0)" data-href="{{route('company.create') }}" class="btn btn-danger btn-fill  create-edit-show" data-model="modal" title="@lang('app.create_company')">
                           @lang('app.add_company')
                       </a>
                     </div>

@@ -830,6 +830,64 @@ $(document).on('click', '.btn-submit', function (e) {
     });
 });
 
+$(document).on('click', '.btn-submit-tour', function (e) {
+    e.preventDefault();
+    showLoading();
+    var $this = $(this);
+    var tour_id = $this.data('tour');
+    var form = $('#tour-generic-'+tour_id); 
+    var type = $('#tour-generic-'+tour_id+' input[name="_method"]').val();
+
+    if(typeof type == "undefined") {
+        type = form.attr('method');
+    }
+
+    if($this.data('auth') && $this.data('auth') == false) {
+        window.location.href = url_login;
+    }
+
+    $.ajax({
+        url: form.attr('action'),
+        type: type,
+        data: form.serialize(),
+        dataType: 'json',
+        success: function(response) {
+            hideLoading();
+            console.log(response);
+            if(response.success){
+                $this.addClass('disabled');
+                $('#title-tour-'+tour_id).removeClass('bg-nav');
+                if(response.message) {
+                    notify('success', response.message);
+                } else {
+                    getPages(CURRENT_URL);
+                }
+                
+            } else {
+                if(response.login){
+                    showLoading();
+                    window.location.href = response.login;
+                } 
+                if(response.validator) {
+                  var message = '';
+                  $.each(response.message, function(key, value) {
+                    message += value+' ';
+                  });
+                  notify('error', message);
+                } 
+                if(response.message){
+                    notify('error', response.message);
+                } 
+            }
+           
+        },
+        error: function (status) {
+            hideLoading();
+            notify('error', status.statusText);
+        }
+    });
+});
+
 $(document).on('click', '.btn-cancel-status', function () {
     var $this = $(this);
     swal({   
@@ -862,6 +920,7 @@ $(document).on('click', '.btn-cancel-status', function () {
                             if($this.data('close')){
                                 $('#general-modal').modal('hide');
                             }
+                            console.log(CURRENT_URL);
                             getPages(CURRENT_URL);  
                         } else {
                             notify('error', response.message);
@@ -874,6 +933,38 @@ $(document).on('click', '.btn-cancel-status', function () {
                 });     
         } 
     });
+});
+
+$(document).on('click', '.btn-approved-status', function () {
+    var $this = $(this);
+    showLoading(); 
+    $.ajax({
+        type: 'GET',
+        url: $this.data('href'),
+        dataType: 'json',
+        success: function (response) { 
+            hideLoading();                          
+            if(response.success) {  
+                notify('success', response.message);
+                if(response.view) {
+                    $('#tab-content').html(response.view);
+                } 
+                if($this.data('current')){
+                    CURRENT_URL = $this.data('current');
+                } 
+                if($this.data('close')){
+                    $('#general-modal').modal('hide');
+                }
+                getPages(CURRENT_URL);  
+            } else {
+                notify('error', response.message);
+            }
+        },
+        error: function (status) {
+            hideLoading();
+            notify('error', status.statusText);
+        }
+    });     
 });
 
 $(document).on('change', '#change_province', function () {

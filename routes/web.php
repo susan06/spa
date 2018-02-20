@@ -42,6 +42,9 @@ Route::post('/message/store', 'FrontendController@messageCreateStore')->name('me
 Route::get('/messages', 'FrontendController@messages')->name('messages');
 Route::get('/messages/count', 'FrontendController@countMessages')->name('message.count');
 
+Route::get('/my/tours', 'FrontendController@myTours')->name('local.my.tours');
+Route::get('/tour/reservation/cancel/{id}', 'FrontendController@reservationTourCancel')->name('reservation.tour.cancel');
+Route::post('/tour/store/reservation/{id}', 'FrontendController@tourStoreReservation')->name('tour.reservation.store');
 /**
  * Social Facebook Login
  */

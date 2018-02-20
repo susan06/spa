@@ -18,6 +18,8 @@ use App\Repositories\BranchOffice\BranchOfficeRepository;
 use App\Repositories\Reservation\ReservationRepository;
 use App\Http\Requests\Reservation\CreateReservation;
 use App\Repositories\Province\ProvinceRepository;
+use App\Repositories\Tour\TourRepository;
+use App\Repositories\Tour\TourReservationRepository;
 
 class FrontendController extends Controller
 {
@@ -63,6 +65,16 @@ class FrontendController extends Controller
     private $provinces;
 
     /**
+     * @var TourRepository
+     */
+    private $tours;
+
+    /**
+     * @var TourReservationRepository
+     */
+    private $tour_reservations;
+
+    /**
      * FrontendController constructor.
      * @param 
      */
@@ -74,7 +86,9 @@ class FrontendController extends Controller
         ReservationRepository $reservations,
         MessageRepository $messages,
         UserRepository $users,
-        ProvinceRepository $provinces
+        ProvinceRepository $provinces,
+        TourRepository $tours,
+        TourReservationRepository $tour_reservations
 
     ){
         $this->middleware('locale'); 
@@ -90,6 +104,8 @@ class FrontendController extends Controller
         $this->messages = $messages;
         $this->users = $users;
         $this->provinces = $provinces;
+        $this->tour_reservations = $tour_reservations;
+        $this->tours = $tours;
     }
 
     /**
@@ -495,7 +511,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * save local in favorite
+     * save local reservation
      *
      */
     public function localStoreReservation($id, CreateReservation $request, NotificationMailer $mailer)
@@ -790,5 +806,132 @@ class FrontendController extends Controller
         return view('frontend.branchs.locations', compact('lat', 'lng', 'locales'));
     }
 
+    /**
+     * change status of reservation tour
+     *
+     */
+    public function reservationTourCancel($id, Request $request, NotificationMailer $mailer)
+    {
+        $tour_reservation = $this->tour_reservations->update($id, ['rejected_by' => $request->rejected_by, 'status' => 'rejected']);
+
+        if($tour_reservation) {
+            $mailer->sendReservationTourStatusOwner($tour_reservation);
+
+            $message = 'Se ha cambiado el estatus de su reservación del tour';
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => true,
+                    'message' => $message
+                ]);
+            }
+
+            return back()->withSuccess($message);
+        }
+
+        $message = trans('app.error_again');
+
+        if ( $request->ajax() ) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $message
+            ]);
+        }
+
+        return back()->withErrors($message);
+    }
+
+    /**
+     * save tour reservation
+     *
+     */
+    public function tourStoreReservation($id, Request $request, NotificationMailer $mailer)
+    {
+        $client = Auth::User()->id;
+
+        $data = [
+            'tour_id' => $id,
+            'client_id' => $client
+        ];
+
+        $exist_tour = $this->tour_reservations
+            ->where('tour_id', $id)
+            ->where('client_id', $client)
+            ->whereIn('status', ['pendient', 'approved'])
+            ->first();
+
+        if(!$exist_tour) {
+            $tour_reservation = $this->tour_reservations->create($data);
+
+            if($tour_reservation) {
+                $mailer->sendTourReservationOwner($tour_reservation);
+
+                $message = 'Se ha guardado su reservación del tour, puede encontrarla en la sección de MIS TOURS';
+
+                if ( $request->ajax() ) {
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => $message
+                    ]);
+                }
+
+                return back()->withSuccess($message);
+            }
+
+            $message = trans('app.error_again');
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message
+                ]);
+            }
+
+            return back()->withErrors($message);
+        }
+
+        $message = 'Ya ha reservado el tour seleccionado';
+
+            if ( $request->ajax() ) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message
+                ]);
+            }
+
+        return back()->withErrors($message);
+    }
+
+    /**
+     * Display list of tours of client
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function myTours(Request $request)
+    {
+        $client = Auth::User()->id;
+        $reservations = $this->tour_reservations->where('client_id', $client)->orderBy('created_at', 'desc')->paginate(10);
+
+        if ( $request->ajax() ) {
+            if (count($reservations)) {
+                return response()->json([
+                    'success' => true,
+                    'view' => view('frontend.tours.list', compact('reservations'))->render(),
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('app.no_records_found')
+                ]);
+            }
+        }
+
+        return view('frontend.tours.myList', compact('reservations'));
+    }
 
 }

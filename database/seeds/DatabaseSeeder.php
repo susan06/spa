@@ -30,5 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ScoresSeeder::class);
         $this->call(CommentsSeeder::class);
         $this->call(ReservationSeeder::class);
+        $this->call(ToursSeeder::class);
+        $this->call(ToursReservationsSeeder::class);
     }
 }

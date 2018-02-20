@@ -5,7 +5,6 @@
         @if(isset($showLocal))
         <th>Local</th>
         @endif
-        <th>@lang('app.date')</th>
         <th>@lang('app.registration_date')</th>
         <th>@lang('app.status')</th>
         @if (Auth::user()->hasRole('owner')) 
@@ -21,9 +20,8 @@
                     </a>
                   </td>
                 @if(isset($showLocal))
-                <td>{{ $reservation->branchOffice->name }}</td>
+                <td>{{ $reservation->tour->branchOffice->name }}</td>
                 @endif
-                <td>{{ $reservation->date.' - '.$reservation->hour }}</td>
                 <td>{{ $reservation->created_at }}</td>
                 <td>
                 {!! $reservation->getStatus() !!}
@@ -34,11 +32,16 @@
                         <span class="label label-info">Cancelada por el: {{ ($reservation->rejected_by == 'client') ? 'Cliente' : 'Propietario'}}</span>
                     @endif
                     @if($reservation->status == 'pendient')
-                    <a type="button" data-href="{{ route('reservation.cancel', $reservation->id) }}?rejected_by=owner" 
+                    <a type="button" data-href="{{ route('reservation.tour.approved', $reservation->id) }}"
+                      class="btn btn-success btn-fill btn-approved-status" 
+                      title="Aprobar reservación">
+                        <i class="fa fa fa-thumbs-o-up"></i>
+                    </a>
+                    <a type="button" data-href="{{ route('reservation.tour.cancel', $reservation->id) }}?rejected_by=owner" 
                       class="btn btn-danger btn-fill btn-cancel-status" 
-                      data-confirm-text="Seguro que desea cancelar la reservación?"
+                      data-confirm-text="Seguro que desea cancelar la reservación del Tour?"
                       data-confirm-delete="Si"
-                      title="Cancelar reserva">
+                      title="Cancelar reservación">
                         <i class="fa fa-trash-o"></i>
                     </a>
                   @endif

@@ -231,25 +231,54 @@
 	</div>
 
 	<div class="col-md-6 col-xs-12">
-			@if (App::environment() === 'production')
-			<div id="disqus_thread"></div>
+		<div class="col-md-12 col-xs-12">
+		@foreach($local->tours as $tour)
+    		@if($tour->view)
+    			@if(date('Y-m-d') >= $tour->view_start && date('Y-m-d') <= $tour->view_end)   	
+		    		<div class="box-reservation-tour">
+		    			<div class="title bg-nav" id="title-tour-{{$tour->id}}">Tour {{ $tour->title }}</div>
+		    			<div class="content">
+		    			{!! Form::open(['route' => ['tour.reservation.store', $tour->id], 'id' => 'tour-generic-'.$tour->id]) !!}
+		    				<div class="row">
+		    					<div class="col-md-12 col-xs-12 text-center">
+		    						{{ $tour->description }}. Fecha: {{ $tour->rangeDate() }}.
+		    					</div>
+		    					<div class="col-md-12 col-xs-12">
+					                <div id="date_reservation_tour_{{$tour->id}}"></div>
+					            </div>
+					            <div class="col-md-12 col-xs-12">
+					            	<button type="submit" data-auth="{{ (Auth::check()) ? 'true' : 'false' }}" id="btn-reservar-tour" data-tour="{{$tour->id}}" class="btn btn-fill btn-danger btn-reservar-tour col-md-12 col-xs-12 btn-submit-tour">Reservar Tour</button>
+					            </div>
+					        </div>
+					        {!! Form::close() !!}
+		    			</div>
+		    		</div>  	
+    			@endif
+    		@endif
+    	@endforeach
+		</div>
 
-			<script>
-			var disqus_config = function () {
-			this.page.url = '{{ url()->current() }}'; 
-			this.page.identifier = 'local-{{$local->id}}'; 
-			};
-			
-			(function() { // DON'T EDIT BELOW THIS LINE
-			var d = document, s = d.createElement('script');
-			s.src = "{{ Settings::get('site_disqus') }}"; //https://kels-2.disqus.com/embed.js
-			s.setAttribute('data-timestamp', +new Date());
-			(d.head || d.body).appendChild(s);
-			})();
-			</script>
+		@if (App::environment() === 'production')
+			<div class="col-md-12 col-xs-12">
+				<div id="disqus_thread"></div>
 
-			<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-			@endif
+				<script>
+					var disqus_config = function () {
+					this.page.url = '{{ url()->current() }}'; 
+					this.page.identifier = 'local-{{$local->id}}'; 
+					};
+					
+					(function() { // DON'T EDIT BELOW THIS LINE
+					var d = document, s = d.createElement('script');
+					s.src = "{{ Settings::get('site_disqus') }}"; //https://kels-2.disqus.com/embed.js
+					s.setAttribute('data-timestamp', +new Date());
+					(d.head || d.body).appendChild(s);
+					})();
+				</script>
+
+				<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			</div>
+		@endif
 	</div>
 
 </div>
@@ -485,6 +514,21 @@ $("#time_reservation").on("dp.change", function(e) {
           width: 'auto'
         });
       });
+
+@foreach($local->tours as $tour)
+	@if($tour->view)
+		@if(date('Y-m-d') >= $tour->view_start && date('Y-m-d') <= $tour->view_end)
+		  $('#date_reservation_tour_{{$tour->id}}').datetimepicker({
+		    format: 'DD-MM-YYYY',
+		    minDate: moment('{{$tour->date_start}}'),
+		    maxDate: moment('{{$tour->date_end}}'),
+		    inline: true,
+		    sideBySide: true,
+		    defaultDate: false
+		  });	
+		@endif
+	@endif
+@endforeach
   
 </script>
 

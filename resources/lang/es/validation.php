@@ -209,6 +209,11 @@ return [
         'week' => 'días de semana',
         'min_time' => 'hora inicial',
         'max_time' => 'hora final',
+        'branch_office_id' => 'Local',
+        'date_start' => 'Fecha comienzo',
+        'date_end' => 'Fecha final',
+        'view_start' => 'Publicación comienzo',
+        'view_end' => 'Publicación final',
     ],
 
 ];

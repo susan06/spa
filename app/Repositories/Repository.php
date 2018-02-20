@@ -63,7 +63,22 @@ abstract class Repository implements RepositoryInterface
     {
         return $this->model->firstOrCreate($attributes);
     }
-
+  
+    /**
+     * First.
+     *
+     * First and returns the first record if
+     * exists or creates a new model.
+     *
+     * @param array $attributes
+     *
+     * @return mixed
+     *
+     */
+    public function first()
+    {
+        return $this->model->first();
+    }
 
     /**
      * All
@@ -127,6 +142,22 @@ abstract class Repository implements RepositoryInterface
     public function where($needle, $hayStack, $option = '=')
     {
         return $this->model->where($needle, $option, $hayStack);
+    }
+
+    /**
+     * WhereIn
+     *
+     * Standard mySql where statement.
+     *
+     * @param $column
+     * @param $array
+     *
+     * @return mixed
+     *
+     */
+    public function whereIn($column, $array)
+    {
+        return $this->model->whereIn($column, $array);
     }
 
     /**

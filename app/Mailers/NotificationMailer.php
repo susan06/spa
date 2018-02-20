@@ -6,6 +6,8 @@ use Settings;
 use App\User;
 use App\BranchOffice;
 use App\Reservation;
+use App\Tour;
+use App\TourReservation;
 
 class NotificationMailer extends AbstractMailer
 {
@@ -51,5 +53,39 @@ class NotificationMailer extends AbstractMailer
         $subject = trans('app.invite_email', ['client' => $friend, 'site' => Settings::get('app_name') ]);
 
         $this->sendTo($email, $subject, $view, $data);
+    }
+
+     public function sendTourReservationOwner(TourReservation $tour_reservation)
+    {
+        $local = $tour_reservation->tour->branchOffice;
+        $owner = $local->company->owner;
+        $client = $tour_reservation->client;
+        $view = 'emails.notifications.new_tour_reservation_owner';
+        $data = ['client' => $client, 'local' => $local, 'tour' => $tour_reservation->tour];
+        $subject = 'Reservación para tour '.$tour_reservation->tour->title;
+        $email_to = [$owner->email, $local->email];
+
+        $this->sendTo($email_to, $subject, $view, $data);
+    }
+
+    public function sendReservationTourStatusOwner(TourReservation $tour_reservation, $status = 'rejected')
+    {
+        $local = $tour_reservation->tour->branchOffice;
+        $owner = $local->company->owner;
+        $client = $tour_reservation->client;
+        $view = 'emails.notifications.reservation_tour_status_owner';
+        $data = [
+            'client' => $client, 
+            'local' => $local, 
+            'reservation' => $tour_reservation->tour, 
+            'status' => ($status == 'rejected') ? 'CANCELADO' : 'APROBADO'
+        ];
+        if($status == 'rejected') {
+            $subject = 'Se ha cancelado una reservación de su tour';
+        } else {
+            $subject = 'Se ha aprobado una reservación de su tour';
+        }
+
+        $this->sendTo($owner->email, $subject, $view, $data);
     }
 }

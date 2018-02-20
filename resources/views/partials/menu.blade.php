@@ -44,6 +44,15 @@
     </li>
     @endpermission
 
+    @permission('tour.manage')
+    <li class="{{ Request::is('tour*') ? 'active' : ''  }} menu-click">
+        <a  href="{{ route('tour.index') }}" title="@lang('app.tours')">
+        <i class="fa fa-globe"></i>
+        <p> @lang('app.tours')</p>
+        </a>
+    </li>
+    @endpermission
+
     @permission('banner.manage')
     <li class="{{ Request::is('banner*') ? 'active' : ''  }} menu-click">
         <a  href="{{ route('banner.index') }}" title="@lang('app.banners')">
