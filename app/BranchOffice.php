@@ -59,8 +59,12 @@ class BranchOffice extends Model
 
 
     public function getFirsthPhoto() {
+
+        if(count($this->photos) > 0) {
+            return $this->photos->first()->name;
+        }
         
-        return $this->photos->first()->name;
+        return 'no-imagen.jpg';
     }
 
     public function sumPrice() {
@@ -70,7 +74,11 @@ class BranchOffice extends Model
             $sum += $value->price;
         }
 
-        return $sum / $services->count();
+        if($services->count() > 0) {
+            return $sum / $services->count();
+        }
+
+        return 0;
     }
 
     public function isVisit() {
@@ -102,7 +110,6 @@ class BranchOffice extends Model
 
         return $result;
     }
-
 
     public function isSave() {
 

@@ -1,5 +1,7 @@
 function add_services() {
 
+  console.log('hola');
+
   if(verifiquePrice()) {
     $('#services_table').show();
 
@@ -39,9 +41,9 @@ function add_services() {
 
     input4.type  = 'text';
     input4.name  = 'services_offer_porcent[]';
-    input4.className = 'form-control',
+    input4.className = 'form-control';
 
-    var td5    = document.createElement("TD");
+    var td5 = document.createElement("TD");
     var select2 = document.createElement("select");
 
     select2.name  = 'services_status[]';
