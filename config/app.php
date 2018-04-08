@@ -181,8 +181,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
-        Roumen\Disqus\DisqusServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class
 
 
     ],
