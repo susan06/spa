@@ -1,7 +1,5 @@
 function add_services() {
-
-  console.log('hola');
-
+  
   if(verifiquePrice()) {
     $('#services_table').show();
 
