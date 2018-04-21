@@ -299,7 +299,7 @@ input:focus {
   margin-top: 0px;
 }
 .sidebar .nav li > a {
-  color: #483002;
+  color: #ffffff;
   padding: 4.2px 0px;
   margin: 0px 0px 0px 15px;
   opacity: .86;
@@ -309,8 +309,8 @@ input:focus {
   background: rgba(255, 255, 255, 0.13);
   opacity: 1;
 }
-.sidebar .nav li.active > a {
-  color: #885b05;
+.sidebar .nav li.active > a, .navbar-collapse .nav li.active > a {
+  color: #ffffff;
   opacity: 1;
   background: rgba(255, 255, 255, 0.23);
 }
@@ -2915,9 +2915,10 @@ body > .navbar-collapse[data-color="purple"]:after {
     overflow-y: scroll;
     height: calc(100vh - 61px);
     width: 100%;
+    background-color: #000b0a;
   }
   body > .navbar-collapse .nav > li > a {
-    padding: 30px 25px;
+    padding: 10px 25px;
   }
   body > .navbar-collapse::before {
     top: 0;
@@ -3579,7 +3580,7 @@ body > .navbar-collapse[data-color="purple"]:after {
     height: 48px;
     display: inline-block;
     box-sizing: border-box;
-    border-top: solid 6px #C82606;
+    border-top: solid 6px #8bd9ea;
     border-right: solid 6px #fff;
     border-bottom: solid 6px #fff;
     border-left: solid 6px #fff;
@@ -3986,14 +3987,15 @@ ul.list_1{
 /********* menu ***********/
 
 .sidebar-wrapper .logo img{
-    width: 90px;
-    height: 55px;
-    margin: -8px 0px;
+    width: 200px;
+    height: 100px;
+    /*margin: -8px 0px;*/
 }
 
 .sidebar-wrapper {
-  background-image: url(sidebar-1.png);
-  background-repeat: repeat;
+  /*background-image: url(sidebar-1.png);
+  background-repeat: repeat;*/
+  background-color: #000b0a;
 }
 
 /*** card estados ***/
@@ -4016,7 +4018,7 @@ ul.list_1{
 .card .title {
   margin-top: 0;
   margin-bottom: 5px;
-  border-bottom: 2px solid #6BB051;
+  border-bottom: 2px solid #8bd9ea;
 }
 .card .card-image {
   height: 60%;
@@ -4248,9 +4250,8 @@ ul.list_1{
 
 
 .navbar-collapse .logo img{
-    width: 90px;
-    height: 55px;
-    margin: -8px 0px;
+    width: 100%;
+    height: 90px;
 }
 
 div.collapse.navbar-collapse.has-image > div {
