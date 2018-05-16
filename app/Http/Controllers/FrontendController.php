@@ -528,9 +528,16 @@ class FrontendController extends Controller
         $reservation = $this->reservations->create($data);
 
         if($reservation) {
-            $mailer->sendReservationOwner($reservation);
-
             $message = 'Se ha guardado su reservación, puede encontrarla en la sección de MIS RESERVAS';
+            try {
+                $mailer->sendReservationOwner($reservation);
+            } 
+              catch(\Swift_TransportException $e){
+              $message = 'Se ha guardado su reservación, pero falló la conexión para el envio de la notificación a la administración.';
+            }
+              catch (\Exception $e) {
+                $message = 'Se ha guardado su reservación, pero falló el envio de la notificación a la administración.';
+            }
 
             if ( $request->ajax() ) {
 
@@ -566,9 +573,16 @@ class FrontendController extends Controller
         $reservation = $this->reservations->update($id, ['rejected_by' => $request->rejected_by, 'status' => 'rejected']);
 
         if($reservation) {
-            $mailer->sendReservationStatusOwner($reservation);
-
             $message = 'Se ha cambiado el estatus de su reserva';
+            try {
+                $mailer->sendReservationStatusOwner($reservation);
+            } 
+              catch(\Swift_TransportException $e){
+              $message = 'Se ha guardado el estatus de la reserva, pero falló la conexión para el envio de la notificación a la administración.';
+            }
+              catch (\Exception $e) {
+                $message = 'Se ha guardado el estatus de la reserva, pero falló el envio de la notificación a la administración.';
+            }
 
             if ( $request->ajax() ) {
 
@@ -615,8 +629,16 @@ class FrontendController extends Controller
             if(filter_var($value, FILTER_VALIDATE_EMAIL)) {
 
                 $friend = $this->branchs->storeRecommend($data);
-
-                $mailer->sendRecommendation($id, $value, Auth::user()->full_name());
+                $message = trans('app.invitations_sended');
+                try {
+                    $mailer->sendRecommendation($id, $value, Auth::user()->full_name());
+                } 
+                  catch(\Swift_TransportException $e){
+                  $message = $message.'. Pero falló la conexión para el envio de la notificación por email.';
+                }
+                  catch (\Exception $e) {
+                    $message = $message.'. Pero falló la conexión para el envio de la notificación por email.';
+                }
             }
             
             if ( $request->ajax() ) {
@@ -625,7 +647,7 @@ class FrontendController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'message' => trans('app.invitations_sended'),
+                    'message' => $message,
                     'url_return' => route('local.show', $id)
                 ]);
             } 
@@ -815,9 +837,16 @@ class FrontendController extends Controller
         $tour_reservation = $this->tour_reservations->update($id, ['rejected_by' => $request->rejected_by, 'status' => 'rejected']);
 
         if($tour_reservation) {
-            $mailer->sendReservationTourStatusOwner($tour_reservation);
-
             $message = 'Se ha cambiado el estatus de su reservación del tour';
+            try {
+                $mailer->sendReservationTourStatusOwner($tour_reservation);
+            } 
+              catch(\Swift_TransportException $e){
+              $message = 'Se ha cambiado el estado de su reservación del tour, pero falló la conexión para el envio de la notificación a la administración.';
+            }
+              catch (\Exception $e) {
+                $message = 'Se ha cambiado el estado de su reservación del tour, pero falló el envio de la notificación a la administración.';
+            }
 
             if ( $request->ajax() ) {
 
@@ -866,9 +895,17 @@ class FrontendController extends Controller
             $tour_reservation = $this->tour_reservations->create($data);
 
             if($tour_reservation) {
-                $mailer->sendTourReservationOwner($tour_reservation);
-
                 $message = 'Se ha guardado su reservación del tour, puede encontrarla en la sección de MIS TOURS';
+
+                try {
+                    $mailer->sendTourReservationOwner($tour_reservation);
+                } 
+                  catch(\Swift_TransportException $e){
+                  $message = 'Se ha guardado su reservación del tour, pero falló la conexión para el envio de la notificación a la administración.';
+                }
+                  catch (\Exception $e) {
+                    $message = 'Se ha guardado su reservación del tour, pero falló el envio de la notificación a la administración.';
+                }
 
                 if ( $request->ajax() ) {
 

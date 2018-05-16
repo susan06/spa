@@ -178,6 +178,16 @@ class RegisterController extends Controller
         $token = str_random(60);
         $this->users->update($user->id, ['confirmation_token' => $token]);
         $mailer->sendConfirmationEmail($user, $token);
-        $this->logAction('auth', trans('log.end_confirmation_email'), 'user', $user->id);
+        $message = trans('log.end_confirmation_email');
+        try {
+            $mailer->sendRecommendation($id, $value, Auth::user()->full_name());
+        } 
+          catch(\Swift_TransportException $e){
+            $message = $message.'. Pero falló la conexión para el envio de la notificación por email.';
+        }
+          catch (\Exception $e) {
+            $message = $message.'. Pero falló la conexión para el envio de la notificación por email.';
+        }
+        $this->logAction('auth', $message, 'user', $user->id);
     }
 }
